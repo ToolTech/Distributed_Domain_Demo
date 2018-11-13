@@ -32,7 +32,7 @@ Simplicty of code
 
 We tried to make an easy to use API but also very high performance
 
-    '''cs
+    csharp
     using GizmoSDK.GizmoBase;
     using GizmoSDK.GizmoDistribution;
 
