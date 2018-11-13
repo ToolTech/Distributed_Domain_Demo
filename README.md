@@ -32,60 +32,77 @@ Simplicty of code
 
 We tried to make an easy to use API but also very high performance
 
+    
     using GizmoSDK.GizmoBase;
     using GizmoSDK.GizmoDistribution;
 
-    namespace Distributed_Domain_Demo
+    namespace Event_Demo
     {
-      class Program
-      {
-       
-
-        static void Main(string[] args)
+        class Program
         {
-            GizmoSDK.GizmoBase.Platform.Initialize();
-
-            GizmoSDK.GizmoDistribution.Platform.Initialize();
-
-            DistManager manager = DistManager.GetManager(true);
-
-            
-            manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(), DistRemoteChannel.CreateDefaultServerChannel());
-
-            DistClient client = new DistClient("MessageClient", manager);
-
-            client.Initialize();
-
-            DistSession session=client.GetSession("MessageSession", true, true);
-
-            client.JoinSession(session);
-
-            client.SubscribeEvents(session);
-
-            client.OnEvent += Client_OnEvent;
-
-            while(true)
+    
+            static void Main(string[] args)
             {
-                string result = Console.ReadLine();
+                // Initialize platforms for various used SDKs
+                GizmoSDK.GizmoBase.Platform.Initialize();
+                GizmoSDK.GizmoDistribution.Platform.Initialize();
 
-                if (result == "quit")
-                    break;
 
-                DistEvent e = manager.GetEvent();
+                // Create a manager. The manager controls it all
+                DistManager manager = DistManager.GetManager(true);
 
-                e.SetAttributeValue("Message", result);
+                // Start the manager with settting for transport protocols
+                manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(), DistRemoteChannel.CreateDefaultServerChannel());
 
-                client.SendEvent(e, session);
+
+                // Client set up. You are a client that sends and receives information
+                DistClient client = new DistClient("MessageClient", manager);
+
+                // We need to tell the client how to initialize
+                client.Initialize();
+
+                // Now we can get a session. A kind of a meeting room that is used to exchange various "topics"
+                DistSession session=client.GetSession("MessageSession", true, true);
+
+                // Joint that session and subribe all events
+                client.JoinSession(session);
+                client.SubscribeEvents(session);
+
+                // Create a delegete
+                client.OnEvent += Client_OnEvent;
+
+
+                // Now loops around some simple program to get strings from console and distribute them as a message app
+
+                while(true)
+                {
+                    string result = Console.ReadLine();
+
+                    if (result == "quit")
+                        break;
+
+                    // get a new empty event from manager
+                    DistEvent e = manager.GetEvent();
+
+                    // set some attributes in the event to any kind of value
+                    e.SetAttributeValue("Message", result);
+
+                    // and send the event on the specific session
+                    client.SendEvent(e, session);
+                }
+
+                // Some kind of graceful shutdown
+                manager.Shutdown();
+
+
+                // GC and platform uninit is managed by the system automatically
             }
+                
 
-
-            manager.Shutdown();
+            private static void Client_OnEvent(DistClient sender, DistEvent e)
+            {
+                if(e.GetSource()!=sender.GetClientID().InstanceID)
+                    Console.WriteLine(e.GetAttributeValue("Message").GetString());
+            }
         }
-
-        private static void Client_OnEvent(DistClient sender, DistEvent e)
-        {
-            if(e.GetSource()!=sender.GetClientID().InstanceID)
-                Console.WriteLine(e.GetAttributeValue("Message").GetString());
-        }
-      }
     }
