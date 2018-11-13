@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1BB1AD89-5B53-4455-B125-97A25359E33B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Distributed_Domain_Demo</RootNamespace>
+    <AssemblyName>Distributed_Domain_Demo</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WIN64</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;WIN64</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\BasicTypes.cs">
+      <Link>GizmoBase\BasicTypes.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Debug.cs">
+      <Link>GizmoBase\Debug.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\DynamicEvent.cs">
+      <Link>GizmoBase\DynamicEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\DynamicType.cs">
+      <Link>GizmoBase\DynamicType.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\DynamicTypeArray.cs">
+      <Link>GizmoBase\DynamicTypeArray.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\DynamicTypeContainer.cs">
+      <Link>GizmoBase\DynamicTypeContainer.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\DynamicTypeInt64.cs">
+      <Link>GizmoBase\DynamicTypeInt64.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\DynamicTypeTimeTagged.cs">
+      <Link>GizmoBase\DynamicTypeTimeTagged.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Image.cs">
+      <Link>GizmoBase\Image.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\KeyDatabase.cs">
+      <Link>GizmoBase\KeyDatabase.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\License.cs">
+      <Link>GizmoBase\License.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Matrix.cs">
+      <Link>GizmoBase\Matrix.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Message.cs">
+      <Link>GizmoBase\Message.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Module.cs">
+      <Link>GizmoBase\Module.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Object.cs">
+      <Link>GizmoBase\Object.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Performance.cs">
+      <Link>GizmoBase\Performance.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Platform.cs">
+      <Link>GizmoBase\Platform.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Reference.cs">
+      <Link>GizmoBase\Reference.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Serialize.cs">
+      <Link>GizmoBase\Serialize.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Time.cs">
+      <Link>GizmoBase\Time.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\UserData.cs">
+      <Link>GizmoBase\UserData.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Utilities.cs">
+      <Link>GizmoBase\Utilities.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Vec.cs">
+      <Link>GizmoBase\Vec.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistAttribute.cs">
+      <Link>GizmoDistribution\DistAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistClient.cs">
+      <Link>GizmoDistribution\DistClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistClientID.cs">
+      <Link>GizmoDistribution\DistClientID.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistEvent.cs">
+      <Link>GizmoDistribution\DistEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistInstanceID.cs">
+      <Link>GizmoDistribution\DistInstanceID.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistManager.cs">
+      <Link>GizmoDistribution\DistManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistNotificationSet.cs">
+      <Link>GizmoDistribution\DistNotificationSet.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistObject.cs">
+      <Link>GizmoDistribution\DistObject.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistSession.cs">
+      <Link>GizmoDistribution\DistSession.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistTransaction.cs">
+      <Link>GizmoDistribution\DistTransaction.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\Platform.cs">
+      <Link>GizmoDistribution\Platform.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzRemoteDistribution\DistRemoteChannel.cs">
+      <Link>GizmoDistribution\DistRemoteChannel.cs</Link>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeReference Include="gzGizmoBaseLibraries, Version=1.0.0.0, Type=win32">
+      <Name>gzGizmoBaseLibraries.manifest</Name>
+      <HintPath>..\Assets\Plugins\x64\gzGizmoBaseLibraries.manifest</HintPath>
+    </NativeReference>
+    <NativeReference Include="gzGizmoDistributionLibraries, Version=1.0.0.0, Type=win32">
+      <Name>gzGizmoDistributionLibraries.manifest</Name>
+      <HintPath>..\Assets\Plugins\x64\gzGizmoDistributionLibraries.manifest</HintPath>
+    </NativeReference>
+    <NativeReference Include="gzGizmoRemoteDistributionLibraries, Version=1.0.0.0, Type=win32">
+      <Name>gzGizmoRemoteDistributionLibraries.manifest</Name>
+      <HintPath>..\Assets\Plugins\x64\gzGizmoRemoteDistributionLibraries.manifest</HintPath>
+    </NativeReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
