@@ -26,7 +26,9 @@ namespace Event_Demo
             // Start the manager with settting for transport protocols
             manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(), DistRemoteChannel.CreateDefaultServerChannel());
 
-
+            //If we want to attach the DistMonitor debugger
+            manager.EnableDebug(true);
+            
             // Client set up. You are a client that sends and receives information
             DistClient client = new DistClient("MessageClient", manager);
 
