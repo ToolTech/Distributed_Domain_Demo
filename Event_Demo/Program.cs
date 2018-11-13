@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using GizmoSDK.GizmoBase;
 using GizmoSDK.GizmoDistribution;
 
-namespace Distributed_Domain_Demo
+namespace Event_Demo
 {
     class Program
     {
@@ -18,6 +18,8 @@ namespace Distributed_Domain_Demo
             GizmoSDK.GizmoBase.Platform.Initialize();
 
             GizmoSDK.GizmoDistribution.Platform.Initialize();
+
+           
 
             DistManager manager = DistManager.GetManager(true);
 
@@ -53,6 +55,7 @@ namespace Distributed_Domain_Demo
 
             manager.Shutdown();
         }
+                
 
         private static void Client_OnEvent(DistClient sender, DistEvent e)
         {
