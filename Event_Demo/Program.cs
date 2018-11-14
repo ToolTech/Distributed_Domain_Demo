@@ -11,15 +11,12 @@ namespace Event_Demo
 {
     class Program
     {
-       
-
         static void Main(string[] args)
         {
             // Initialize platforms for various used SDKs
             GizmoSDK.GizmoBase.Platform.Initialize();
             GizmoSDK.GizmoDistribution.Platform.Initialize();
-
-           
+                       
             // Create a manager. The manager controls it all
             DistManager manager = DistManager.GetManager(true);
 
