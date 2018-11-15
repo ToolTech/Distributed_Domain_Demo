@@ -9,19 +9,45 @@ using GizmoSDK.GizmoDistribution;
 
 namespace Event_Demo
 {
+    class MessageEvent : DistEvent
+    {
+        // Let the constructor be private or internal so we dont expose this by mistake
+        internal  MessageEvent(IntPtr nativeReference) : base(nativeReference)
+        {
+        }
+
+        // a factory design pattern for this class
+        public override Reference Create(IntPtr nativeReference)
+        {
+            return new MessageEvent(nativeReference) as Reference;
+        }
+
+        public string Message
+        {
+            get { return GetAttributeValue(nameof(Message)); }
+            set { SetAttributeValue(nameof(Message), value); }
+        }
+
+        public double Time
+        {
+            get { return GetAttributeValue(nameof(Time)); }
+            set { SetAttributeValue(nameof(Time), value); }
+        }
+    }
+
     class Program
     {
-       
-
         static void Main(string[] args)
         {
             // Initialize platforms for various used SDKs
             GizmoSDK.GizmoBase.Platform.Initialize();
             GizmoSDK.GizmoDistribution.Platform.Initialize();
-
-           
+                       
             // Create a manager. The manager controls it all
             DistManager manager = DistManager.GetManager(true);
+
+            // Let the manager know about our special event
+            manager.RegisterEvent<MessageEvent>();
 
             // Start the manager with settting for transport protocols
             manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(), DistRemoteChannel.CreateDefaultServerChannel());
@@ -40,7 +66,7 @@ namespace Event_Demo
 
             // Joint that session and subribe all events
             client.JoinSession(session);
-            client.SubscribeEvents(session);
+            client.SubscribeEvents< MessageEvent>(session); // Subscribe MessageEvent as base type
 
             // Create a delegete
             client.OnEvent += Client_OnEvent;
@@ -56,10 +82,11 @@ namespace Event_Demo
                     break;
 
                 // get a new empty event from manager
-                DistEvent e = manager.GetEvent();
+                MessageEvent e = manager.GetEvent<MessageEvent>();
 
                 // set some attributes in the event to any kind of value
-                e.SetAttributeValue("Message", result);
+                e.Message=result;
+                e.Time = Time.SystemSeconds;
 
                 // and send the event on the specific session
                 client.SendEvent(e, session);
@@ -75,8 +102,14 @@ namespace Event_Demo
 
         private static void Client_OnEvent(DistClient sender, DistEvent e)
         {
-            if(e.GetSource()!=sender.GetClientID().InstanceID)
-                Console.WriteLine(e.GetAttributeValue("Message").GetString());
+            // Check if message is from us
+            if (e.GetSource() == sender.GetClientID().InstanceID)
+                return;
+
+            MessageEvent mess = e as MessageEvent;
+            
+            if(mess!=null)
+                Console.WriteLine(mess.Message);
         }
     }
 }

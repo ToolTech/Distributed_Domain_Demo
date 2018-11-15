@@ -69,6 +69,9 @@
     <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\DynamicTypeTimeTagged.cs">
       <Link>DynamicTypeTimeTagged.cs</Link>
     </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Feature.cs">
+      <Link>Feature.cs</Link>
+    </Compile>
     <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Image.cs">
       <Link>Image.cs</Link>
     </Compile>

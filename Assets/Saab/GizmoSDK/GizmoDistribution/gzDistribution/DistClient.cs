@@ -146,6 +146,11 @@ namespace GizmoSDK
                 return DistClient_unsubscribeSessions(GetNativeReference(), timeOut);
             }
 
+            public bool SubscribeEvents<T>(DistSession session, Int32 timeOut = 0) where T : DistEvent
+            {
+                return SubscribeEvents(session, typeof(T).Name, timeOut);
+            }
+
             public bool SubscribeEvents(DistSession session,string typeName=null,Int32 timeOut=0)
             {
                 return DistClient_subscribeEvents(GetNativeReference(),session.GetNativeReference(), typeName, timeOut);
