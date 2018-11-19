@@ -38,8 +38,8 @@ namespace Event_Demo
             return new MessageEvent(nativeReference) as Reference;
         }
 
-        //[DistProperty]
-        //public ComplexType Compis;
+        [DistProperty]
+        public ComplexType Compis;
 
         [DistProperty]
         public string Message;
@@ -102,8 +102,8 @@ namespace Event_Demo
                 MessageEvent e = manager.GetEvent<MessageEvent>();
 
                 // set some attributes in the event to any kind of value
-                //e.Compis = new ComplexType();
-                //e.Compis.Test = "aloha";
+                e.Compis = new ComplexType();
+                e.Compis.Test = "aloha";
                 e.Message=result;
                 e.Time = Time.SystemSeconds;
 
