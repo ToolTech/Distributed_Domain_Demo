@@ -83,7 +83,7 @@ namespace Event_Demo
 
                 // set some attributes in the event to any kind of value
                 e.Message=result;
-                e.Time = (ulong)Time.SystemSeconds;
+                e.Time = Time.SystemSeconds;
 
                 // and send the event on the specific session
                 client.SendEvent(e, session);

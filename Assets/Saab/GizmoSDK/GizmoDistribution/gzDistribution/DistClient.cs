@@ -163,7 +163,7 @@ namespace GizmoSDK
 
             public bool SendEvent(DistEvent e,DistSession session)
             {
-                if (e.GetType().IsDefined(typeof(DistPropertyAutoStore),false))
+                if (e.GetType().IsDefined(typeof(DistPropertyAutoStore),true))
                     e.StorePropertiesAndFields();
 
                 return DistClient_sendEvent(GetNativeReference(), e.GetNativeReference(), session.GetNativeReference());
@@ -306,7 +306,7 @@ namespace GizmoSDK
 
                 if (@event != null)
                 {
-                    if (@event.GetType().IsDefined(typeof(DistPropertyAutoRestore), false))
+                    if (@event.GetType().IsDefined(typeof(DistPropertyAutoRestore), true))
                         @event.RestorePropertiesAndFields();
 
                     OnEvent?.Invoke(this, @event);

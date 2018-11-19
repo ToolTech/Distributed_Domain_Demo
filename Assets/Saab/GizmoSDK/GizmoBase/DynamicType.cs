@@ -126,7 +126,10 @@ namespace GizmoSDK
             public DynamicType(Reference reference) : base(DynamicType_create_reference(reference.GetNativeReference())) { }
 
             public static DynamicType CreateDynamicType(object obj)
-            { 
+            {
+                if (obj == null)
+                    return new DynamicType();
+
                 if (obj is DynamicType)
                     return obj as DynamicType;
 
@@ -195,6 +198,11 @@ namespace GizmoSDK
                 return Convert.ChangeType(GetNumber(), t);
             }
 
+            public bool IsVoid()
+            {
+                return Is("void");
+            }
+
 
             public string GetDynamicType()
             {
@@ -225,6 +233,7 @@ namespace GizmoSDK
                 if (!IsValid())
                     throw (new Exception("DynamicType is not VALID"));
 
+
                 return DynamicType_getVec2(GetNativeReference());
             }
 
@@ -240,6 +249,9 @@ namespace GizmoSDK
             {
                 if (!IsValid())
                     throw (new Exception("DynamicType is not VALID"));
+
+                if (IsVoid())
+                    return null;
 
                 return new Reference(DynamicType_getReference(GetNativeReference()));
             }
@@ -263,7 +275,10 @@ namespace GizmoSDK
             public string GetString()
             {
                 if (!IsValid())
-                    return "Invalid";
+                    return null;
+
+                if (IsVoid())
+                    return null;
 
                 return Marshal.PtrToStringUni(DynamicType_getString(GetNativeReference()));
             }
@@ -271,7 +286,7 @@ namespace GizmoSDK
             public string AsString(bool stripXML = true, bool skipDynTag = true, string tagName="data")
             {
                 if (!IsValid())
-                    return "Invalid";
+                    return null;
 
                 return Marshal.PtrToStringUni(DynamicType_asString(GetNativeReference(),stripXML,skipDynTag,tagName));
             }
