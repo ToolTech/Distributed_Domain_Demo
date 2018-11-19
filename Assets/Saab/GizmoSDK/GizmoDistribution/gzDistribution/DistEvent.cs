@@ -69,7 +69,7 @@ namespace GizmoSDK
                      
         public class DistEvent : Reference, IEnumerable<DistAttribute>
         {
-            public DistEvent(IntPtr nativeReference) : base(nativeReference){}
+            protected DistEvent(IntPtr nativeReference) : base(nativeReference){}
 
             public DistEvent():base(DistEvent_createDefaultEvent()){}
 
@@ -133,6 +133,80 @@ namespace GizmoSDK
             public bool RestoreFromJSON(string json)
             {
                 return DistEvent_fromJSON(GetNativeReference(), json);
+            }
+
+            // --- Reflection mechanisms --------------------------------
+
+            public void StorePropertiesAndFields(bool onlyWithDistProperty=true)
+            {
+                if (onlyWithDistProperty)
+                {
+                    foreach (System.Reflection.PropertyInfo prop in GetType().GetProperties())
+                    {
+                        foreach (System.Attribute attr in prop.GetCustomAttributes(true))
+                        {
+                            if (attr is DistProperty)
+                                SetAttributeValue(prop.Name, DynamicType.CreateDynamicType(prop.GetValue(this)));
+                        }
+                    }
+
+                    foreach (System.Reflection.FieldInfo field in GetType().GetFields())
+                    {
+                        foreach (System.Attribute attr in field.GetCustomAttributes(true))
+                        {
+                            if (attr is DistProperty)
+                                SetAttributeValue(field.Name, DynamicType.CreateDynamicType(field.GetValue(this)));
+                        }
+                    }
+                }
+                else        // For all attributes
+                {
+                    foreach (System.Reflection.PropertyInfo prop in GetType().GetProperties())
+                    {
+                        SetAttributeValue(prop.Name, DynamicType.CreateDynamicType(prop.GetValue(this)));
+                    }
+
+                    foreach (System.Reflection.FieldInfo field in GetType().GetFields())
+                    {
+                        SetAttributeValue(field.Name, DynamicType.CreateDynamicType(field.GetValue(this)));
+                    }
+                }
+            }
+
+            public void RestorePropertiesAndFields(bool onlyWithDistProperty = true)
+            {
+                if (onlyWithDistProperty)
+                {
+                    foreach (System.Reflection.PropertyInfo prop in GetType().GetProperties())
+                    {
+                        foreach (System.Attribute attr in prop.GetCustomAttributes(true))
+                        {
+                            if (attr is DistProperty)
+                                prop.SetValue(this, GetAttributeValue(prop.Name).GetObject(prop.PropertyType));
+                        }
+                    }
+
+                    foreach (System.Reflection.FieldInfo field in GetType().GetFields())
+                    {
+                        foreach (System.Attribute attr in field.GetCustomAttributes(true))
+                        {
+                            if (attr is DistProperty)
+                                field.SetValue(this, GetAttributeValue(field.Name).GetObject(field.FieldType));
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (System.Reflection.PropertyInfo prop in GetType().GetProperties())
+                    {
+                        prop.SetValue(this, GetAttributeValue(prop.Name).GetObject(prop.PropertyType));
+                    }
+
+                    foreach (System.Reflection.FieldInfo field in GetType().GetFields())
+                    {
+                        field.SetValue(this, GetAttributeValue(field.Name).GetObject(field.FieldType));
+                    }
+                }
             }
 
             #region --------------------------- private ----------------------------------------------

@@ -125,6 +125,77 @@ namespace GizmoSDK
 
             public DynamicType(Reference reference) : base(DynamicType_create_reference(reference.GetNativeReference())) { }
 
+            public static DynamicType CreateDynamicType(object obj)
+            { 
+                if (obj is DynamicType)
+                    return obj as DynamicType;
+
+                if (obj.GetType() == typeof(string))
+                    return new DynamicType((string)obj);
+
+                if (obj.GetType() == typeof(Int64))
+                    return new DynamicTypeInt64((Int64)obj);
+
+                if (obj.GetType() == typeof(UInt64))
+                    return new DynamicTypeInt64((UInt64)obj);
+
+                if (obj.GetType() == typeof(Vec2))
+                    return new DynamicType((Vec2)obj);
+
+                if (obj.GetType() == typeof(Vec3))
+                    return new DynamicType((Vec3)obj);
+
+                if (obj.GetType() == typeof(Vec4))
+                    return new DynamicType((Vec4)obj);
+
+                if (obj.GetType() == typeof(Guid))
+                    return new DynamicType((Guid)obj);
+
+                if (obj.GetType() == typeof(Reference))
+                    return new DynamicType((Reference)obj);
+
+                return new DynamicType((double)Convert.ChangeType(obj,typeof(double)));    // default to double
+            }
+
+            public object GetObject(System.Type t)
+            {
+                if (t==typeof(DynamicType))
+                    return this;
+
+                if (t.IsSubclassOf(typeof(DynamicType)))
+                    return this;
+
+                if (t==typeof(string))
+                    return (string)this;
+
+                if (t == typeof(UInt64))
+                    return (UInt64)this;
+
+                if (t == typeof(Int64))
+                    return (Int64)this;
+
+                if (t == typeof(Vec2))
+                    return (Vec2)this;
+
+                if (t == typeof(Vec3))
+                    return (Vec3)this;
+
+                if (t == typeof(Vec4))
+                    return (Vec4)this;
+
+                if (t == typeof(Guid))
+                    return (Guid)this;
+
+                if (t == typeof(Reference))
+                    return (Reference)this;
+
+                if (t.IsSubclassOf(typeof(Reference)))
+                    return (Reference)this;
+
+                return Convert.ChangeType(GetNumber(), t);
+            }
+
+
             public string GetDynamicType()
             {
                 if (!IsValid())

@@ -174,6 +174,10 @@ namespace GizmoSDK
                 }
             }
 
+            static public bool RemoveFactory<T>() where T : Reference
+            {
+                return RemoveFactory(typeof(T).Name);
+            }
             static public bool RemoveFactory(string typeName)
             {
                 lock (s_factory)

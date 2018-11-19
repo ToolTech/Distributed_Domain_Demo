@@ -12,7 +12,7 @@ namespace Event_Demo
     class MessageEvent : DistEvent
     {
         // Let the constructor be private or internal so we dont expose this by mistake
-        internal  MessageEvent(IntPtr nativeReference) : base(nativeReference)
+        protected  MessageEvent(IntPtr nativeReference) : base(nativeReference)
         {
         }
 
@@ -22,17 +22,12 @@ namespace Event_Demo
             return new MessageEvent(nativeReference) as Reference;
         }
 
-        public string Message
-        {
-            get { return GetAttributeValue(nameof(Message)); }
-            set { SetAttributeValue(nameof(Message), value); }
-        }
-
-        public double Time
-        {
-            get { return GetAttributeValue(nameof(Time)); }
-            set { SetAttributeValue(nameof(Time), value); }
-        }
+        [DistProperty]
+        public string Message;
+        
+        [DistProperty]
+        public UInt64 Time;
+        
     }
 
     class Program
@@ -86,7 +81,10 @@ namespace Event_Demo
 
                 // set some attributes in the event to any kind of value
                 e.Message=result;
-                e.Time = Time.SystemSeconds;
+                e.Time = (ulong)Time.SystemSeconds;
+
+                // As we use reflection we need to store the object propertis to our attributes
+                e.StorePropertiesAndFields();
 
                 // and send the event on the specific session
                 client.SendEvent(e, session);
@@ -105,6 +103,9 @@ namespace Event_Demo
             // Check if message is from us
             if (e.GetSource() == sender.GetClientID().InstanceID)
                 return;
+
+            // As we use reflection and want to access the object by properties and fields
+            e.RestorePropertiesAndFields();
 
             MessageEvent mess = e as MessageEvent;
             
