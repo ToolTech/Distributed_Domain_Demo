@@ -33,5 +33,15 @@ namespace GizmoSDK
         public class DistProperty : System.Attribute
         {
         }
+
+        [System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = false)]
+        public class DistPropertyAutoStore : System.Attribute
+        {
+        }
+
+        [System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = false)]
+        public class DistPropertyAutoRestore : System.Attribute
+        {
+        }
     }
 }

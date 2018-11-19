@@ -9,6 +9,8 @@ using GizmoSDK.GizmoDistribution;
 
 namespace Event_Demo
 {
+    [DistPropertyAutoStore]         // We will reflect our dist property attributes at send event
+    [DistPropertyAutoRestore]       // we will reflect our dist property attributes at OnEvent
     class MessageEvent : DistEvent
     {
         // Let the constructor be private or internal so we dont expose this by mistake
@@ -26,7 +28,7 @@ namespace Event_Demo
         public string Message;
         
         [DistProperty]
-        public UInt64 Time;
+        public double Time;
         
     }
 
@@ -83,9 +85,6 @@ namespace Event_Demo
                 e.Message=result;
                 e.Time = (ulong)Time.SystemSeconds;
 
-                // As we use reflection we need to store the object propertis to our attributes
-                e.StorePropertiesAndFields();
-
                 // and send the event on the specific session
                 client.SendEvent(e, session);
             }
@@ -103,10 +102,7 @@ namespace Event_Demo
             // Check if message is from us
             if (e.GetSource() == sender.GetClientID().InstanceID)
                 return;
-
-            // As we use reflection and want to access the object by properties and fields
-            e.RestorePropertiesAndFields();
-
+           
             MessageEvent mess = e as MessageEvent;
             
             if(mess!=null)

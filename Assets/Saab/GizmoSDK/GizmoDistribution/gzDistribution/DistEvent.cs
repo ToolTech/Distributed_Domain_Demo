@@ -137,75 +137,33 @@ namespace GizmoSDK
 
             // --- Reflection mechanisms --------------------------------
 
-            public void StorePropertiesAndFields(bool onlyWithDistProperty=true)
+            public void StorePropertiesAndFields(bool allProperties=false)
             {
-                if (onlyWithDistProperty)
+                foreach (System.Reflection.PropertyInfo prop in GetType().GetProperties())
                 {
-                    foreach (System.Reflection.PropertyInfo prop in GetType().GetProperties())
-                    {
-                        foreach (System.Attribute attr in prop.GetCustomAttributes(true))
-                        {
-                            if (attr is DistProperty)
-                                SetAttributeValue(prop.Name, DynamicType.CreateDynamicType(prop.GetValue(this)));
-                        }
-                    }
-
-                    foreach (System.Reflection.FieldInfo field in GetType().GetFields())
-                    {
-                        foreach (System.Attribute attr in field.GetCustomAttributes(true))
-                        {
-                            if (attr is DistProperty)
-                                SetAttributeValue(field.Name, DynamicType.CreateDynamicType(field.GetValue(this)));
-                        }
-                    }
-                }
-                else        // For all attributes
-                {
-                    foreach (System.Reflection.PropertyInfo prop in GetType().GetProperties())
-                    {
+                    if(allProperties || Attribute.IsDefined(prop,typeof(DistProperty)))
                         SetAttributeValue(prop.Name, DynamicType.CreateDynamicType(prop.GetValue(this)));
-                    }
+                }
 
-                    foreach (System.Reflection.FieldInfo field in GetType().GetFields())
-                    {
+                foreach (System.Reflection.FieldInfo field in GetType().GetFields())
+                {
+                    if (allProperties || Attribute.IsDefined(field, typeof(DistProperty)))
                         SetAttributeValue(field.Name, DynamicType.CreateDynamicType(field.GetValue(this)));
-                    }
                 }
             }
 
-            public void RestorePropertiesAndFields(bool onlyWithDistProperty = true)
+            public void RestorePropertiesAndFields(bool allProperties = false)
             {
-                if (onlyWithDistProperty)
+                foreach (System.Reflection.PropertyInfo prop in GetType().GetProperties())
                 {
-                    foreach (System.Reflection.PropertyInfo prop in GetType().GetProperties())
-                    {
-                        foreach (System.Attribute attr in prop.GetCustomAttributes(true))
-                        {
-                            if (attr is DistProperty)
-                                prop.SetValue(this, GetAttributeValue(prop.Name).GetObject(prop.PropertyType));
-                        }
-                    }
-
-                    foreach (System.Reflection.FieldInfo field in GetType().GetFields())
-                    {
-                        foreach (System.Attribute attr in field.GetCustomAttributes(true))
-                        {
-                            if (attr is DistProperty)
-                                field.SetValue(this, GetAttributeValue(field.Name).GetObject(field.FieldType));
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (System.Reflection.PropertyInfo prop in GetType().GetProperties())
-                    {
+                    if (allProperties || Attribute.IsDefined(prop, typeof(DistProperty)))
                         prop.SetValue(this, GetAttributeValue(prop.Name).GetObject(prop.PropertyType));
-                    }
+                }
 
-                    foreach (System.Reflection.FieldInfo field in GetType().GetFields())
-                    {
+                foreach (System.Reflection.FieldInfo field in GetType().GetFields())
+                {
+                    if (allProperties || Attribute.IsDefined(field, typeof(DistProperty)))
                         field.SetValue(this, GetAttributeValue(field.Name).GetObject(field.FieldType));
-                    }
                 }
             }
 

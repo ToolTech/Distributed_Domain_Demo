@@ -163,6 +163,9 @@ namespace GizmoSDK
 
             public bool SendEvent(DistEvent e,DistSession session)
             {
+                if (e.GetType().IsDefined(typeof(DistPropertyAutoStore),false))
+                    e.StorePropertiesAndFields();
+
                 return DistClient_sendEvent(GetNativeReference(), e.GetNativeReference(), session.GetNativeReference());
             }
 
@@ -299,7 +302,15 @@ namespace GizmoSDK
             private DistEventHandler_OnEvent_Callback m_dispatcher_OnEvent;
             private void OnEvent_callback(IntPtr e)
             {
-                OnEvent?.Invoke(this, Reference.CreateObject(e) as DistEvent);
+                DistEvent @event = Reference.CreateObject(e) as DistEvent;
+
+                if (@event != null)
+                {
+                    if (@event.GetType().IsDefined(typeof(DistPropertyAutoRestore), false))
+                        @event.RestorePropertiesAndFields();
+
+                    OnEvent?.Invoke(this, @event);
+                }
             }
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
