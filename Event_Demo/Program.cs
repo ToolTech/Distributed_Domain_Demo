@@ -13,6 +13,10 @@ namespace Event_Demo
     [DistPropertyAutoRestore]       // we will reflect our dist property attributes at OnEvent
     class MessageEvent : DistEvent
     {
+        public enum Fault : UInt64
+        {
+            BZ=0,
+        }
         // Let the constructor be private or internal so we dont expose this by mistake
         protected  MessageEvent(IntPtr nativeReference) : base(nativeReference)
         {
@@ -29,7 +33,10 @@ namespace Event_Demo
         
         [DistProperty]
         public double Time;
-        
+
+        [DistProperty]
+        public Fault enu;
+
     }
 
     class Program

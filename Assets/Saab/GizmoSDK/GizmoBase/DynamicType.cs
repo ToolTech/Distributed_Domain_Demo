@@ -157,6 +157,14 @@ namespace GizmoSDK
                 if (obj.GetType() == typeof(Reference))
                     return new DynamicType((Reference)obj);
 
+                if (obj.GetType().IsEnum)
+                {
+                    if (Marshal.SizeOf(Enum.GetUnderlyingType(obj.GetType())) <= sizeof(UInt32))
+                        return new DynamicType((UInt32)Convert.ChangeType(obj, typeof(UInt32)));
+                    else
+                        return new DynamicType((UInt64)Convert.ChangeType(obj, typeof(UInt64)));
+                }
+
                 return new DynamicType((double)Convert.ChangeType(obj,typeof(double)));    // default to double
             }
 
@@ -191,10 +199,18 @@ namespace GizmoSDK
 
                 if (t == typeof(Reference))
                     return (Reference)this;
-
+                
                 if (t.IsSubclassOf(typeof(Reference)))
                     return (Reference)this;
 
+                if (t.IsEnum)
+                {
+                    if(Marshal.SizeOf(Enum.GetUnderlyingType(t))<=sizeof(UInt32))
+                        return Enum.ToObject(t, (UInt32)this);
+                    else
+                        return Enum.ToObject(t, (UInt64)this);
+                }
+    
                 return Convert.ChangeType(GetNumber(), t);
             }
 
