@@ -76,6 +76,9 @@ namespace GizmoSDK
                 if (cont == null)
                     return null;
 
+                if (cont.GetType().IsDefined(typeof(DynamicTypePropertyAutoStore), true))
+                    cont.StorePropertiesAndFields();
+
                 return new DynamicType(DynamicTypeContainer_pack_cont(cont.GetNativeReference()));
             }
 
@@ -95,6 +98,9 @@ namespace GizmoSDK
 
                 if (GetNativeReference()==IntPtr.Zero)
                     throw (new Exception("DynamicType is not a CONTAINER"));
+
+                if (GetType().IsDefined(typeof(DynamicTypePropertyAutoRestore), true))
+                    RestorePropertiesAndFields();
             }
 
             public void SetAttribute(string name, DynamicType value)
@@ -127,6 +133,38 @@ namespace GizmoSDK
             public override string ToString()
             {
                 return ((DynamicType)(this)).AsString();
+            }
+
+            // --- Reflection mechanisms --------------------------------
+
+            public void StorePropertiesAndFields(bool allProperties = false)
+            {
+                foreach (System.Reflection.PropertyInfo prop in GetType().GetProperties())
+                {
+                    if (allProperties || Attribute.IsDefined(prop, typeof(DynamicTypeProperty)))
+                        SetAttribute(prop.Name, DynamicType.CreateDynamicType(prop.GetValue(this)));
+                }
+
+                foreach (System.Reflection.FieldInfo field in GetType().GetFields())
+                {
+                    if (allProperties || Attribute.IsDefined(field, typeof(DynamicTypeProperty)))
+                        SetAttribute(field.Name, DynamicType.CreateDynamicType(field.GetValue(this)));
+                }
+            }
+
+            public void RestorePropertiesAndFields(bool allProperties = false)
+            {
+                foreach (System.Reflection.PropertyInfo prop in GetType().GetProperties())
+                {
+                    if (allProperties || Attribute.IsDefined(prop, typeof(DynamicTypeProperty)))
+                        prop.SetValue(this, GetAttribute(prop.Name).GetObject(prop.PropertyType));
+                }
+
+                foreach (System.Reflection.FieldInfo field in GetType().GetFields())
+                {
+                    if (allProperties || Attribute.IsDefined(field, typeof(DynamicTypeProperty)))
+                        field.SetValue(this, GetAttribute(field.Name).GetObject(field.FieldType));
+                }
             }
 
             #region ---------------------- private -------------------------------------

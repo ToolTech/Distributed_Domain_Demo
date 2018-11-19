@@ -9,6 +9,16 @@ using GizmoSDK.GizmoDistribution;
 
 namespace Event_Demo
 {
+    [DynamicTypePropertyAutoRestore]
+    [DynamicTypePropertyAutoStore]
+    class ComplexType :DynamicTypeContainer
+    {
+
+        [DynamicTypeProperty]
+        public string Test;
+
+    }
+
     [DistPropertyAutoStore]         // We will reflect our dist property attributes at send event
     [DistPropertyAutoRestore]       // we will reflect our dist property attributes at OnEvent
     class MessageEvent : DistEvent
@@ -27,6 +37,9 @@ namespace Event_Demo
         {
             return new MessageEvent(nativeReference) as Reference;
         }
+
+        //[DistProperty]
+        //public ComplexType Compis;
 
         [DistProperty]
         public string Message;
@@ -89,6 +102,8 @@ namespace Event_Demo
                 MessageEvent e = manager.GetEvent<MessageEvent>();
 
                 // set some attributes in the event to any kind of value
+                //e.Compis = new ComplexType();
+                //e.Compis.Test = "aloha";
                 e.Message=result;
                 e.Time = Time.SystemSeconds;
 

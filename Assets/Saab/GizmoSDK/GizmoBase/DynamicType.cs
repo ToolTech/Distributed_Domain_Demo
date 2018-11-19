@@ -133,6 +133,12 @@ namespace GizmoSDK
                 if (obj is DynamicType)
                     return obj as DynamicType;
 
+                if(obj is DynamicTypeContainer)
+                    return (DynamicType)(obj as DynamicTypeContainer);
+
+                if (obj is DynamicTypeArray)
+                    return (DynamicType)(obj as DynamicTypeArray);
+
                 if (obj.GetType() == typeof(string))
                     return new DynamicType((string)obj);
 
@@ -175,6 +181,18 @@ namespace GizmoSDK
 
                 if (t.IsSubclassOf(typeof(DynamicType)))
                     return this;
+
+                if (t == typeof(DynamicTypeArray))
+                    return (DynamicTypeArray)this;
+
+                if (t.IsSubclassOf(typeof(DynamicTypeArray)))
+                    return Convert.ChangeType((DynamicTypeArray)this,t);
+
+                if (t == typeof(DynamicTypeContainer))
+                    return (DynamicTypeContainer)this;
+
+                if (t.IsSubclassOf(typeof(DynamicTypeContainer)))
+                    return Convert.ChangeType((DynamicTypeContainer)this,t);
 
                 if (t==typeof(string))
                     return (string)this;

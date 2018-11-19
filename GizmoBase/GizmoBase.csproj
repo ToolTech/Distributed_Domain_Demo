@@ -66,6 +66,9 @@
     <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\DynamicTypeInt64.cs">
       <Link>DynamicTypeInt64.cs</Link>
     </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\DynamicTypeProperty.cs">
+      <Link>DynamicTypeProperty.cs</Link>
+    </Compile>
     <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\DynamicTypeTimeTagged.cs">
       <Link>DynamicTypeTimeTagged.cs</Link>
     </Compile>
