@@ -56,6 +56,15 @@ namespace GizmoSDK
                     Reference_ref(copy.GetNativeReference());
             }
 
+            public void Reset(IntPtr nativeReference)
+            {
+                Release();
+
+                m_reference = new HandleRef(this, nativeReference);
+
+                Reference_ref(nativeReference);
+            }
+
             ~Reference()
             {
                 Release();

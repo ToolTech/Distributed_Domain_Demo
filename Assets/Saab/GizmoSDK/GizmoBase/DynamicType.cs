@@ -186,14 +186,25 @@ namespace GizmoSDK
                     return (DynamicTypeArray)this;
 
                 if (t.IsSubclassOf(typeof(DynamicTypeArray)))
-                    return Convert.ChangeType((DynamicTypeArray)this,t);
+                {
+                    object o = Activator.CreateInstance(t);
+
+                    ((DynamicTypeArray)o).Set(this);
+
+                    return o;
+                }
 
                 if (t == typeof(DynamicTypeContainer))
                     return (DynamicTypeContainer)this;
 
                 if (t.IsSubclassOf(typeof(DynamicTypeContainer)))
-                    return Convert.ChangeType((DynamicTypeContainer)this,t);
+                {
+                    object o=Activator.CreateInstance(t);
 
+                    ((DynamicTypeContainer)o).Set(this);
+                    
+                    return o;
+                }
                 if (t==typeof(string))
                     return (string)this;
 

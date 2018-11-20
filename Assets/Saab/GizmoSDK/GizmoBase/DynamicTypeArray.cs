@@ -105,7 +105,18 @@ namespace GizmoSDK
                     throw (new Exception("DynamicType is not an ARRAY"));
             }
 
-           
+            public void Set(DynamicType t)
+            {
+                if (t == null)
+                    return;
+
+                if (!t.Is(DynamicType.Type.ARRAY))
+                    return;
+
+                Reset(DynamicTypeArray_unpack_array(t.GetNativeReference()));
+            }
+
+
             public int IndexOf(DynamicType item)
             {
                 return DynamicTypeArray_index_of(GetNativeReference(),item.GetNativeReference());

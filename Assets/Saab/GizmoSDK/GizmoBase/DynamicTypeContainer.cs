@@ -98,10 +98,23 @@ namespace GizmoSDK
 
                 if (GetNativeReference()==IntPtr.Zero)
                     throw (new Exception("DynamicType is not a CONTAINER"));
+                
+            }
+
+            public void Set(DynamicType t)
+            {
+                if (t == null)
+                    return;
+
+                if (!t.Is(DynamicType.Type.CONTAINER))
+                    return;
+
+                Reset(DynamicTypeContainer_unpack_cont(t.GetNativeReference()));
 
                 if (GetType().IsDefined(typeof(DynamicTypePropertyAutoRestore), true))
                     RestorePropertiesAndFields();
             }
+
 
             public void SetAttribute(string name, DynamicType value)
             {
