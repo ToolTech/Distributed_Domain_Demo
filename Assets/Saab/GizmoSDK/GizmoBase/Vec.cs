@@ -246,6 +246,7 @@ namespace GizmoSDK
         [Serializable]
         public struct Vec3D
         {
+            public static Vec3D Zero = default(Vec3D);
             public Vec3D(double _x = 0, double _y = 0, double _z = 0)
             {
                 x = _x;
@@ -286,12 +287,47 @@ namespace GizmoSDK
                 x /= l;
                 y /= l;
                 z /= l;
+            }
 
+            public void normalize(out double l)
+            {
+                l = Math.Sqrt(x * x + y * y + z * z);
+                x /= l;
+                y /= l;
+                z /= l;
             }
 
             public double length()
             {
                 return Math.Sqrt(x * x + y * y + z * z);
+            }
+
+            public static Vec3D Normalize(Vec3D v)
+            {
+                var result = v;
+                result.normalize();
+                return result;
+            }
+
+            public static Vec3D Normalize(Vec3D v, out double l)
+            {
+                l = Math.Sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+                return new Vec3D(v.x / l, v.y / l, v.z / l);
+            }
+
+            public static Vec3D Lerp(ref Vec3D a, ref Vec3D b, double t)
+            {
+                t = Math.Min(1, Math.Max(0, t));
+
+                return new Vec3D(
+                    a.x + (b.x - a.x) * t,
+                    a.y + (b.y - a.y) * t,
+                    a.z + (b.z - a.z) * t);
+            }
+
+            public static double Distance(ref Vec3D a, ref Vec3D b)
+            {
+                return (b - a).length();
             }
         }
 

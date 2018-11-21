@@ -169,6 +169,20 @@ namespace GizmoSDK
                 return DistClient_sendEvent(GetNativeReference(), e.GetNativeReference(), session.GetNativeReference());
             }
 
+            public DistEvent SendEventAndAwaitResponse(DistEvent e, DistSession session, DistEvent responseEventType, UInt32 timeout=100)
+            {
+                if (e.GetType().IsDefined(typeof(DistPropertyAutoStore), true))
+                    e.StorePropertiesAndFields();
+
+                DistEvent response = Reference.CreateObject(DistClient_sendEventAndAwaitResponse(GetNativeReference(), e.GetNativeReference(), session.GetNativeReference(), responseEventType.GetNativeReference(), timeout)) as DistEvent;
+
+                if(response?.IsValid() ?? false)
+                    if (response.GetType().IsDefined(typeof(DistPropertyAutoRestore), true))
+                        e.RestorePropertiesAndFields();
+
+                return response;
+            }
+
             public bool AddObject(DistObject o, DistSession session, Int32 timeOut = 0)
             {
                 return DistClient_addObject(GetNativeReference(), o.GetNativeReference(), session.GetNativeReference(), timeOut);
@@ -415,6 +429,8 @@ namespace GizmoSDK
             #region ------------------- DistEvents ----------------------------------------------------------------------------------
             [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
             private static extern bool DistClient_sendEvent(IntPtr client_ref, IntPtr event_ref, IntPtr session_ref);
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern IntPtr DistClient_sendEventAndAwaitResponse(IntPtr client_ref, IntPtr event_ref, IntPtr session_ref,IntPtr response_ref,UInt32 timeout);
             [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
             private static extern bool DistClient_subscribeEvents(IntPtr client_ref, IntPtr session_ref,string typeName,Int32 timeOut);
             [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
