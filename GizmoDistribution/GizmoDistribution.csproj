@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\GizmoSDK\GizmoDistribution\source\C#\gzDistribution\DistProperty.cs">
+      <Link>DistProperty.cs</Link>
+    </Compile>
     <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>

@@ -56,6 +56,15 @@ namespace GizmoSDK
                     Reference_ref(copy.GetNativeReference());
             }
 
+            public void Reset(IntPtr nativeReference)
+            {
+                Release();
+
+                m_reference = new HandleRef(this, nativeReference);
+
+                Reference_ref(nativeReference);
+            }
+
             ~Reference()
             {
                 Release();
@@ -174,6 +183,10 @@ namespace GizmoSDK
                 }
             }
 
+            static public bool RemoveFactory<T>() where T : Reference
+            {
+                return RemoveFactory(typeof(T).Name);
+            }
             static public bool RemoveFactory(string typeName)
             {
                 lock (s_factory)

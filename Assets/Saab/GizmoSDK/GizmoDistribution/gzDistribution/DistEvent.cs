@@ -69,7 +69,7 @@ namespace GizmoSDK
                      
         public class DistEvent : Reference, IEnumerable<DistAttribute>
         {
-            public DistEvent(IntPtr nativeReference) : base(nativeReference){}
+            protected DistEvent(IntPtr nativeReference) : base(nativeReference){}
 
             public DistEvent():base(DistEvent_createDefaultEvent()){}
 
@@ -133,6 +133,38 @@ namespace GizmoSDK
             public bool RestoreFromJSON(string json)
             {
                 return DistEvent_fromJSON(GetNativeReference(), json);
+            }
+
+            // --- Reflection mechanisms --------------------------------
+
+            public void StorePropertiesAndFields(bool allProperties=false)
+            {
+                foreach (System.Reflection.PropertyInfo prop in GetType().GetProperties())
+                {
+                    if(allProperties || Attribute.IsDefined(prop,typeof(DistProperty)))
+                        SetAttributeValue(prop.Name, DynamicType.CreateDynamicType(prop.GetValue(this)));
+                }
+
+                foreach (System.Reflection.FieldInfo field in GetType().GetFields())
+                {
+                    if (allProperties || Attribute.IsDefined(field, typeof(DistProperty)))
+                        SetAttributeValue(field.Name, DynamicType.CreateDynamicType(field.GetValue(this)));
+                }
+            }
+
+            public void RestorePropertiesAndFields(bool allProperties = false)
+            {
+                foreach (System.Reflection.PropertyInfo prop in GetType().GetProperties())
+                {
+                    if (allProperties || Attribute.IsDefined(prop, typeof(DistProperty)))
+                        prop.SetValue(this, GetAttributeValue(prop.Name).GetObject(prop.PropertyType));
+                }
+
+                foreach (System.Reflection.FieldInfo field in GetType().GetFields())
+                {
+                    if (allProperties || Attribute.IsDefined(field, typeof(DistProperty)))
+                        field.SetValue(this, GetAttributeValue(field.Name).GetObject(field.FieldType));
+                }
             }
 
             #region --------------------------- private ----------------------------------------------

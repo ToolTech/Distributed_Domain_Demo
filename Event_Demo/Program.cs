@@ -9,10 +9,26 @@ using GizmoSDK.GizmoDistribution;
 
 namespace Event_Demo
 {
+    [DynamicTypePropertyAutoRestore]
+    [DynamicTypePropertyAutoStore]
+    class ComplexType :DynamicTypeContainer
+    {
+
+        [DynamicTypeProperty]
+        public string Test;
+
+    }
+
+    [DistPropertyAutoStore]         // We will reflect our dist property attributes at send event
+    [DistPropertyAutoRestore]       // we will reflect our dist property attributes at OnEvent
     class MessageEvent : DistEvent
     {
+        public enum Fault : UInt64
+        {
+            BZ=0,
+        }
         // Let the constructor be private or internal so we dont expose this by mistake
-        internal  MessageEvent(IntPtr nativeReference) : base(nativeReference)
+        protected  MessageEvent(IntPtr nativeReference) : base(nativeReference)
         {
         }
 
@@ -22,17 +38,18 @@ namespace Event_Demo
             return new MessageEvent(nativeReference) as Reference;
         }
 
-        public string Message
-        {
-            get { return GetAttributeValue(nameof(Message)); }
-            set { SetAttributeValue(nameof(Message), value); }
-        }
+        [DistProperty]
+        public ComplexType Compis;
 
-        public double Time
-        {
-            get { return GetAttributeValue(nameof(Time)); }
-            set { SetAttributeValue(nameof(Time), value); }
-        }
+        [DistProperty]
+        public string Message;
+        
+        [DistProperty]
+        public double Time;
+
+        [DistProperty]
+        public Fault enu;
+
     }
 
     class Program
@@ -85,6 +102,8 @@ namespace Event_Demo
                 MessageEvent e = manager.GetEvent<MessageEvent>();
 
                 // set some attributes in the event to any kind of value
+                e.Compis = new ComplexType();
+                e.Compis.Test = "aloha";
                 e.Message=result;
                 e.Time = Time.SystemSeconds;
 
@@ -105,7 +124,7 @@ namespace Event_Demo
             // Check if message is from us
             if (e.GetSource() == sender.GetClientID().InstanceID)
                 return;
-
+           
             MessageEvent mess = e as MessageEvent;
             
             if(mess!=null)
