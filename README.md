@@ -23,7 +23,7 @@ Good Luck !
 Technology Info
 ===============
 
-The demo is based on GizmoDistribution SDK that is part of the GizmoSDK. It will allow a HLA/DIS/CORBA alike API for C#
+The demo is based on GizmoDistribution SDK that is part of the GizmoSDK. It will allow a HLA/DIS/CORBA alike API for C# but at the same time compatible with C++ native API, enabling a transparent data exchange between native C++ and C# in high speed.
 
 You can take a look at http://www.gizmosdk.se/html/distrdoc.htm for more info! It is also structured to be used in Unity3D.
 
@@ -144,3 +144,4 @@ We tried to make an easy to use API but also very high performance
             }
         }
     }
+```
