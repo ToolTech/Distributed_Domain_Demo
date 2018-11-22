@@ -169,6 +169,11 @@ namespace GizmoSDK
                 return DistClient_sendEvent(GetNativeReference(), e.GetNativeReference(), session.GetNativeReference());
             }
 
+            public T SendEventAndAwaitResponse<T>(DistEvent e,DistSession session,UInt32 timeout=100) where T : DistEvent
+            {
+                return SendEventAndAwaitResponse(e, session, manager.GetEvent<T>(), timeout) as T;
+            }
+
             public DistEvent SendEventAndAwaitResponse(DistEvent e, DistSession session, DistEvent responseEventType, UInt32 timeout=100)
             {
                 if (e.GetType().IsDefined(typeof(DistPropertyAutoStore), true))
@@ -178,7 +183,23 @@ namespace GizmoSDK
 
                 if(response?.IsValid() ?? false)
                     if (response.GetType().IsDefined(typeof(DistPropertyAutoRestore), true))
-                        e.RestorePropertiesAndFields();
+                        response.RestorePropertiesAndFields();
+
+                return response;
+            }
+
+            public T AwaitResponse<T>(UInt32 timeout = 100) where T : DistEvent
+            {
+                return AwaitResponse(manager.GetEvent<T>(), timeout) as T;
+            }
+
+            public DistEvent AwaitResponse(DistEvent responseEventType, UInt32 timeout = 100)
+            {
+                DistEvent response = Reference.CreateObject(DistClient_awaitResponse(GetNativeReference(), responseEventType.GetNativeReference(), timeout)) as DistEvent;
+
+                if (response?.IsValid() ?? false)
+                    if (response.GetType().IsDefined(typeof(DistPropertyAutoRestore), true))
+                        response.RestorePropertiesAndFields();
 
                 return response;
             }
@@ -431,6 +452,8 @@ namespace GizmoSDK
             private static extern bool DistClient_sendEvent(IntPtr client_ref, IntPtr event_ref, IntPtr session_ref);
             [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
             private static extern IntPtr DistClient_sendEventAndAwaitResponse(IntPtr client_ref, IntPtr event_ref, IntPtr session_ref,IntPtr response_ref,UInt32 timeout);
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern IntPtr DistClient_awaitResponse(IntPtr client_ref, IntPtr response_ref, UInt32 timeout);
             [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
             private static extern bool DistClient_subscribeEvents(IntPtr client_ref, IntPtr session_ref,string typeName,Int32 timeOut);
             [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]

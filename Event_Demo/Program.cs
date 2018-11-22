@@ -13,9 +13,11 @@ namespace Event_Demo
     [DynamicTypePropertyAutoStore]
     class ComplexType :DynamicTypeContainer
     {
+        [DynamicTypeProperty]
+        public string SenderID;
 
         [DynamicTypeProperty]
-        public string Test;
+        public float Speed;
 
     }
 
@@ -48,7 +50,7 @@ namespace Event_Demo
         public double Time;
 
         [DistProperty]
-        public Fault enu;
+        public Fault EnumTest;
 
     }
 
@@ -102,10 +104,13 @@ namespace Event_Demo
                 MessageEvent e = manager.GetEvent<MessageEvent>();
 
                 // set some attributes in the event to any kind of value
-                e.Compis = new ComplexType();
-                e.Compis.Test = "aloha";
+                e.Compis = new ComplexType { SenderID = "Aloha", Speed = 27 };
+
                 e.Message=result;
+
                 e.Time = Time.SystemSeconds;
+
+                e.EnumTest = MessageEvent.Fault.BZ;
 
                 // and send the event on the specific session
                 client.SendEvent(e, session);

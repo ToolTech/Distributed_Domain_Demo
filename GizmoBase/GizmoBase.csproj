@@ -72,6 +72,9 @@
     <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\DynamicTypeTimeTagged.cs">
       <Link>DynamicTypeTimeTagged.cs</Link>
     </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Event.cs">
+      <Link>Event.cs</Link>
+    </Compile>
     <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Feature.cs">
       <Link>Feature.cs</Link>
     </Compile>
@@ -110,6 +113,9 @@
     </Compile>
     <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Time.cs">
       <Link>Time.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\Timer.cs">
+      <Link>Timer.cs</Link>
     </Compile>
     <Compile Include="..\Assets\Saab\GizmoSDK\GizmoBase\UserData.cs">
       <Link>UserData.cs</Link>

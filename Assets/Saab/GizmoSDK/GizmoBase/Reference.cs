@@ -58,11 +58,13 @@ namespace GizmoSDK
 
             public void Reset(IntPtr nativeReference)
             {
-                Release();
+                if(nativeReference!= IntPtr.Zero)
+                    Reference_ref(nativeReference);
+
+                if (m_reference.Handle != IntPtr.Zero)
+                    Reference_unref(m_reference.Handle);
 
                 m_reference = new HandleRef(this, nativeReference);
-
-                Reference_ref(nativeReference);
             }
 
             ~Reference()
