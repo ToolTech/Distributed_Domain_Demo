@@ -11,6 +11,7 @@ namespace Event_Demo
 {
     [DynamicTypePropertyAutoRestore]
     [DynamicTypePropertyAutoStore]
+
     class ComplexType :DynamicTypeContainer
     {
         [DynamicTypeProperty]
@@ -23,6 +24,7 @@ namespace Event_Demo
 
     [DistPropertyAutoStore]         // We will reflect our dist property attributes at send event
     [DistPropertyAutoRestore]       // we will reflect our dist property attributes at OnEvent
+
     class MessageEvent : DistEvent
     {
         public enum Fault : UInt64
