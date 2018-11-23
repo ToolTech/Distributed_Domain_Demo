@@ -125,10 +125,12 @@ namespace GizmoSDK
 
             public DynamicType(Reference reference) : base(DynamicType_create_reference(reference.GetNativeReference())) { }
 
-            public static DynamicType CreateDynamicType(object obj)
+            public static DynamicType CreateDynamicType(object obj,bool allProperties=false)
             {
                 if (obj == null)
                     return new DynamicType();
+
+                System.Type t = obj.GetType();
 
                 if (obj is DynamicType)
                     return obj as DynamicType;
@@ -139,31 +141,31 @@ namespace GizmoSDK
                 if (obj is DynamicTypeArray)
                     return (DynamicType)(obj as DynamicTypeArray);
 
-                if (obj.GetType() == typeof(string))
+                if (t == typeof(string))
                     return new DynamicType((string)obj);
 
-                if (obj.GetType() == typeof(Int64))
+                if (t == typeof(Int64))
                     return new DynamicTypeInt64((Int64)obj);
 
-                if (obj.GetType() == typeof(UInt64))
+                if (t == typeof(UInt64))
                     return new DynamicTypeInt64((UInt64)obj);
 
-                if (obj.GetType() == typeof(Vec2))
+                if (t == typeof(Vec2))
                     return new DynamicType((Vec2)obj);
 
-                if (obj.GetType() == typeof(Vec3))
+                if (t == typeof(Vec3))
                     return new DynamicType((Vec3)obj);
 
-                if (obj.GetType() == typeof(Vec4))
+                if (t == typeof(Vec4))
                     return new DynamicType((Vec4)obj);
 
-                if (obj.GetType() == typeof(Guid))
+                if (t == typeof(Guid))
                     return new DynamicType((Guid)obj);
 
-                if (obj.GetType() == typeof(Reference))
+                if (t == typeof(Reference))
                     return new DynamicType((Reference)obj);
 
-                if (obj.GetType().IsEnum)
+                if (t.IsEnum)
                 {
                     if (Marshal.SizeOf(Enum.GetUnderlyingType(obj.GetType())) <= sizeof(UInt32))
                         return new DynamicType((UInt32)Convert.ChangeType(obj, typeof(UInt32)));
@@ -171,10 +173,27 @@ namespace GizmoSDK
                         return new DynamicType((UInt64)Convert.ChangeType(obj, typeof(UInt64)));
                 }
 
+                if (typeof(Array).IsAssignableFrom(t))
+                {
+                    Array b = (Array)obj;
+                    DynamicTypeArray array = new DynamicTypeArray();
+                    DynamicTypeArray.StoreArray(array, b,allProperties);
+
+                    return array;
+                }
+
+                if (t.IsClass)
+                {
+                    DynamicTypeContainer cont = new DynamicTypeContainer();
+                    DynamicTypeContainer.StorePropertiesAndFields(cont, obj, allProperties);
+
+                    return cont;
+                }
+
                 return new DynamicType((double)Convert.ChangeType(obj,typeof(double)));    // default to double
             }
 
-            public object GetObject(System.Type t)
+            public object GetObject(System.Type t,bool allProperties=false)
             {
                 if (t==typeof(DynamicType))
                     return this;
@@ -182,10 +201,10 @@ namespace GizmoSDK
                 if (t.IsSubclassOf(typeof(DynamicType)))
                     return this;
 
-                if (t == typeof(DynamicTypeArray))
+                if (t == typeof(DynamicTypeArray) && Is(DynamicType.Type.ARRAY))
                     return (DynamicTypeArray)this;
 
-                if (t.IsSubclassOf(typeof(DynamicTypeArray)))
+                if (t.IsSubclassOf(typeof(DynamicTypeArray)) && Is(DynamicType.Type.ARRAY))
                 {
                     object o = Activator.CreateInstance(t);
 
@@ -194,10 +213,10 @@ namespace GizmoSDK
                     return o;
                 }
 
-                if (t == typeof(DynamicTypeContainer))
+                if (t == typeof(DynamicTypeContainer) && Is(DynamicType.Type.CONTAINER))
                     return (DynamicTypeContainer)this;
 
-                if (t.IsSubclassOf(typeof(DynamicTypeContainer)))
+                if (t.IsSubclassOf(typeof(DynamicTypeContainer)) && Is(DynamicType.Type.CONTAINER))
                 {
                     object o=Activator.CreateInstance(t);
 
@@ -205,6 +224,7 @@ namespace GizmoSDK
                     
                     return o;
                 }
+
                 if (t==typeof(string))
                     return (string)this;
 
@@ -226,10 +246,10 @@ namespace GizmoSDK
                 if (t == typeof(Guid))
                     return (Guid)this;
 
-                if (t == typeof(Reference))
+                if (t == typeof(Reference) && Is(DynamicType.Type.REFERENCE))
                     return (Reference)this;
                 
-                if (t.IsSubclassOf(typeof(Reference)))
+                if (t.IsSubclassOf(typeof(Reference)) && Is(DynamicType.Type.REFERENCE))
                     return (Reference)this;
 
                 if (t.IsEnum)
@@ -239,7 +259,29 @@ namespace GizmoSDK
                     else
                         return Enum.ToObject(t, (UInt64)this);
                 }
+
+                if (typeof(Array).IsAssignableFrom(t) && Is(DynamicType.Type.ARRAY))
+                {
+                    DynamicTypeArray array = (DynamicTypeArray)this;
+
+                    Array obj=Array.CreateInstance(t.GetElementType(), array.Count);
+
+                    DynamicTypeArray.RestoreArray(array,obj,allProperties);
+
+                    return obj;
+                }
+
+                if (t.IsClass && Is(DynamicType.Type.CONTAINER))
+                {
+                    object obj = Activator.CreateInstance(t);
+
+                    DynamicTypeContainer.RestorePropertiesAndFields(this, obj, allProperties);
+
+                    return obj;
+                }
     
+                // Default to integer number 
+
                 return Convert.ChangeType(GetNumber(), t);
             }
 

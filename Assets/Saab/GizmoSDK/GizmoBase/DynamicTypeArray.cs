@@ -193,6 +193,21 @@ namespace GizmoSDK
                 return ((DynamicType)(this)).AsString();
             }
 
+            // --- Reflection mechanisms --------------------------------
+
+            static public void StoreArray(DynamicTypeArray array, Array list ,bool allProperties=false)
+            {
+                foreach (object o in list)
+                    array.Add(DynamicType.CreateDynamicType(o, allProperties));
+            }
+
+            static public void RestoreArray(DynamicTypeArray array, Array list, bool allProperties=false)
+            {
+                for (int i = 0; i < list.GetLength(0); i++)
+                    list.SetValue(array[i].GetObject(list.GetType().GetElementType(), allProperties),i);
+            }
+
+
             #region ---------------------- private -------------------------------------
 
             [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]

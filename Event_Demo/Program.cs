@@ -43,7 +43,7 @@ namespace Event_Demo
         }
 
         [DistProperty]
-        public ComplexType Compis;
+        public ComplexType [] Compis;
 
         [DistProperty]
         public string Message;
@@ -55,7 +55,7 @@ namespace Event_Demo
         public Fault EnumTest;
 
     }
-
+        
     class Program
     {
         static void Main(string[] args)
@@ -106,7 +106,9 @@ namespace Event_Demo
                 MessageEvent e = manager.GetEvent<MessageEvent>();
 
                 // set some attributes in the event to any kind of value
-                e.Compis = new ComplexType { SenderID = "Aloha", Speed = 27 };
+                Array.Resize<ComplexType>(ref e.Compis, 1);
+
+                e.Compis[0] = new ComplexType { SenderID = "Aloha", Speed = 27 };
 
                 e.Message=result;
 
