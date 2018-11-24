@@ -175,9 +175,16 @@ namespace GizmoSDK
 
                 if (typeof(Array).IsAssignableFrom(t))
                 {
-                    Array b = (Array)obj;
                     DynamicTypeArray array = new DynamicTypeArray();
-                    DynamicTypeArray.StoreArray(array, b,allProperties);
+                    DynamicTypeArray.StoreArray(array, (Array)obj, allProperties);
+
+                    return array;
+                }
+
+                if(t.IsGenericType && t.GetGenericTypeDefinition()==typeof(System.Collections.Generic.List<>))
+                {
+                    DynamicTypeArray array = new DynamicTypeArray();
+                    DynamicTypeArray.StoreList(array, (System.Collections.IList)obj,allProperties);
 
                     return array;
                 }
@@ -267,6 +274,19 @@ namespace GizmoSDK
                     Array obj=Array.CreateInstance(t.GetElementType(), array.Count);
 
                     DynamicTypeArray.RestoreArray(array,obj,allProperties);
+
+                    return obj;
+                }
+
+                if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(System.Collections.Generic.List<>))
+                {
+                    object obj = Activator.CreateInstance(t);
+
+                    System.Collections.IList list = (System.Collections.IList)obj;
+
+                    DynamicTypeArray array = (DynamicTypeArray)this;
+
+                    DynamicTypeArray.RestoreList(array, list, t.GetGenericArguments()[0], allProperties);
 
                     return obj;
                 }

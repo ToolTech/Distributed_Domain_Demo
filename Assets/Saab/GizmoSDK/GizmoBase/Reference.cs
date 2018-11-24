@@ -43,17 +43,17 @@ namespace GizmoSDK
         {
             public Reference(IntPtr nativeReference)
             {
-                m_reference = new HandleRef(this,nativeReference);
-
                 Reference_ref(nativeReference);
+
+                m_reference = new HandleRef(this,nativeReference);
             }
 
             public Reference(Reference copy)
             {
-                m_reference = new HandleRef(this, copy.GetNativeReference());
-
-                if(copy.GetNativeReference()!=IntPtr.Zero)
+                if (copy.GetNativeReference() != IntPtr.Zero)
                     Reference_ref(copy.GetNativeReference());
+
+                m_reference = new HandleRef(this, copy.GetNativeReference());
             }
 
             public void Reset(IntPtr nativeReference)
@@ -61,10 +61,12 @@ namespace GizmoSDK
                 if(nativeReference!= IntPtr.Zero)
                     Reference_ref(nativeReference);
 
-                if (m_reference.Handle != IntPtr.Zero)
-                    Reference_unref(m_reference.Handle);
+                IntPtr oldRef = m_reference.Handle;
 
                 m_reference = new HandleRef(this, nativeReference);
+
+                if (oldRef != IntPtr.Zero)
+                    Reference_unref(oldRef);
             }
 
             ~Reference()
@@ -122,21 +124,25 @@ namespace GizmoSDK
 
             virtual public void ReleaseNoDelete()
             {
-                if (m_reference.Handle != IntPtr.Zero)
-                    Reference_unrefNoDelete(m_reference.Handle);
+                IntPtr oldRef = m_reference.Handle;
 
                 // Don't permit the handle to be used again.
                 m_reference = new HandleRef(this, IntPtr.Zero);
+
+                if (oldRef != IntPtr.Zero)
+                    Reference_unrefNoDelete(oldRef);
             }
 
             
             virtual public void Release()
             {
-                if(m_reference.Handle != IntPtr.Zero)
-                    Reference_unref(m_reference.Handle);
+                IntPtr oldRef = m_reference.Handle;
 
                 // Don't permit the handle to be used again.
                 m_reference = new HandleRef(this, IntPtr.Zero);
+
+                if (oldRef != IntPtr.Zero)
+                    Reference_unref(oldRef);
             }
 
             #region ----------------- privates --------------------

@@ -207,6 +207,18 @@ namespace GizmoSDK
                     list.SetValue(array[i].GetObject(list.GetType().GetElementType(), allProperties),i);
             }
 
+            static public void StoreList(DynamicTypeArray array, IList list, bool allProperties = false)
+            {
+                foreach (object o in list)
+                    array.Add(DynamicType.CreateDynamicType(o, allProperties));
+            }
+
+            static public void RestoreList(DynamicTypeArray array, IList list, Type type,bool allProperties = false)
+            {
+                foreach (DynamicType t in array)
+                    list.Add(t.GetObject(type, allProperties));
+            }
+
 
             #region ---------------------- private -------------------------------------
 
