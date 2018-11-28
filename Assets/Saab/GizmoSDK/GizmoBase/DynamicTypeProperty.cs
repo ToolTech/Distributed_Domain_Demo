@@ -33,7 +33,7 @@ namespace GizmoSDK
         public class DynamicTypeProperty : System.Attribute
         {
         }
-
+               
         [System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = false)]
         public class DynamicTypePropertyAutoStore : System.Attribute
         {
