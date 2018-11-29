@@ -162,28 +162,40 @@ namespace GizmoSDK
 
             static public void StorePropertiesAndFields(DynamicTypeContainer container,object obj,bool allProperties = false)
             {
-                foreach (System.Reflection.PropertyInfo prop in obj.GetType().GetProperties())
+                var bindingFlags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public;
+
+                foreach (System.Reflection.PropertyInfo prop in obj.GetType().GetProperties(bindingFlags))
                 {
                     if (allProperties || Attribute.IsDefined(prop, typeof(DynamicTypeProperty)))
-                        container.SetAttribute(prop.Name, DynamicType.CreateDynamicType(prop.GetValue(obj),allProperties));
+                    {
+                        var value = prop.GetValue(obj);
+                        bool reflectType = value == null ? false : prop.PropertyType != value.GetType();
+                        container.SetAttribute(prop.Name, DynamicType.CreateDynamicType(value, allProperties,reflectType));
+                    }
                 }
 
-                foreach (System.Reflection.FieldInfo field in obj.GetType().GetFields())
+                foreach (System.Reflection.FieldInfo field in obj.GetType().GetFields(bindingFlags))
                 {
                     if (allProperties || Attribute.IsDefined(field, typeof(DynamicTypeProperty)))
-                        container.SetAttribute(field.Name, DynamicType.CreateDynamicType(field.GetValue(obj),allProperties));
+                    {
+                        var value = field.GetValue(obj);
+                        bool reflectType = value == null ? false : field.FieldType != value.GetType();
+                        container.SetAttribute(field.Name, DynamicType.CreateDynamicType(value, allProperties,reflectType));
+                    }
                 }
             }
 
             static public void RestorePropertiesAndFields(DynamicTypeContainer container, object obj,bool allProperties = false)
             {
-                foreach (System.Reflection.PropertyInfo prop in obj.GetType().GetProperties())
+                var bindingFlags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public;
+
+                foreach (System.Reflection.PropertyInfo prop in obj.GetType().GetProperties(bindingFlags))
                 {
                     if (allProperties || Attribute.IsDefined(prop, typeof(DynamicTypeProperty)))
                         prop.SetValue(obj, container.GetAttribute(prop.Name).GetObject(prop.PropertyType,allProperties));
                 }
 
-                foreach (System.Reflection.FieldInfo field in obj.GetType().GetFields())
+                foreach (System.Reflection.FieldInfo field in obj.GetType().GetFields(bindingFlags))
                 {
                     if (allProperties || Attribute.IsDefined(field, typeof(DynamicTypeProperty)))
                         field.SetValue(obj, container.GetAttribute(field.Name).GetObject(field.FieldType,allProperties));

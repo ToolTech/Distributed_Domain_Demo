@@ -28,6 +28,9 @@ namespace GizmoSDK
     {
         public class DynamicType : Reference , ISerializeData
         {
+            public static Func<System.Reflection.AssemblyName, System.Reflection.Assembly> AssemblyResolver;
+            public static Func<System.Reflection.Assembly, string, bool, System.Type> TypeResolver;
+
             public static class Type
             {
                 public static string STRING = "str";
@@ -46,6 +49,8 @@ namespace GizmoSDK
                 public static string GUID = "guid";
                 public static string TIME_TAGGED = "ttag";
             }
+
+            const string TYPE_REFLECT = "_type_";
 
             #region ---------------------- implicits --------------------
 
@@ -125,7 +130,7 @@ namespace GizmoSDK
 
             public DynamicType(Reference reference) : base(DynamicType_create_reference(reference.GetNativeReference())) { }
 
-            public static DynamicType CreateDynamicType(object obj,bool allProperties=false)
+            public static DynamicType CreateDynamicType(object obj,bool allProperties=false,bool addReflectedType=false)
             {
                 if (obj == null)
                     return new DynamicType();
@@ -165,6 +170,9 @@ namespace GizmoSDK
                 if (t == typeof(Reference))
                     return new DynamicType((Reference)obj);
 
+                if (t == typeof(System.Type))
+                    return new DynamicType(t.AssemblyQualifiedName);
+
                 if (t.IsEnum)
                 {
                     if (Marshal.SizeOf(Enum.GetUnderlyingType(obj.GetType())) <= sizeof(UInt32))
@@ -181,6 +189,17 @@ namespace GizmoSDK
                     return array;
                 }
 
+                if(t.IsValueType && !t.IsPrimitive)     // Struct
+                {
+                    DynamicTypeContainer cont = new DynamicTypeContainer();
+                    DynamicTypeContainer.StorePropertiesAndFields(cont, obj, allProperties);
+
+                    if (addReflectedType)
+                        cont.SetAttribute(TYPE_REFLECT, t.AssemblyQualifiedName);
+
+                    return cont;
+                }
+
                 if(t.IsGenericType && t.GetGenericTypeDefinition()==typeof(System.Collections.Generic.List<>))
                 {
                     DynamicTypeArray array = new DynamicTypeArray();
@@ -189,10 +208,14 @@ namespace GizmoSDK
                     return array;
                 }
 
+                
                 if (t.IsClass)
                 {
                     DynamicTypeContainer cont = new DynamicTypeContainer();
                     DynamicTypeContainer.StorePropertiesAndFields(cont, obj, allProperties);
+
+                    if(addReflectedType)
+                        cont.SetAttribute(TYPE_REFLECT, t.AssemblyQualifiedName);
 
                     return cont;
                 }
@@ -202,6 +225,9 @@ namespace GizmoSDK
 
             public object GetObject(System.Type t,bool allProperties=false)
             {
+                if (Is(DynamicType.Type.VOID))
+                    return null;
+
                 if (t==typeof(DynamicType))
                     return this;
 
@@ -232,6 +258,8 @@ namespace GizmoSDK
                     return o;
                 }
 
+                // ------- Converts to builtins --------------------
+
                 if (t==typeof(string))
                     return (string)this;
 
@@ -253,11 +281,45 @@ namespace GizmoSDK
                 if (t == typeof(Guid))
                     return (Guid)this;
 
+                if(t==typeof(System.Type))
+                {
+                    if (TypeResolver != null)
+                        return System.Type.GetType((string)this, AssemblyResolver, TypeResolver);
+                    else
+                        return System.Type.GetType((string)this);
+                }
+
                 if (t == typeof(Reference) && Is(DynamicType.Type.REFERENCE))
                     return (Reference)this;
                 
                 if (t.IsSubclassOf(typeof(Reference)) && Is(DynamicType.Type.REFERENCE))
                     return (Reference)this;
+
+                if (t == typeof(object) && !Is(Type.CONTAINER))
+                {
+                    // ------- Converts to builtins --------------------
+
+                    if (Is(Type.STRING))
+                        return (string)this;
+
+                    if (Is(Type.INT64))
+                        return (Int64)this;
+
+                    if (Is(Type.VEC2))
+                        return (Vec2)this;
+
+                    if (Is(Type.VEC3))
+                        return (Vec3)this;
+
+                    if (Is(Type.VEC4))
+                        return (Vec4)this;
+
+                    if (Is(Type.GUID))
+                        return (Guid)this;
+
+                    if(Is(Type.REFERENCE))
+                        return (Reference)this;
+                }
 
                 if (t.IsEnum)
                 {
@@ -267,35 +329,66 @@ namespace GizmoSDK
                         return Enum.ToObject(t, (UInt64)this);
                 }
 
-                if (typeof(Array).IsAssignableFrom(t) && Is(DynamicType.Type.ARRAY))
+                if (Is(DynamicType.Type.ARRAY))
                 {
-                    DynamicTypeArray array = (DynamicTypeArray)this;
+                    if (typeof(Array).IsAssignableFrom(t))        // Array
+                    {
+                        DynamicTypeArray array = (DynamicTypeArray)this;
 
-                    Array obj=Array.CreateInstance(t.GetElementType(), array.Count);
+                        Array obj = Array.CreateInstance(t.GetElementType(), array.Count);
 
-                    DynamicTypeArray.RestoreArray(array,obj,allProperties);
+                        DynamicTypeArray.RestoreArray(array, obj, allProperties);
 
-                    return obj;
+                        return obj;
+                    }
+
+                    if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(System.Collections.Generic.List<>))   // List<>
+                    {
+                        object obj = Activator.CreateInstance(t);
+
+                        System.Collections.IList list = (System.Collections.IList)obj;
+
+                        DynamicTypeArray array = (DynamicTypeArray)this;
+
+                        DynamicTypeArray.RestoreList(array, list, t.GetGenericArguments()[0], allProperties);
+
+                        return obj;
+                    }
                 }
 
-                if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(System.Collections.Generic.List<>))
+                if(t.IsValueType && !t.IsPrimitive)                 // struct
                 {
                     object obj = Activator.CreateInstance(t);
 
-                    System.Collections.IList list = (System.Collections.IList)obj;
-
-                    DynamicTypeArray array = (DynamicTypeArray)this;
-
-                    DynamicTypeArray.RestoreList(array, list, t.GetGenericArguments()[0], allProperties);
+                    DynamicTypeContainer.RestorePropertiesAndFields(this, obj, allProperties);
 
                     return obj;
                 }
 
                 if (t.IsClass && Is(DynamicType.Type.CONTAINER))
                 {
-                    object obj = Activator.CreateInstance(t);
+                    DynamicTypeContainer container = this;
 
-                    DynamicTypeContainer.RestorePropertiesAndFields(this, obj, allProperties);
+                    object obj;
+
+                    string _type_ = container.GetAttribute(TYPE_REFLECT);
+
+                    if (_type_!=null)
+                    {
+                        var typename = container.GetAttribute(TYPE_REFLECT);
+
+                        if(TypeResolver!=null)
+                            obj = Activator.CreateInstance(System.Type.GetType(typename, AssemblyResolver, TypeResolver));
+                        else
+                            obj = Activator.CreateInstance(System.Type.GetType(typename));
+
+                        if (obj==null)
+                            obj = Activator.CreateInstance(t);
+                    }
+                    else
+                        obj = Activator.CreateInstance(t);
+
+                    DynamicTypeContainer.RestorePropertiesAndFields(container, obj, allProperties);
 
                     return obj;
                 }
