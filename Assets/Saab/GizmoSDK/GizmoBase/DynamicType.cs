@@ -223,6 +223,11 @@ namespace GizmoSDK
                 return new DynamicType((double)Convert.ChangeType(obj,typeof(double)));    // default to double
             }
 
+            public T GetObject<T>(bool allProperties = false)
+            {
+                return (T)GetObject(typeof(T), allProperties);
+            }
+
             public object GetObject(System.Type t,bool allProperties=false)
             {
                 if (Is(DynamicType.Type.VOID))
@@ -264,10 +269,10 @@ namespace GizmoSDK
                     return (string)this;
 
                 if (t == typeof(UInt64))
-                    return (UInt64)this;
+                    return (UInt64)(DynamicTypeInt64)this;
 
                 if (t == typeof(Int64))
-                    return (Int64)this;
+                    return (Int64)(DynamicTypeInt64)this;
 
                 if (t == typeof(Vec2))
                     return (Vec2)this;

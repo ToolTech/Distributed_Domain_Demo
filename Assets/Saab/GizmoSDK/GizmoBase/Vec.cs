@@ -98,6 +98,14 @@ namespace GizmoSDK
             {
                 return new Vec3(a * b.x, a * b.y, a * b.z);
             }
+            public static Vec3 operator *(Vec3 v, float f)
+            {
+                return new Vec3(f * v.x, f * v.y, f * v.z);
+            }
+            public static Vec3 operator /(Vec3 v, float f)
+            {
+                return new Vec3(v.x / f, v.y / f, v.z / f);
+            }
 
             public static Vec3 operator -(Vec3 b)
             {
@@ -127,6 +135,27 @@ namespace GizmoSDK
             public static implicit operator Vec3D(Vec3 a)
             {
                 return new Vec3D(a.x, a.y, a.z);
+            }
+
+            public static Vec3 Min(Vec3 a, Vec3 b)
+            {
+                return new Vec3(
+                    a.x <= b.x ? a.x : b.x,
+                    a.y <= b.y ? a.y : b.y,
+                    a.z <= b.z ? a.z : b.z);
+            }
+
+            public static Vec3 Max(Vec3 a, Vec3 b)
+            {
+                return new Vec3(
+                    a.x >= b.x ? a.x : b.x,
+                    a.y >= b.y ? a.y : b.y,
+                    a.z >= b.z ? a.z : b.z);
+            }
+
+            public static Vec3 Scale(Vec3 a, Vec3 b)
+            {
+                return new Vec3(a.x * b.x, a.y * b.y, a.z * b.z);
             }
 
             [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
