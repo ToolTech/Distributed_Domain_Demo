@@ -173,14 +173,14 @@ namespace GizmoSDK
                 foreach (System.Reflection.PropertyInfo prop in obj.GetType().GetProperties())
                 {
                     if (allProperties || Attribute.IsDefined(prop, typeof(DistProperty)))
-                        if (!e.SetAttributeValue(prop.Name, DynamicType.CreateDynamicType(prop.GetValue(obj), allProperties)))
+                        if (!e.SetAttributeValue(prop.Name, DynamicType.CreateDynamicType(prop.GetValue(obj), true)))
                             return false;
                 }
 
                 foreach (System.Reflection.FieldInfo field in obj.GetType().GetFields())
                 {
                     if (allProperties || Attribute.IsDefined(field, typeof(DistProperty)))
-                        if (!e.SetAttributeValue(field.Name, DynamicType.CreateDynamicType(field.GetValue(obj), allProperties)))
+                        if (!e.SetAttributeValue(field.Name, DynamicType.CreateDynamicType(field.GetValue(obj), true)))
                             return false;
                 }
 
