@@ -180,14 +180,7 @@ namespace GizmoSDK
                     else
                         return new DynamicType((UInt64)Convert.ChangeType(obj, typeof(UInt64)));
                 }
-
-                if (typeof(Array).IsAssignableFrom(t))
-                {
-                    DynamicTypeArray array = new DynamicTypeArray();
-                    DynamicTypeArray.StoreArray(array, (Array)obj, allProperties);
-
-                    return array;
-                }
+                               
 
                 if(t.IsValueType && !t.IsPrimitive)     // Struct
                 {
@@ -200,15 +193,19 @@ namespace GizmoSDK
                     return cont;
                 }
 
-                if(t.IsGenericType && t.GetGenericTypeDefinition()==typeof(System.Collections.Generic.List<>))
+                if (obj is System.Collections.IEnumerable) 
                 {
+                    System.Type elemType = obj.GetType().GetElementType();
+
+                    if (elemType==null && obj.GetType().IsGenericType)
+                        elemType = obj.GetType().GenericTypeArguments[0];
+
                     DynamicTypeArray array = new DynamicTypeArray();
-                    DynamicTypeArray.StoreList(array, (System.Collections.IList)obj,allProperties);
+                    DynamicTypeArray.StoreEnumerable(array, (System.Collections.IEnumerable)obj, allProperties,elemType);
 
                     return array;
                 }
 
-                
                 if (t.IsClass)
                 {
                     DynamicTypeContainer cont = new DynamicTypeContainer();
@@ -347,7 +344,7 @@ namespace GizmoSDK
                         return obj;
                     }
 
-                    if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(System.Collections.Generic.List<>))   // List<>
+                    if (typeof(System.Collections.IList).IsAssignableFrom(t))
                     {
                         object obj = Activator.CreateInstance(t);
 
@@ -355,10 +352,17 @@ namespace GizmoSDK
 
                         DynamicTypeArray array = (DynamicTypeArray)this;
 
-                        DynamicTypeArray.RestoreList(array, list, t.GetGenericArguments()[0], allProperties);
+                        if(t.IsGenericType)
+                            DynamicTypeArray.RestoreList(array, list,t.GenericTypeArguments[0], allProperties);
 
                         return obj;
                     }
+
+
+                    // We can create it but not populate it
+
+                    return Activator.CreateInstance(t);
+                                        
                 }
 
                 if(t.IsValueType && !t.IsPrimitive)                 // struct
@@ -380,12 +384,10 @@ namespace GizmoSDK
 
                     if (_type_!=null)
                     {
-                        var typename = container.GetAttribute(TYPE_REFLECT);
-
                         if(TypeResolver!=null)
-                            obj = Activator.CreateInstance(System.Type.GetType(typename, AssemblyResolver, TypeResolver));
+                            obj = Activator.CreateInstance(System.Type.GetType(_type_, AssemblyResolver, TypeResolver));
                         else
-                            obj = Activator.CreateInstance(System.Type.GetType(typename));
+                            obj = Activator.CreateInstance(System.Type.GetType(_type_));
 
                         if (obj==null)
                             obj = Activator.CreateInstance(t);

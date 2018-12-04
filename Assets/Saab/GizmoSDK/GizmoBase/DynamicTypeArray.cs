@@ -194,12 +194,7 @@ namespace GizmoSDK
             }
 
             // --- Reflection mechanisms --------------------------------
-
-            static public void StoreArray(DynamicTypeArray array, Array list ,bool allProperties=false)
-            {
-                foreach (object o in list)
-                    array.Add(DynamicType.CreateDynamicType(o, allProperties));
-            }
+                        
 
             static public void RestoreArray(DynamicTypeArray array, Array list, bool allProperties=false)
             {
@@ -207,10 +202,10 @@ namespace GizmoSDK
                     list.SetValue(array[i].GetObject(list.GetType().GetElementType(), allProperties),i);
             }
 
-            static public void StoreList(DynamicTypeArray array, IList list, bool allProperties = false)
+            static public void StoreEnumerable(DynamicTypeArray array, IEnumerable enumer, bool allProperties = false,Type type=null)
             {
-                foreach (object o in list)
-                    array.Add(DynamicType.CreateDynamicType(o, allProperties));
+                foreach (object o in enumer)
+                    array.Add(DynamicType.CreateDynamicType(o, allProperties,type!=null && o!=null ? type!=o.GetType() : false ));
             }
 
             static public void RestoreList(DynamicTypeArray array, IList list, Type type,bool allProperties = false)

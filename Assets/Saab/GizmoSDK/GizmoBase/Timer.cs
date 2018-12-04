@@ -30,11 +30,34 @@ namespace GizmoSDK
         {
             public Timer() : base(Timer_create()) { }
 
+            public double GetTime()
+            {
+                return Timer_getTime(GetNativeReference());
+            }
+
+            public double GetFrequency(double samples=1.0)
+            {
+                double time = GetTime();
+
+                if (time != 0.0)
+                    return samples / time;
+
+                return 0.0;
+            }
+
+            public override string ToString()
+            {
+                return $"Timer:{GetTime()} Frequency:{GetFrequency()}";
+            }
 
             #region -------------- Native calls ------------------
 
             [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
             private static extern IntPtr Timer_create();
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern double Timer_getTime(IntPtr timer_ref);
+         
+
 
             #endregion
         }
