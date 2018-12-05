@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GizmoSDK", "GizmoSDK", "{6C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event_Performance", "Event_Performance\Event_Performance.csproj", "{3ED6CC6A-A88B-4297-9A7B-B0BC76659E28}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InProcess_Event_Performance", "InProcess_Event_Performance\InProcess_Event_Performance.csproj", "{BE03FA1F-906A-4E77-9F73-577F92DA7FD9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,12 @@ Global
 		{3ED6CC6A-A88B-4297-9A7B-B0BC76659E28}.Release|Any CPU.ActiveCfg = Release|x64
 		{3ED6CC6A-A88B-4297-9A7B-B0BC76659E28}.Release|x64.ActiveCfg = Release|x64
 		{3ED6CC6A-A88B-4297-9A7B-B0BC76659E28}.Release|x64.Build.0 = Release|x64
+		{BE03FA1F-906A-4E77-9F73-577F92DA7FD9}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{BE03FA1F-906A-4E77-9F73-577F92DA7FD9}.Debug|x64.ActiveCfg = Debug|x64
+		{BE03FA1F-906A-4E77-9F73-577F92DA7FD9}.Debug|x64.Build.0 = Debug|x64
+		{BE03FA1F-906A-4E77-9F73-577F92DA7FD9}.Release|Any CPU.ActiveCfg = Release|x64
+		{BE03FA1F-906A-4E77-9F73-577F92DA7FD9}.Release|x64.ActiveCfg = Release|x64
+		{BE03FA1F-906A-4E77-9F73-577F92DA7FD9}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
