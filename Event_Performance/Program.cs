@@ -8,7 +8,7 @@ namespace Event_Performance
     
     class Program
     {
-        const int COUNT = 100;
+        const int COUNT = 1000;
 
         static void Main(string[] args)
         {
@@ -84,6 +84,8 @@ namespace Event_Performance
             while (manager.HasPendingData())
                 System.Threading.Thread.Sleep(10);
 
+            client.Uninitialize(true);
+       
             // Some kind of graceful shutdown
             manager.Shutdown();
 

@@ -12,7 +12,7 @@ namespace Event_Performance
 
     class Program
     {
-        const int COUNT = 10000;
+        const int COUNT = 100000;
 
         static void Main(string[] args)
         {
@@ -20,6 +20,11 @@ namespace Event_Performance
             GizmoSDK.GizmoBase.Platform.Initialize();
             GizmoSDK.GizmoDistribution.Platform.Initialize();
 
+
+            Message.OnMessage += Message_OnMessage;
+
+            Message.SetMessageLevel(MessageLevel.DEBUG);
+              
             // Create a manager. The manager controls it all
             DistManager manager = DistManager.GetManager(true);
 
@@ -52,59 +57,58 @@ namespace Event_Performance
 
             // Create a delegete
             client2.OnEvent += Client2_OnEvent;
-            
-            Console.WriteLine($"Press <RETURN> to start sending");
 
-            // Now loops around some simple program to get strings from console and distribute them as a message app
+            System.Threading.Thread.Sleep(100);
 
-            while (true)
+            // Create COUNT test event 
+
+            Timer timer = new Timer();
+
+            DistEvent[] e_arr = new DistEvent[COUNT];
+
+            for (int i = 0; i < COUNT; i++)
             {
-                string result = Console.ReadLine();
+                e_arr[i] = new DistEvent();
+                e_arr[i].SetAttributeValue("Cnt", i);
 
-                if (result == "quit")
-                    break;
-
-                // Create 1000 test event 
-
-                Timer timer = new Timer();
-
-                DistEvent[] e_arr = new DistEvent[COUNT];
-
-                for (int i = 0; i < COUNT; i++)
-                {
-                    e_arr[i] = new DistEvent();
-                    e_arr[i].SetAttributeValue("Cnt", i);
-
-                    // Set some additional data e.g. two vec3
-                    e_arr[i].SetAttributeValue("vec1", new Vec3(1, 2, 3));
-                    e_arr[i].SetAttributeValue("vec2", new Vec3(4, 5, 6));
-                }
-
-                Console.WriteLine($"Created {COUNT} events in {timer.GetTime()} seconds -> Frequency: { timer.GetFrequency(COUNT)}");
-
-                // Send 1000 events
-
-                timer = new Timer();
-
-                for (int i = 0; i < COUNT; i++)
-                    client.SendEvent(e_arr[i], session);
-
-                Console.WriteLine($"Sent {COUNT} events in {timer.GetTime()} seconds -> Frequency: {timer.GetFrequency(COUNT)}");
+                // Set some additional data e.g. two vec3
+                e_arr[i].SetAttributeValue("vec1", new Vec3(1, 2, 3));
+                e_arr[i].SetAttributeValue("vec2", new Vec3(4, 5, 6));
             }
 
-            while (manager.HasPendingData())
+            Console.WriteLine($"Created {COUNT} events in {timer.GetTime()} seconds -> Frequency: { timer.GetFrequency(COUNT)}");
+
+            // Send COUNT events
+
+            timer = new Timer();
+
+            for (int i = 0; i < COUNT; i++)
+                client.SendEvent(e_arr[i], session);
+
+            Console.WriteLine($"Sent {COUNT} events in {timer.GetTime()} seconds -> Frequency: {timer.GetFrequency(COUNT)}");
+        
+            while (manager.HasPendingData() || !stopper)
                 System.Threading.Thread.Sleep(10);
+
+            client.Uninitialize(true);
+            client2.Uninitialize(true);
 
             // Some kind of graceful shutdown
             manager.Shutdown();
 
-
             // GC and platform uninit is managed by the system automatically
+        }
+
+        private static void Message_OnMessage(string sender, MessageLevel level, string message)
+        {
+            Console.WriteLine(message);
         }
 
         static int counter = 0;
 
         static Timer recv_timer = null;
+
+        static bool stopper = false;
 
        
         private static void Client2_OnEvent(DistClient sender, DistEvent e)
@@ -123,6 +127,7 @@ namespace Event_Performance
             {
                 Console.WriteLine($"Received {COUNT} events in {recv_timer.GetTime()} seconds -> Frequency: {recv_timer.GetFrequency(COUNT)} ");
                 counter = 0;
+                stopper = true;
             }
 
 
