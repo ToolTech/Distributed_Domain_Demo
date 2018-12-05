@@ -299,7 +299,16 @@ namespace GizmoSDK
                 return new DistClientID(DistClient_getClientID(GetNativeReference()));
             }
 
- 
+            static public bool HasDistThreadError()
+            {
+                return DistClient_hasDistThreadError();
+            }
+
+            static public string GetDistThreadError(bool clearError=true)
+            {
+                return Marshal.PtrToStringUni(DistClient_getDistThreadError(clearError));
+            }
+
             #region ------------------------ Private Callbacks ---------------------------------------------
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
@@ -405,6 +414,12 @@ namespace GizmoSDK
 
             [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
             private static extern UInt32 DistClient_getPendingData(IntPtr client, bool outQueue);
+
+
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern bool DistClient_hasDistThreadError();
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern IntPtr DistClient_getDistThreadError(bool clearError);
 
             #region ------------------ SetCallback ------------------------------------------------------------------------------
             [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]

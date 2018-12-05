@@ -62,16 +62,41 @@ namespace GizmoSDK
                 return new Vec2D(a.x, a.y);
             }
 
-            public void normalize()
+            public void Normalize()
             {
-                var l = (float)Math.Sqrt(x * x + y * y);
+                var l = (float)Math.Sqrt (x * x + y * y );
                 x /= l;
                 y /= l;
             }
 
-            public float length()
+            public void Normalize(out float l)
             {
-                return (float)Math.Sqrt(x * x + y * y);
+                l = (float)Math.Sqrt(x * x + y * y );
+                x /= l;
+                y /= l;
+            }
+
+            public float Length()
+            {
+                return (float)Math.Sqrt(x * x + y * y );
+            }
+
+            public static Vec2 Normalize(Vec2 v)
+            {
+                var result = v;
+                result.Normalize();
+                return result;
+            }
+
+            public static Vec2 Normalize(Vec2 v, out float l)
+            {
+                l = (float)Math.Sqrt(v.x * v.x + v.y * v.y);
+                return new Vec2(v.x / l, v.y / l);
+            }
+
+            public static float Distance(ref Vec2 a, ref Vec2 b)
+            {
+                return (b - a).Length();
             }
         }
         [Serializable]
@@ -114,17 +139,43 @@ namespace GizmoSDK
 
             public float x, y, z;
 
-            public void normalize()
+            public void Normalize()
             {
-                var l = (float)Math.Sqrt(x * x + y * y + z * z);
+                float l = (float)Math.Sqrt(x * x + y * y + z * z );
                 x /= l;
                 y /= l;
                 z /= l;
             }
 
-            public float length()
+            public void Normalize(out float l)
+            {
+                l = (float)Math.Sqrt(x * x + y * y + z * z);
+                x /= l;
+                y /= l;
+                z /= l;
+            }
+
+            public float Length()
             {
                 return (float)Math.Sqrt(x * x + y * y + z * z);
+            }
+
+            public static Vec3 Normalize(Vec3 v)
+            {
+                var result = v;
+                result.Normalize();
+                return result;
+            }
+
+            public static Vec3 Normalize(Vec3 v, out float l)
+            {
+                l = (float)Math.Sqrt(v.x * v.x + v.y * v.y + v.z * v.z );
+                return new Vec3(v.x / l, v.y / l, v.z / l);
+            }
+
+            public static float Distance(ref Vec3 a, ref Vec3 b)
+            {
+                return (b - a).Length();
             }
 
             public override string ToString()
@@ -195,7 +246,7 @@ namespace GizmoSDK
 
             public float x, y, z, w;
 
-            public void normalize()
+            public void Normalize()
             {
                 var l = (float)Math.Sqrt(x * x + y * y + z * z + w * w);
                 x /= l;
@@ -204,9 +255,36 @@ namespace GizmoSDK
                 w /= l;
             }
 
-            public float length()
+            public void Normalize(out float l)
+            {
+                l = (float)Math.Sqrt(x * x + y * y + z * z + w * w);
+                x /= l;
+                y /= l;
+                z /= l;
+                w /= l;
+            }
+
+            public float Length()
             {
                 return (float)Math.Sqrt(x * x + y * y + z * z + w * w);
+            }
+
+            public static Vec4 Normalize(Vec4 v)
+            {
+                var result = v;
+                result.Normalize();
+                return result;
+            }
+
+            public static Vec4 Normalize(Vec4 v, out float l)
+            {
+                l =(float) Math.Sqrt(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w);
+                return new Vec4(v.x / l, v.y / l, v.z / l, v.w / l);
+            }
+
+            public static double Distance(ref Vec4 a, ref Vec4 b)
+            {
+                return (b - a).Length();
             }
 
             public override string ToString()
@@ -259,16 +337,41 @@ namespace GizmoSDK
 
             public double x, y;
 
-            public void normalize()
+            public void Normalize()
             {
-                var l = Math.Sqrt(x * x + y * y);
+                var l = Math.Sqrt(x * x + y * y );
                 x /= l;
                 y /= l;
             }
 
-            public double length()
+            public void Normalize(out double l)
             {
-                return Math.Sqrt(x * x + y * y);
+                l = Math.Sqrt(x * x + y * y );
+                x /= l;
+                y /= l;
+            }
+
+            public double Length()
+            {
+                return Math.Sqrt(x * x + y * y );
+            }
+
+            public static Vec2D Normalize(Vec2D v)
+            {
+                var result = v;
+                result.Normalize();
+                return result;
+            }
+
+            public static Vec2D Normalize(Vec2D v, out double l)
+            {
+                l = Math.Sqrt(v.x * v.x + v.y * v.y);
+                return new Vec2D(v.x / l, v.y / l);
+            }
+
+            public static double Distance(ref Vec2D a, ref Vec2D b)
+            {
+                return (b - a).Length();
             }
         }
 
@@ -310,7 +413,7 @@ namespace GizmoSDK
 
             public double x, y, z;
 
-            public void normalize()
+            public void Normalize()
             {
                 var l = Math.Sqrt(x * x + y * y + z * z);
                 x /= l;
@@ -318,7 +421,7 @@ namespace GizmoSDK
                 z /= l;
             }
 
-            public void normalize(out double l)
+            public void Normalize(out double l)
             {
                 l = Math.Sqrt(x * x + y * y + z * z);
                 x /= l;
@@ -326,7 +429,7 @@ namespace GizmoSDK
                 z /= l;
             }
 
-            public double length()
+            public double Length()
             {
                 return Math.Sqrt(x * x + y * y + z * z);
             }
@@ -334,7 +437,7 @@ namespace GizmoSDK
             public static Vec3D Normalize(Vec3D v)
             {
                 var result = v;
-                result.normalize();
+                result.Normalize();
                 return result;
             }
 
@@ -356,7 +459,7 @@ namespace GizmoSDK
 
             public static double Distance(ref Vec3D a, ref Vec3D b)
             {
-                return (b - a).length();
+                return (b - a).Length();
             }
         }
 
@@ -398,18 +501,45 @@ namespace GizmoSDK
 
             public double x, y, z, w;
 
-            public void normalize()
+            public void Normalize()
             {
-                var l = Math.Sqrt(x * x + y * y + z * z + w * w);
+                var l = Math.Sqrt(x * x + y * y + z * z+w*w);
                 x /= l;
                 y /= l;
                 z /= l;
                 w /= l;
             }
 
-            public double length()
+            public void Normalize(out double l)
             {
-                return Math.Sqrt(x * x + y * y + z * z + w * w);
+                l = Math.Sqrt(x * x + y * y + z * z+w*w);
+                x /= l;
+                y /= l;
+                z /= l;
+                w /= l;
+            }
+
+            public double Length()
+            {
+                return Math.Sqrt(x * x + y * y + z * z+w*w);
+            }
+
+            public static Vec4D Normalize(Vec4D v)
+            {
+                var result = v;
+                result.Normalize();
+                return result;
+            }
+
+            public static Vec4D Normalize(Vec4D v, out double l)
+            {
+                l = Math.Sqrt(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w);
+                return new Vec4D(v.x / l, v.y / l, v.z / l,v.w/l);
+            }
+
+            public static double Distance(ref Vec4D a, ref Vec4D b)
+            {
+                return (b - a).Length();
             }
         }
     }

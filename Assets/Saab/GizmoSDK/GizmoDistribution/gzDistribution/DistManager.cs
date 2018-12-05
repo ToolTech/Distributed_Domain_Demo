@@ -63,6 +63,9 @@ namespace GizmoSDK
             {
                 IntPtr nativeReference = DistManager_getManager(create, DEFAULT_MANAGER);
 
+                if (nativeReference == IntPtr.Zero)
+                    return null;
+
                 return new DistManager(nativeReference);
             }
 
