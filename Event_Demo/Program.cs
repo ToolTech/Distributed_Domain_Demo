@@ -120,6 +120,8 @@ namespace Event_Demo
                 client.SendEvent(e, session);
             }
 
+            client.Uninitialize();
+
             // Some kind of graceful shutdown
             manager.Shutdown();
 
