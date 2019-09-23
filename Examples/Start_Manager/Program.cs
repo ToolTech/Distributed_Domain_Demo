@@ -40,7 +40,7 @@ namespace Start_Manager_Example
             //If we want to attach the DistMonitor debugger
             manager.EnableDebug(true);
 
-            System.Threading.Thread.Sleep(100000);
+            System.Threading.Thread.Sleep(10000);
 
         }
     }       
