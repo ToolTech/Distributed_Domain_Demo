@@ -18,30 +18,62 @@
 //
 //******************************************************************************
 
-using System;
+using GizmoSDK.GizmoBase;
 using GizmoSDK.GizmoDistribution;
 
-namespace Start_Manager_Example
+namespace Create_Client
 {
+        
     class Program
     {
         static void Main(string[] args)
         {
+
+            // Add a message receiver
+            Message.OnMessage += Message_OnMessage;
+
+            // Set message level to debug
+            Message.SetMessageLevel(MessageLevel.DEBUG);
+
+            // Just test send a message in debug level
+            Message.Send("test", MessageLevel.DEBUG, "Helluu");
+
+
             // Initialize platforms for various used SDKs
             GizmoSDK.GizmoBase.Platform.Initialize();
             GizmoSDK.GizmoDistribution.Platform.Initialize();
+                       
+
 
             // Create a manager. The manager controls it all
             DistManager manager = DistManager.GetManager(true);
 
-            // Start the manager with settting for transport protocols
+               // Start the manager with settting for transport protocols
             manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(), DistRemoteChannel.CreateDefaultServerChannel());
 
             //If we want to attach the DistMonitor debugger
             manager.EnableDebug(true);
+            
+            // Client set up. You are a client that sends and receives information
+            DistClient client = new DistClient("Our Test Client", manager);
 
-            System.Threading.Thread.Sleep(100000);
+            // We need to tell the client how to initialize
+            client.Initialize();
 
+            System.Threading.Thread.Sleep(10000);
+   
+            client.Uninitialize();
+
+            // Some kind of graceful shutdown
+            manager.Shutdown();
+
+
+            // GC and platform uninit is managed by the system automatically
         }
-    }       
+
+        private static void Message_OnMessage(string sender, MessageLevel level, string message)
+        {
+            System.Console.WriteLine(message);
+        }
+    }
 }
