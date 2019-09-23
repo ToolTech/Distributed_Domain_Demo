@@ -1,7 +1,7 @@
 //******************************************************************************
-// File			: Performance.cs
+// File			: Serialize.cs
 // Module		: GizmoBase C#
-// Description	: C# Bridge to performance utilities
+// Description	: C# Bridge to gzSerialize.cpp
 // Author		: Anders Modén		
 // Product		: GizmoBase 2.10.4
 //		
@@ -26,50 +26,54 @@ namespace GizmoSDK
 {
     namespace GizmoBase
     {
-             
-        public class Monitor
+        public enum PipeConnection
         {
-            static public void Enter(string monitor)
+            Local,
+            Global,
+        }
+
+        public class Pipe : SerializeAdapter
+        {
+            
+            public Pipe(IntPtr nativeReference) : base(nativeReference) { }
+
+            public static Pipe Connect(string url, bool create, PipeConnection connection = PipeConnection.Global, uint timeout = 50, string options = null)
             {
-                Monitor_enter(monitor);
+                var res = Pipe_connect(url, create, connection, timeout, options);
+                if (res == null)
+                    throw new Exception("an error occured during pipe connect");
+
+                return new Pipe(res);
             }
 
-            static public void Leave(string monitor)
+            public static bool SetPortStart(UInt16 port)
             {
-                Monitor_leave(monitor);
+                return Pipe_setPortStart(port);
             }
 
-            static public void InstallMonitor(string url="udp::45454?nic=127.0.0.1")
+            public static bool SetPortRange(UInt16 count)
             {
-                Monitor_install(url);
+                return Pipe_setPortRangle(count);
             }
 
-            static public void AddValue(string monitor,DynamicType value,double time=-1,UInt32 instanceID=0)
+            public bool Connected
             {
-                Monitor_addValue(monitor,value.GetNativeReference(),time,instanceID);
-            }
-
-            static public void AddValueOpt(bool addValue,string monitor,DynamicType value, double time = -1, UInt32 instanceID = 0)
-            {
-                if (addValue)
-                    AddValue(monitor, value, time, instanceID);
+                get { return Pipe_connected(GetNativeReference()); }
             }
 
             #region -------------- Native calls ------------------
 
             [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
-            private static extern void Monitor_enter(string monitor);
+            private static extern IntPtr Pipe_connect(string url, bool create, PipeConnection connection, uint timeout, string options);
             [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
-            private static extern void Monitor_leave(string monitor);
+            private static extern bool Pipe_setPortStart(UInt16 port);
             [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
-            private static extern void Monitor_install(string url);
+            private static extern bool Pipe_setPortRangle(UInt16 count);
             [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
-            private static extern void Monitor_addValue(string monitor,IntPtr dynamic_reference,double time,UInt32 instanceID);
+            private static extern bool Pipe_connected(IntPtr pipe);
+            
 
             #endregion
         }
-
-
     }
 }
-

@@ -2,17 +2,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GizmoBase", "GizmoBase\GizmoBase.csproj", "{5C84642F-7DB7-42B2-A3C9-D3F65D5610F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GizmoBase", "GizmoSDK\GizmoBase\GizmoBase.csproj", "{5C84642F-7DB7-42B2-A3C9-D3F65D5610F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GizmoDistribution", "GizmoDistribution\GizmoDistribution.csproj", "{8252F26D-0FBB-4E15-84F8-3D145758AB55}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GizmoDistribution", "GizmoSDK\GizmoDistribution\GizmoDistribution.csproj", "{8252F26D-0FBB-4E15-84F8-3D145758AB55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event_Demo", "Event_Demo\Event_Demo.csproj", "{1BB1AD89-5B53-4455-B125-97A25359E33B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event_Demo", "Examples\Event_Demo\Event_Demo.csproj", "{1BB1AD89-5B53-4455-B125-97A25359E33B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GizmoSDK", "GizmoSDK", "{6CEDBC4A-060E-4EDE-85FD-9E672A6A6825}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event_Performance", "Event_Performance\Event_Performance.csproj", "{3ED6CC6A-A88B-4297-9A7B-B0BC76659E28}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event_Performance", "Examples\Event_Performance\Event_Performance.csproj", "{3ED6CC6A-A88B-4297-9A7B-B0BC76659E28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InProcess_Event_Performance", "InProcess_Event_Performance\InProcess_Event_Performance.csproj", "{BE03FA1F-906A-4E77-9F73-577F92DA7FD9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InProcess_Event_Performance", "Examples\InProcess_Event_Performance\InProcess_Event_Performance.csproj", "{BE03FA1F-906A-4E77-9F73-577F92DA7FD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Start_Manager", "Examples\Start_Manager\Start_Manager.csproj", "{14967656-DF2F-4203-8590-BAE1ED4DF319}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basic Examples", "Basic Examples", "{6D024A4E-F795-4FE5-9932-07574DCE9E75}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Performance", "Performance", "{94F7CD17-EBE0-46DD-8C72-470B7365AF3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +58,12 @@ Global
 		{BE03FA1F-906A-4E77-9F73-577F92DA7FD9}.Release|Any CPU.ActiveCfg = Release|x64
 		{BE03FA1F-906A-4E77-9F73-577F92DA7FD9}.Release|x64.ActiveCfg = Release|x64
 		{BE03FA1F-906A-4E77-9F73-577F92DA7FD9}.Release|x64.Build.0 = Release|x64
+		{14967656-DF2F-4203-8590-BAE1ED4DF319}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{14967656-DF2F-4203-8590-BAE1ED4DF319}.Debug|x64.ActiveCfg = Debug|x64
+		{14967656-DF2F-4203-8590-BAE1ED4DF319}.Debug|x64.Build.0 = Debug|x64
+		{14967656-DF2F-4203-8590-BAE1ED4DF319}.Release|Any CPU.ActiveCfg = Release|x64
+		{14967656-DF2F-4203-8590-BAE1ED4DF319}.Release|x64.ActiveCfg = Release|x64
+		{14967656-DF2F-4203-8590-BAE1ED4DF319}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +71,10 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{5C84642F-7DB7-42B2-A3C9-D3F65D5610F1} = {6CEDBC4A-060E-4EDE-85FD-9E672A6A6825}
 		{8252F26D-0FBB-4E15-84F8-3D145758AB55} = {6CEDBC4A-060E-4EDE-85FD-9E672A6A6825}
+		{1BB1AD89-5B53-4455-B125-97A25359E33B} = {94F7CD17-EBE0-46DD-8C72-470B7365AF3A}
+		{3ED6CC6A-A88B-4297-9A7B-B0BC76659E28} = {94F7CD17-EBE0-46DD-8C72-470B7365AF3A}
+		{BE03FA1F-906A-4E77-9F73-577F92DA7FD9} = {94F7CD17-EBE0-46DD-8C72-470B7365AF3A}
+		{14967656-DF2F-4203-8590-BAE1ED4DF319} = {6D024A4E-F795-4FE5-9932-07574DCE9E75}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B96B0E72-1B38-4DCC-AB55-CF778AE9D003}

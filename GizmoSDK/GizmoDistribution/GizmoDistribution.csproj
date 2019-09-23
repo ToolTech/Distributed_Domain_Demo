@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -42,46 +42,46 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\GizmoSDK\GizmoDistribution\source\C#\gzDistribution\DistProperty.cs">
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistProperty.cs">
       <Link>DistProperty.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\AssemblyInfo.cs">
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistAttribute.cs">
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistAttribute.cs">
       <Link>DistAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistClient.cs">
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistClient.cs">
       <Link>DistClient.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistClientID.cs">
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistClientID.cs">
       <Link>DistClientID.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistEvent.cs">
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistEvent.cs">
       <Link>DistEvent.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistInstanceID.cs">
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistInstanceID.cs">
       <Link>DistInstanceID.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistManager.cs">
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistManager.cs">
       <Link>DistManager.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistNotificationSet.cs">
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistNotificationSet.cs">
       <Link>DistNotificationSet.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistObject.cs">
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistObject.cs">
       <Link>DistObject.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistSession.cs">
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistSession.cs">
       <Link>DistSession.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistTransaction.cs">
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\DistTransaction.cs">
       <Link>DistTransaction.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\Platform.cs">
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoDistribution\gzDistribution\Platform.cs">
       <Link>Platform.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\Saab\GizmoSDK\GizmoDistribution\gzRemoteDistribution\DistRemoteChannel.cs">
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoDistribution\gzRemoteDistribution\DistRemoteChannel.cs">
       <Link>DistRemoteChannel.cs</Link>
     </Compile>
   </ItemGroup>
@@ -94,11 +94,11 @@
   <ItemGroup>
     <NativeReference Include="gzGizmoDistributionLibraries, Version=1.0.0.0, Type=win32">
       <Name>gzGizmoDistributionLibraries.manifest</Name>
-      <HintPath>..\Assets\Plugins\x64\gzGizmoDistributionLibraries.manifest</HintPath>
+      <HintPath>..\..\Assets\Plugins\x64\gzGizmoDistributionLibraries.manifest</HintPath>
     </NativeReference>
     <NativeReference Include="gzGizmoRemoteDistributionLibraries, Version=1.0.0.0, Type=win32">
       <Name>gzGizmoRemoteDistributionLibraries.manifest</Name>
-      <HintPath>..\Assets\Plugins\x64\gzGizmoRemoteDistributionLibraries.manifest</HintPath>
+      <HintPath>..\..\Assets\Plugins\x64\gzGizmoRemoteDistributionLibraries.manifest</HintPath>
     </NativeReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

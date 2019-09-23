@@ -4,19 +4,34 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BE03FA1F-906A-4E77-9F73-577F92DA7FD9}</ProjectGuid>
+    <ProjectGuid>{14967656-DF2F-4203-8590-BAE1ED4DF319}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>InProcess_Event_Performance</RootNamespace>
-    <AssemblyName>InProcess_Event_Performance</AssemblyName>
+    <RootNamespace>Start_Manager_Example</RootNamespace>
+    <AssemblyName>Start_Manager_Example</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;WIN64</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
@@ -25,13 +40,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;WIN64</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Start_Manager_Example.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -51,11 +69,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GizmoBase\GizmoBase.csproj">
+    <ProjectReference Include="..\..\GizmoSDK\GizmoBase\GizmoBase.csproj">
       <Project>{5c84642f-7db7-42b2-a3c9-d3f65d5610f1}</Project>
       <Name>GizmoBase</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GizmoDistribution\GizmoDistribution.csproj">
+    <ProjectReference Include="..\..\GizmoSDK\GizmoDistribution\GizmoDistribution.csproj">
       <Project>{8252f26d-0fbb-4e15-84f8-3d145758ab55}</Project>
       <Name>GizmoDistribution</Name>
     </ProjectReference>
@@ -63,16 +81,28 @@
   <ItemGroup>
     <NativeReference Include="gzGizmoBaseLibraries, Version=1.0.0.0, Type=win32">
       <Name>gzGizmoBaseLibraries.manifest</Name>
-      <HintPath>..\Assets\Plugins\x64\gzGizmoBaseLibraries.manifest</HintPath>
+      <HintPath>..\..\Assets\Plugins\x64\gzGizmoBaseLibraries.manifest</HintPath>
     </NativeReference>
     <NativeReference Include="gzGizmoDistributionLibraries, Version=1.0.0.0, Type=win32">
       <Name>gzGizmoDistributionLibraries.manifest</Name>
-      <HintPath>..\Assets\Plugins\x64\gzGizmoDistributionLibraries.manifest</HintPath>
+      <HintPath>..\..\Assets\Plugins\x64\gzGizmoDistributionLibraries.manifest</HintPath>
     </NativeReference>
     <NativeReference Include="gzGizmoRemoteDistributionLibraries, Version=1.0.0.0, Type=win32">
       <Name>gzGizmoRemoteDistributionLibraries.manifest</Name>
-      <HintPath>..\Assets\Plugins\x64\gzGizmoRemoteDistributionLibraries.manifest</HintPath>
+      <HintPath>..\..\Assets\Plugins\x64\gzGizmoRemoteDistributionLibraries.manifest</HintPath>
     </NativeReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
