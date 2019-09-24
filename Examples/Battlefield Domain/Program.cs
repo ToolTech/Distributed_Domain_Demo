@@ -91,8 +91,14 @@ namespace Battlefield
             client.OnNewAttributes += Client_OnNewAttributes;
             client.OnUpdateAttributes += Client_OnUpdateAttributes;
 
-            // Subscribe standard objects
+            client.OnEvent += Client_OnEvent;
+
+            // Subscribe all standard objects
             client.SubscribeObjects(session,null,true);
+
+            // Subscribe all standard events
+            client.SubscribeEvents(session);
+
 
             //DistObject o = manager.GetObject("TestObject");
 
@@ -100,7 +106,7 @@ namespace Battlefield
 
             //o = client.WaitForObject("TestObject", session);
 
-            for(int i=0;i<100;i++)
+            for (int i=0;i<100;i++)
             {
                 //DistTransaction update = new DistTransaction();
 
@@ -124,6 +130,7 @@ namespace Battlefield
             // GC and platform uninit is managed by the system automatically
         }
 
+     
         private static void Client_OnNewAttributes(DistClient sender, DistNotificationSet notif, DistObject o, DistSession session)
         {
             sender.SubscribeAttributeValue(notif, o, true);
