@@ -62,6 +62,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BattlefieldSoldierObject.cs" />
+    <Compile Include="BattlefieldTimeObject.cs" />
+    <Compile Include="BattlefieldTimeSyncEvent.cs" />
+    <Compile Include="BattlefieldVehicleObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

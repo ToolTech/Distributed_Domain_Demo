@@ -20,6 +20,9 @@
 
 using GizmoSDK.GizmoBase;
 using GizmoSDK.GizmoDistribution;
+using System;
+
+
 
 namespace Battlefield
 {
@@ -33,7 +36,7 @@ namespace Battlefield
             Message.OnMessage += Message_OnMessage;
 
             // Set message level to debug
-            Message.SetMessageLevel(MessageLevel.DEBUG);
+            Message.SetMessageLevel(MessageLevel.DEBUG|MessageLevel.INTERNAL);
 
            
             // Initialize platforms for various used SDKs
@@ -45,14 +48,26 @@ namespace Battlefield
             // Create a manager. The manager controls it all
             DistManager manager = DistManager.GetManager(true);
 
+            // Register some factories
+            manager.RegisterObject<BattlefieldSoldierObject>();
+            manager.RegisterObject<BattlefieldVehicleObject>();
+            manager.RegisterObject<BattlefieldTimeObject>();
+
+            // Events
+            manager.RegisterEvent<BattlefieldTimeSyncEvent>();
+
+
+
+
             // Start the manager with settting for transport protocols
-            var IPAddress = "234.2.3.100";
-            var networkInterface = "0.0.0.0"; // Update this to your interface ip. E.g. 192.168.100.100.
+            var MCastAddress = "234.2.3.100";
+
+            //var networkInterface = "10.23.24.50"; // Update this to your interface ip. E.g. 192.168.100.100.
             ushort serverPort = 6667;
             ushort sessionPort = 6668;
 
-            var serverChannel = DistRemoteChannel.CreateChannel(5000, DistTransportType.MULTICAST, IPAddress, serverPort, networkInterface);
-            var sessionChannel = DistRemoteChannel.CreateChannel(5000, DistTransportType.MULTICAST, IPAddress, sessionPort, networkInterface);
+            var serverChannel = DistRemoteChannel.CreateChannel(5000, DistTransportType.MULTICAST, MCastAddress, serverPort /*,networkInterface*/);
+            var sessionChannel = DistRemoteChannel.CreateChannel(5000, DistTransportType.MULTICAST, MCastAddress, sessionPort /*,networkInterface*/);
 
             manager.Start(sessionChannel, serverChannel);
 
@@ -79,19 +94,19 @@ namespace Battlefield
             // Subscribe standard objects
             client.SubscribeObjects(session,null,true);
 
-            DistObject o = manager.GetObject("TestObject");
+            //DistObject o = manager.GetObject("TestObject");
 
-            client.AddObject(o, session);
+            //client.AddObject(o, session);
 
-            o = client.WaitForObject("TestObject", session);
+            //o = client.WaitForObject("TestObject", session);
 
             for(int i=0;i<100;i++)
             {
-                DistTransaction update = new DistTransaction();
+                //DistTransaction update = new DistTransaction();
 
-                update.SetAttributeValue("Updater", client.GetClientID().InstanceID.ToString());
+                //update.SetAttributeValue("Updater", client.GetClientID().InstanceID.ToString());
 
-                client.UpdateObject(update, o);
+                //client.UpdateObject(update, o);
 
                 System.Threading.Thread.Sleep(1000);
             }
