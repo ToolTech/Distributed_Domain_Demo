@@ -40,8 +40,7 @@ namespace Send_Event
             GizmoSDK.GizmoBase.Platform.Initialize();
             GizmoSDK.GizmoDistribution.Platform.Initialize();
                        
-
-
+            
             // Create a manager. The manager controls it all
             DistManager manager = DistManager.GetManager(true);
 
@@ -60,7 +59,7 @@ namespace Send_Event
             // Now we can get a session. A kind of a meeting room that is used to exchange various "topics"
             DistSession session = client.GetSession("MessageSession", true, true);
 
-            // Joint that session and subribe all events
+            // Join that session and subribe all events
             client.JoinSession(session);
 
             // Subscribe standard events

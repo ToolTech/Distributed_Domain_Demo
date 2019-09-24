@@ -30,6 +30,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "5. Send Event", "Examples\S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "6. Update Object", "Examples\Update_Object\6. Update Object.csproj", "{94B62930-43CC-42B5-84E1-D791D05DB2FD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{00EF4FB9-B050-4323-94A5-997EDEC10EB1}"
+	ProjectSection(SolutionItems) = preProject
+		Tutorial\c++_gizmodistribution_programmers_manual.pdf = Tutorial\c++_gizmodistribution_programmers_manual.pdf
+		Tutorial\Distribution Tutorial.pptx = Tutorial\Distribution Tutorial.pptx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
