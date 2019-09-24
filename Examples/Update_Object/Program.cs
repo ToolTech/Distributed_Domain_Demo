@@ -45,8 +45,15 @@ namespace Update_Object
             // Create a manager. The manager controls it all
             DistManager manager = DistManager.GetManager(true);
 
-               // Start the manager with settting for transport protocols
-            manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(), DistRemoteChannel.CreateDefaultServerChannel());
+            // Start the manager with settting for transport protocols
+            var IPAddress = "234.2.3.100";
+            var networkInterface = "0.0.0.0"; // Update this to your interface ip. E.g. 192.168.100.100.
+            ushort serverPort = 6667;
+            ushort sessionPort = 6668;
+
+            var serverChannel = DistRemoteChannel.CreateChannel(5000, DistTransportType.MULTICAST, IPAddress, serverPort, networkInterface);
+            var sessionChannel = DistRemoteChannel.CreateChannel(5000, DistTransportType.MULTICAST, IPAddress, sessionPort, networkInterface);
+            manager.Start(sessionChannel, serverChannel);
 
             //If we want to attach the DistMonitor debugger
             manager.EnableDebug(true);
@@ -58,18 +65,18 @@ namespace Update_Object
             client.Initialize();
 
             // Now we can get a session. A kind of a meeting room that is used to exchange various "topics"
-            DistSession session = client.GetSession("MessageSession", true, true);
+            DistSession session = client.GetSession("Battlefield", true, true);
 
             // Joint that session and subribe all events
             client.JoinSession(session);
-
-            // Subscribe standard events
-            client.SubscribeObjects(session,null,true);
 
             // Create a delegete
             client.OnNewObject += Client_OnNewObject;
             client.OnNewAttributes += Client_OnNewAttributes;
             client.OnUpdateAttributes += Client_OnUpdateAttributes;
+
+            // Subscribe standard objects
+            client.SubscribeObjects(session,null,true);
 
             DistObject o = manager.GetObject("TestObject");
 
