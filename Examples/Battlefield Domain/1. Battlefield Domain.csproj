@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1BB1AD89-5B53-4455-B125-97A25359E33B}</ProjectGuid>
+    <ProjectGuid>{0E1E3B00-3923-45DA-A900-5E8A7786A1FD}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Event_Demo</RootNamespace>
-    <AssemblyName>Event_Demo</AssemblyName>
+    <RootNamespace>Battlefield</RootNamespace>
+    <AssemblyName>Battlefield</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -49,7 +49,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Event_Demo.Program</StartupObject>
+    <StartupObject>Battlefield.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -62,6 +62,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BattlefieldSoldierObject.cs" />
+    <Compile Include="BattlefieldTimeObject.cs" />
+    <Compile Include="BattlefieldTimeSyncEvent.cs" />
+    <Compile Include="BattlefieldVehicleObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

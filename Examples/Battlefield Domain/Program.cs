@@ -1,7 +1,7 @@
 ﻿//******************************************************************************
 // File			: Program.cs
-// Module		: Distribution Examples
-// Description	: Basic examples for C# distribution
+// Module		: Battlefield Examples
+// Description	: Basic examples for Saab Battlefield Domain Model (BFD)
 // Author		: Anders Modén		
 //		
 // Copyright © 2003- Saab Training Systems AB, Sweden
@@ -20,9 +20,13 @@
 
 using GizmoSDK.GizmoBase;
 using GizmoSDK.GizmoDistribution;
+using System;
 
-namespace Update_Object
+
+
+namespace Battlefield
 {
+        
     class Program
     {
         static void Main(string[] args)
@@ -32,7 +36,7 @@ namespace Update_Object
             Message.OnMessage += Message_OnMessage;
 
             // Set message level to debug
-            Message.SetMessageLevel(MessageLevel.DEBUG);
+            Message.SetMessageLevel(MessageLevel.DEBUG|MessageLevel.INTERNAL);
 
            
             // Initialize platforms for various used SDKs
@@ -44,8 +48,28 @@ namespace Update_Object
             // Create a manager. The manager controls it all
             DistManager manager = DistManager.GetManager(true);
 
-               // Start the manager with settting for transport protocols
-            manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(), DistRemoteChannel.CreateDefaultServerChannel());
+            // Register some factories
+            manager.RegisterObject<BattlefieldSoldierObject>();
+            manager.RegisterObject<BattlefieldVehicleObject>();
+            manager.RegisterObject<BattlefieldTimeObject>();
+
+            // Events
+            manager.RegisterEvent<BattlefieldTimeSyncEvent>();
+
+
+
+
+            // Start the manager with settting for transport protocols
+            var MCastAddress = "234.2.3.100";
+
+            //var networkInterface = "10.23.24.50"; // Update this to your interface ip. E.g. 192.168.100.100.
+            ushort serverPort = 6667;
+            ushort sessionPort = 6668;
+
+            var serverChannel = DistRemoteChannel.CreateChannel(5000, DistTransportType.MULTICAST, MCastAddress, serverPort /*,networkInterface*/);
+            var sessionChannel = DistRemoteChannel.CreateChannel(5000, DistTransportType.MULTICAST, MCastAddress, sessionPort /*,networkInterface*/);
+
+            manager.Start(sessionChannel, serverChannel);
 
             //If we want to attach the DistMonitor debugger
             manager.EnableDebug(true);
@@ -57,32 +81,38 @@ namespace Update_Object
             client.Initialize();
 
             // Now we can get a session. A kind of a meeting room that is used to exchange various "topics"
-            DistSession session = client.GetSession("MessageSession", true, true);
+            DistSession session = client.GetSession("Battlefield", true, true);
 
             // Joint that session and subribe all events
             client.JoinSession(session);
-
-            // Subscribe standard events
-            client.SubscribeObjects(session,null,true);
 
             // Create a delegete
             client.OnNewObject += Client_OnNewObject;
             client.OnNewAttributes += Client_OnNewAttributes;
             client.OnUpdateAttributes += Client_OnUpdateAttributes;
 
-            DistObject o = manager.GetObject("TestObject");
+            client.OnEvent += Client_OnEvent;
 
-            client.AddObject(o, session);
+            // Subscribe all standard objects
+            client.SubscribeObjects(session,null,true);
 
-            o = client.WaitForObject("TestObject", session);
+            // Subscribe all standard events
+            client.SubscribeEvents(session);
 
-            for(int i=0;i<100;i++)
+
+            //DistObject o = manager.GetObject("TestObject");
+
+            //client.AddObject(o, session);
+
+            //o = client.WaitForObject("TestObject", session);
+
+            for (int i=0;i<100;i++)
             {
-                DistTransaction update = new DistTransaction();
+                //DistTransaction update = new DistTransaction();
 
-                update.SetAttributeValue("Updater", client.GetClientID().InstanceID.ToString());
+                //update.SetAttributeValue("Updater", client.GetClientID().InstanceID.ToString());
 
-                client.UpdateObject(update, o);
+                //client.UpdateObject(update, o);
 
                 System.Threading.Thread.Sleep(1000);
             }
@@ -100,6 +130,7 @@ namespace Update_Object
             // GC and platform uninit is managed by the system automatically
         }
 
+     
         private static void Client_OnNewAttributes(DistClient sender, DistNotificationSet notif, DistObject o, DistSession session)
         {
             sender.SubscribeAttributeValue(notif, o, true);

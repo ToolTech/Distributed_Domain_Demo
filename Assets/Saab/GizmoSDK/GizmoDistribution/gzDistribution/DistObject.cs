@@ -163,6 +163,42 @@ namespace GizmoSDK
                 return DistObject_fromJSON(GetNativeReference(), json);
             }
 
+            // --- Reflection mechanisms --------------------------------
+
+            static public bool StorePropertiesAndFields(DistObject distobj, object obj, bool allProperties = false)
+            {
+                foreach (System.Reflection.PropertyInfo prop in obj.GetType().GetProperties())
+                {
+                    if (allProperties || Attribute.IsDefined(prop, typeof(DistProperty)))
+                        if (!distobj.SetAttributeValue(prop.Name, DynamicType.CreateDynamicType(prop.GetValue(obj), allProperties)))
+                            return false;
+                }
+
+                foreach (System.Reflection.FieldInfo field in obj.GetType().GetFields())
+                {
+                    if (allProperties || Attribute.IsDefined(field, typeof(DistProperty)))
+                        if (!distobj.SetAttributeValue(field.Name, DynamicType.CreateDynamicType(field.GetValue(obj), allProperties)))
+                            return false;
+                }
+
+                return true;
+            }
+
+            static public void RestorePropertiesAndFields(DistObject distobj, object obj, bool allProperties = false)
+            {
+                foreach (System.Reflection.PropertyInfo prop in obj.GetType().GetProperties())
+                {
+                    if (allProperties || Attribute.IsDefined(prop, typeof(DistProperty)))
+                        prop.SetValue(obj, distobj.GetAttributeValue(prop.Name).GetObject(prop.PropertyType, allProperties));
+                }
+
+                foreach (System.Reflection.FieldInfo field in obj.GetType().GetFields())
+                {
+                    if (allProperties || Attribute.IsDefined(field, typeof(DistProperty)))
+                        field.SetValue(obj, distobj.GetAttributeValue(field.Name).GetObject(field.FieldType, allProperties));
+                }
+            }
+
             #region --------------------------- private ----------------------------------------------
 
             [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
