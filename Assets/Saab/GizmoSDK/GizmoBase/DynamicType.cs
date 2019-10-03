@@ -447,14 +447,16 @@ namespace GizmoSDK
 
             public bool IsVoid()
             {
-                return Is("void");
+                return Is(DynamicType.Type.VOID);
             }
 
             public bool IsError()
             {
-                return Is("error");
-            }
+                if (!Is(DynamicType.Type.ERROR))
+                    return false;
 
+                return ((DynamicTypeError)this).IsError();
+            }
 
             public string GetDynamicType()
             {
