@@ -1,5 +1,5 @@
 Distributed Domain Demo
-==================
+=======================
 
 <B>A Saab Dynamics demo of the GizmoDistribution API SDK</B>
 
@@ -11,7 +11,9 @@ The binaries are licensed by Saab Dynamics. If you are interested in using this 
 
 anders.moden@saabgroup.com
 
-
+Generate License
+================
+Run the "licApp.exe" application in the LicApp directory and press "Copy Request" and send clipboard content to email adress above
 
 Running the demo
 ================
