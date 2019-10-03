@@ -41,7 +41,7 @@ namespace Event_Performance
 
             DistTransportType protocol = DistTransportType.MULTICAST;
 
-            string iface = "127.0.0.1"; // null;
+            string iface =  null;
 
             // Start the manager with settting for transport protocols
             manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(false,protocol, iface), DistRemoteChannel.CreateDefaultServerChannel(false,protocol, iface));

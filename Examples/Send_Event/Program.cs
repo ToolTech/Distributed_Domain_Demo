@@ -33,7 +33,7 @@ namespace Send_Event
             Message.OnMessage += Message_OnMessage;
 
             // Set message level to debug
-            Message.SetMessageLevel(MessageLevel.DEBUG);
+            Message.SetMessageLevel(MessageLevel.DEBUG|MessageLevel.INTERNAL);
 
            
             // Initialize platforms for various used SDKs
