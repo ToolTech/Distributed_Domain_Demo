@@ -252,6 +252,8 @@ namespace GizmoSDK
                 if (t==typeof(DynamicType))
                     return this;
 
+                t = Nullable.GetUnderlyingType(t) ?? t;
+
                 if (t.IsSubclassOf(typeof(DynamicType)))
                     return this;
 

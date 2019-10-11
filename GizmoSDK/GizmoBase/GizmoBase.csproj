@@ -63,6 +63,9 @@
     <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\DynamicTypeContainer.cs">
       <Link>DynamicTypeContainer.cs</Link>
     </Compile>
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\DynamicTypeError.cs">
+      <Link>DynamicTypeError.cs</Link>
+    </Compile>
     <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\DynamicTypeInt64.cs">
       <Link>DynamicTypeInt64.cs</Link>
     </Compile>
