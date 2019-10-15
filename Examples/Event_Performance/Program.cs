@@ -30,6 +30,8 @@ namespace Event_Performance
     {
         const int COUNT = 1000;
 
+        static readonly LicenseManager lic = new LicenseManager();
+
         static void Main(string[] args)
         {
             // Initialize platforms for various used SDKs
