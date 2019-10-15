@@ -25,6 +25,8 @@ namespace Update_Object
 {
     class Program
     {
+        static readonly LicenseManager lic = new LicenseManager();
+
         static void Main(string[] args)
         {
 

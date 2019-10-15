@@ -18,10 +18,6 @@
 //
 //******************************************************************************
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using GizmoSDK.GizmoBase;
 using GizmoSDK.GizmoDistribution;
@@ -77,6 +73,8 @@ namespace Event_Demo
         
     class Program
     {
+        static readonly LicenseManager lic = new LicenseManager();
+
         static void Main(string[] args)
         {
             // Initialize platforms for various used SDKs

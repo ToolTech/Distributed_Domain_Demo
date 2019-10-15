@@ -29,18 +29,20 @@ using GizmoSDK.GizmoDistribution;
 
 namespace Event_Performance
 {
+    
 
     class Program
     {
         const int COUNT = 100000;
+
+        static readonly LicenseManager lic = new LicenseManager();
 
         static void Main(string[] args)
         {
             // Initialize platforms for various used SDKs
             GizmoSDK.GizmoBase.Platform.Initialize();
             GizmoSDK.GizmoDistribution.Platform.Initialize();
-
-
+            
             Message.OnMessage += Message_OnMessage;
 
             Message.SetMessageLevel(MessageLevel.DEBUG);

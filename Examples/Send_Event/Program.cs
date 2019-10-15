@@ -26,6 +26,8 @@ namespace Send_Event
         
     class Program
     {
+        static readonly LicenseManager lic = new LicenseManager();
+
         static void Main(string[] args)
         {
 
@@ -33,7 +35,7 @@ namespace Send_Event
             Message.OnMessage += Message_OnMessage;
 
             // Set message level to debug
-            Message.SetMessageLevel(MessageLevel.DEBUG);
+            Message.SetMessageLevel(MessageLevel.DEBUG|MessageLevel.INTERNAL);
 
            
             // Initialize platforms for various used SDKs

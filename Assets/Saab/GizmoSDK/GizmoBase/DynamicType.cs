@@ -252,6 +252,8 @@ namespace GizmoSDK
                 if (t==typeof(DynamicType))
                     return this;
 
+                t = Nullable.GetUnderlyingType(t) ?? t;
+
                 if (t.IsSubclassOf(typeof(DynamicType)))
                     return this;
 
@@ -447,14 +449,16 @@ namespace GizmoSDK
 
             public bool IsVoid()
             {
-                return Is("void");
+                return Is(DynamicType.Type.VOID);
             }
 
             public bool IsError()
             {
-                return Is("error");
-            }
+                if (!Is(DynamicType.Type.ERROR))
+                    return false;
 
+                return ((DynamicTypeError)this).IsError();
+            }
 
             public string GetDynamicType()
             {

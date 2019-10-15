@@ -26,6 +26,8 @@ namespace Create_Client
         
     class Program
     {
+        static readonly LicenseManager lic = new LicenseManager();
+
         static void Main(string[] args)
         {
 

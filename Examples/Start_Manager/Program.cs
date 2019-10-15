@@ -19,12 +19,15 @@
 //******************************************************************************
 
 using System;
+using GizmoSDK.GizmoBase;
 using GizmoSDK.GizmoDistribution;
 
 namespace Start_Manager_Example
 {
     class Program
     {
+        static readonly LicenseManager lic = new LicenseManager();
+
         static void Main(string[] args)
         {
             // Initialize platforms for various used SDKs
@@ -40,7 +43,7 @@ namespace Start_Manager_Example
             //If we want to attach the DistMonitor debugger
             manager.EnableDebug(true);
 
-            System.Threading.Thread.Sleep(10000);
+            System.Threading.Thread.Sleep(100000);
 
         }
     }       

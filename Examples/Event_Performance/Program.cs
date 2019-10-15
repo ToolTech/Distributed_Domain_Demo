@@ -30,6 +30,8 @@ namespace Event_Performance
     {
         const int COUNT = 1000;
 
+        static readonly LicenseManager lic = new LicenseManager();
+
         static void Main(string[] args)
         {
             // Initialize platforms for various used SDKs
@@ -41,7 +43,7 @@ namespace Event_Performance
 
             DistTransportType protocol = DistTransportType.MULTICAST;
 
-            string iface = "127.0.0.1"; // null;
+            string iface =  null;
 
             // Start the manager with settting for transport protocols
             manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(false,protocol, iface), DistRemoteChannel.CreateDefaultServerChannel(false,protocol, iface));

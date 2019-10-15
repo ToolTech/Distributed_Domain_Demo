@@ -63,6 +63,9 @@
     <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\DynamicTypeContainer.cs">
       <Link>DynamicTypeContainer.cs</Link>
     </Compile>
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\DynamicTypeError.cs">
+      <Link>DynamicTypeError.cs</Link>
+    </Compile>
     <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\DynamicTypeInt64.cs">
       <Link>DynamicTypeInt64.cs</Link>
     </Compile>
@@ -86,6 +89,9 @@
     </Compile>
     <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\License.cs">
       <Link>License.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\LicenseManager.cs">
+      <Link>LicenseManager.cs</Link>
     </Compile>
     <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\Matrix.cs">
       <Link>Matrix.cs</Link>

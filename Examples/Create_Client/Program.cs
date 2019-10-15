@@ -18,6 +18,7 @@
 //
 //******************************************************************************
 
+using GizmoSDK.GizmoBase;
 using GizmoSDK.GizmoDistribution;
 
 namespace Create_Client
@@ -25,6 +26,8 @@ namespace Create_Client
         
     class Program
     {
+        static readonly LicenseManager lic = new LicenseManager();
+
         static void Main(string[] args)
         {
             // Initialize platforms for various used SDKs
