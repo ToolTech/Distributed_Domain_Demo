@@ -28,7 +28,7 @@ namespace Event_Performance
     
     class Program
     {
-        const int COUNT = 1000;
+        const int COUNT = 10000;
 
         static readonly LicenseManager lic = new LicenseManager();
 
@@ -54,7 +54,7 @@ namespace Event_Performance
             DistClient client = new DistClient("PerfClient", manager);
 
             // We need to tell the client how to initialize
-            client.Initialize(0,0,true);
+            client.Initialize(0,0);
 
             // Now we can get a session. A kind of a meeting room that is used to exchange various "topics"
             DistSession session = client.GetSession("PerfSession", true, true);
@@ -123,10 +123,6 @@ namespace Event_Performance
 
         private static void Client_OnEvent(DistClient sender, DistEvent e)
         {
-            // Check if message is from us
-            if (e.GetSource() == sender.GetClientID().InstanceID)
-                return;
-
             if(counter==0)
             {
                 recv_timer = new Timer();
