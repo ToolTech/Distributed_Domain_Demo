@@ -41,9 +41,11 @@ namespace Event_Performance
             // Create a manager. The manager controls it all
             DistManager manager = DistManager.GetManager(true);
 
-            DistTransportType protocol = DistTransportType.MULTICAST;
+            DistTransportType protocol = DistTransportType.BROADCAST;
 
-            string iface =  null;
+            string iface =  "127.0.0.1";
+
+            //string iface = null;
 
             // Start the manager with settting for transport protocols
             manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(false,protocol, iface), DistRemoteChannel.CreateDefaultServerChannel(false,protocol, iface));

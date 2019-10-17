@@ -40,6 +40,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Battlefield", "Battlefield"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1. Battlefield Domain", "Examples\Battlefield Domain\1. Battlefield Domain.csproj", "{0E1E3B00-3923-45DA-A900-5E8A7786A1FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Object_Performance", "Examples\Object_Performance\Object_Performance.csproj", "{05ECE2A2-F13B-42F4-9A94-E07CFE0F5A06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -94,6 +96,10 @@ Global
 		{0E1E3B00-3923-45DA-A900-5E8A7786A1FD}.Debug|x64.Build.0 = Debug|x64
 		{0E1E3B00-3923-45DA-A900-5E8A7786A1FD}.Release|x64.ActiveCfg = Release|x64
 		{0E1E3B00-3923-45DA-A900-5E8A7786A1FD}.Release|x64.Build.0 = Release|x64
+		{05ECE2A2-F13B-42F4-9A94-E07CFE0F5A06}.Debug|x64.ActiveCfg = Debug|x64
+		{05ECE2A2-F13B-42F4-9A94-E07CFE0F5A06}.Debug|x64.Build.0 = Debug|x64
+		{05ECE2A2-F13B-42F4-9A94-E07CFE0F5A06}.Release|x64.ActiveCfg = Release|x64
+		{05ECE2A2-F13B-42F4-9A94-E07CFE0F5A06}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +117,7 @@ Global
 		{B0170DEB-DB9F-46C1-A7F3-A449ECED2279} = {6D024A4E-F795-4FE5-9932-07574DCE9E75}
 		{94B62930-43CC-42B5-84E1-D791D05DB2FD} = {6D024A4E-F795-4FE5-9932-07574DCE9E75}
 		{0E1E3B00-3923-45DA-A900-5E8A7786A1FD} = {B1544EAA-3F7A-4273-8E24-94D04D3EDEDD}
+		{05ECE2A2-F13B-42F4-9A94-E07CFE0F5A06} = {94F7CD17-EBE0-46DD-8C72-470B7365AF3A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B96B0E72-1B38-4DCC-AB55-CF778AE9D003}
