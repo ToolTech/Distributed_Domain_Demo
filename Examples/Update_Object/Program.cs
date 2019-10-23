@@ -78,10 +78,10 @@ namespace Update_Object
 
             o = client.WaitForObject("TestObject", session);
 
-            for(int i=0;i<100;i++)
-            {
-                DistTransaction update = new DistTransaction();
+            DistTransaction update = new DistTransaction();
 
+            for (int i=0;i<100;i++)
+            {
                 update.SetAttributeValue("Updater", client.GetClientID().InstanceID.ToString());
 
                 client.UpdateObject(update, o);

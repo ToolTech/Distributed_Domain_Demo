@@ -102,25 +102,24 @@ namespace Battlefield
             client.SubscribeEvents(session);
 
 
-            //DistObject o = manager.GetObject("TestObject");
+            BattlefieldSoldierObject o = manager.GetObject<BattlefieldSoldierObject>("Soldier");
 
-            //client.AddObject(o, session);
+            client.AddObject(o, session);
 
-            //o = client.WaitForObject("TestObject", session);
+            o = client.WaitForObject(o.GetName(), session) as BattlefieldSoldierObject;
+
+            DistTransaction update = new DistTransaction();
 
             for (int i=0;i<100;i++)
             {
-                //DistTransaction update = new DistTransaction();
+                update.SetAttributeValue("Updater", client.GetClientID().InstanceID.ToString());
 
-                //update.SetAttributeValue("Updater", client.GetClientID().InstanceID.ToString());
-
-                //client.UpdateObject(update, o);
+                client.UpdateObject(update, o);
 
                 System.Threading.Thread.Sleep(1000);
             }
 
             
-
             client.ResignSession(session);
    
             client.Uninitialize();

@@ -28,7 +28,7 @@ namespace Event_Performance
     
     class Program
     {
-        const int COUNT = 10000;
+        const int COUNT = 100000;
 
         static readonly LicenseManager lic = new LicenseManager();
 
@@ -41,7 +41,7 @@ namespace Event_Performance
             // Create a manager. The manager controls it all
             DistManager manager = DistManager.GetManager(true);
 
-            DistTransportType protocol = DistTransportType.BROADCAST;
+            DistTransportType protocol = DistTransportType.MULTICAST;
 
             string iface =  "127.0.0.1";
 
