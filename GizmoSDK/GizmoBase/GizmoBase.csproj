@@ -105,6 +105,9 @@
     <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\Module.cs">
       <Link>Module.cs</Link>
     </Compile>
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\Network.cs">
+      <Link>Network.cs</Link>
+    </Compile>
     <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\Object.cs">
       <Link>Object.cs</Link>
     </Compile>
@@ -125,6 +128,9 @@
     </Compile>
     <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\Serialize.cs">
       <Link>Serialize.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\Test.cs">
+      <Link>Test.cs</Link>
     </Compile>
     <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\Thread.cs">
       <Link>Thread.cs</Link>

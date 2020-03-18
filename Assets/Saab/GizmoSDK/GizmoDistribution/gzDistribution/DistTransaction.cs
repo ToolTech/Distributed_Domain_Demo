@@ -67,6 +67,11 @@ namespace GizmoSDK
                 return DistTransaction_hasAttribute(GetNativeReference(), name);
             }
 
+            public void NewTransaction()
+            {
+                Reset(DistTransaction_createDefaultTransaction());
+            }
+
             #region --------------------------- private ----------------------------------------------
 
             [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]

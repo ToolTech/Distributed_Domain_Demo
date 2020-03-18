@@ -112,6 +112,8 @@ namespace Battlefield
 
             for (int i=0;i<100;i++)
             {
+                update.NewTransaction();
+
                 update.SetAttributeValue("Updater", client.GetClientID().InstanceID.ToString());
 
                 client.UpdateObject(update, o);

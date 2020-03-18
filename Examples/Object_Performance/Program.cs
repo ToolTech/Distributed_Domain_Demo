@@ -103,12 +103,16 @@ namespace Object_Performance
 
                 DistTransaction transaction = new DistTransaction();
 
-                transaction.SetAttributeValue("Test", 0.0);
+                
 
                 for (int j = 0; j < OBJECTS; j++)
                 {
+                    transaction.NewTransaction();
+
+                    transaction.SetAttributeValue("Test", 0.0);
+
                     if (!client.UpdateObject(transaction, objects[j]))
-                        Console.WriteLine("Bajs");
+                        Console.WriteLine("Boo");
                 }
             
                 System.Threading.Thread.Sleep(10);
@@ -119,10 +123,11 @@ namespace Object_Performance
 
                 for (int i=0;i< COUNT; i++)
                 {
-                    transaction.SetAttributeValue("Test", timer.GetTime());
-
                     for (int j = 0; j < OBJECTS; j++)
                     {
+                        transaction.NewTransaction();
+                        transaction.SetAttributeValue("Test", timer.GetTime());
+
                         if (!client.UpdateObject(transaction, objects[j]))
                             Console.WriteLine("Bajs");
                     }

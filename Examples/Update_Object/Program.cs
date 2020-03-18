@@ -82,10 +82,13 @@ namespace Update_Object
 
             for (int i=0;i<100;i++)
             {
+                update.NewTransaction();
+
                 update.SetAttributeValue("Updater", client.GetClientID().InstanceID.ToString());
+                update.SetAttributeValue("Time", Time.SystemSeconds);
 
                 client.UpdateObject(update, o);
-
+  
                 System.Threading.Thread.Sleep(1000);
             }
 

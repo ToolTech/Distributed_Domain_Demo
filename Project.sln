@@ -1,6 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2050
+# Visual Studio 16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GizmoBase", "GizmoSDK\GizmoBase\GizmoBase.csproj", "{5C84642F-7DB7-42B2-A3C9-D3F65D5610F1}"
 EndProject
