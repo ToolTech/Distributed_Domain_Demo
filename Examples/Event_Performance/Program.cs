@@ -28,7 +28,7 @@ namespace Event_Performance
     
     class Program
     {
-        const int COUNT = 100000;
+        const int COUNT = 10;
 
         static readonly LicenseManager lic = new LicenseManager();
 
@@ -43,12 +43,12 @@ namespace Event_Performance
 
             DistTransportType protocol = DistTransportType.MULTICAST;
 
-            string iface =  "127.0.0.1";
+            string iface =  "${wi-fi}";
 
             //string iface = null;
 
             // Start the manager with settting for transport protocols
-            manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(false,protocol, iface), DistRemoteChannel.CreateDefaultServerChannel(false,protocol, iface));
+            manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(true,protocol, iface), DistRemoteChannel.CreateDefaultServerChannel(true,protocol, iface));
 
             // Client set up. You are a client that sends and receives information
             DistClient client = new DistClient("PerfClient", manager);
@@ -99,7 +99,8 @@ namespace Event_Performance
 
                 timer =new Timer();
 
-                for(int i=0;i< COUNT; i++)
+                for(
+                    int i=0;i< COUNT; i++)
                     client.SendEvent(e_arr[i], session);
 
                 Console.WriteLine($"Sent {COUNT} events in {timer.GetTime()} seconds -> Frequency: {timer.GetFrequency(COUNT)}");

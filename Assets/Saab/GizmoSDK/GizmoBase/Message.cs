@@ -19,7 +19,7 @@
 // Module		: GizmoBase C#
 // Description	: C# Bridge to gzMessage class
 // Author		: Anders Modén		
-// Product		: GizmoBase 2.10.4
+// Product		: GizmoBase 2.10.5
 //		
 //
 //			
@@ -37,6 +37,7 @@
 
 using System.Runtime.InteropServices;
 using System;
+using System.Xml.Serialization;
 
 namespace GizmoSDK
 {
@@ -56,12 +57,32 @@ namespace GizmoSDK
             ASSERT = 0x6000,
             ALWAYS = 0x7000,
 
-            INTERNAL=(1<<11),
+            LEVEL_MASK = 0xf07f,
+            LEVEL_MASK_STD = 0xf000,
+
+            INTERNAL =(1<<11),
         }
+
+        [XmlRoot]
+        public class ExceptionMessage
+        {
+            [XmlElement]
+            public string Message { get; set; }
+            [XmlElement]
+            public string Source { get; set; }
+            [XmlElement]
+            public string Stacktrace { get; set; }
+            [XmlElement]
+            public string Type { get; set; }
+        }
+
+                      
 
         public class Message
         {
-            [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
+            public const string GIZMOSDK = "GizmoSDK";
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
             public delegate void EventHandler_OnMessage(string sender ,MessageLevel level, string message);
 
             static public event EventHandler_OnMessage OnMessage;
@@ -69,6 +90,25 @@ namespace GizmoSDK
             static public void Send(string sender, MessageLevel level, string message)
             {
                 Message_message(sender,level, message);
+            }
+
+            static public void SendException(string sender, Exception ex)
+            {
+                var exceptionMessage = new ExceptionMessage()
+                {
+                    Message = ex.Message,
+                    Source = ex.Source,
+                    Stacktrace = ex.StackTrace,
+                    Type = ex.GetType().FullName,
+                };
+
+                var xmlSerializer = new XmlSerializer(typeof(ExceptionMessage));
+
+                var xml = new System.Text.StringBuilder();
+                using (var xmlWriter = System.Xml.XmlWriter.Create(xml))
+                    xmlSerializer.Serialize(xmlWriter, exceptionMessage);
+
+                Message_message(sender, MessageLevel.ASSERT, xml.ToString());
             }
 
             static public void SetMessageLevel(MessageLevel level)
@@ -88,7 +128,7 @@ namespace GizmoSDK
                     s_class_init = null;
             }
 
-            // --------------------- private ----------------------------
+            #region ---------------- Private functions ------------------------
 
 
             private sealed class Initializer
@@ -116,10 +156,13 @@ namespace GizmoSDK
 
             static private EventHandler_OnMessage s_dispatcher;
 
+            [MonoPInvokeCallback(typeof(EventHandler_OnMessage))]
             private static void MessageHandler(string sender, MessageLevel level, string message)
             {
                 OnMessage?.Invoke(sender, level, message);
             }
+
+            #endregion
 
             #region // --------------------- Native calls -----------------------
             [DllImport(GizmoSDK.GizmoBase.Platform.BRIDGE, CharSet = CharSet.Unicode,CallingConvention =CallingConvention.Cdecl)]

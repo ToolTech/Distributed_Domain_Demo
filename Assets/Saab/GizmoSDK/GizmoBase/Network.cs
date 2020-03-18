@@ -15,9 +15,9 @@
 // Export Control:		NOT EXPORT CONTROLLED
 //
 //
-// File			: LicenseManager.cs
+// File			: Networ.cs
 // Module		: GizmoBase C#
-// Description	: C# Bridge to gzLicenseManager class
+// Description	: C# Bridge to gzNetwork.cpp
 // Author		: Anders Modén		
 // Product		: GizmoBase 2.10.5
 //		
@@ -31,7 +31,7 @@
 //									
 // Who	Date	Description						
 //									
-// AMO	191015	Created file 	
+// AMO	191125	Created file 	
 //
 //******************************************************************************
 
@@ -42,19 +42,20 @@ namespace GizmoSDK
 {
     namespace GizmoBase
     {
-        public class LicenseManager : Reference
-        {
-            public LicenseManager() : base(LicenseManager_create()) { }
-
-
-            #region -------------- Native calls ------------------
         
-            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
-            private static extern IntPtr LicenseManager_create();
+        public class Network 
+        {
+            static public string GetHostAddress(string interface_name)
+            {
+                return Marshal.PtrToStringUni(Network_GetHostAddress(interface_name));
+            }
+            
+            #region -------------- Native calls ------------------
 
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern IntPtr Network_GetHostAddress(string url);
+            
             #endregion
         }
-
     }
 }
-

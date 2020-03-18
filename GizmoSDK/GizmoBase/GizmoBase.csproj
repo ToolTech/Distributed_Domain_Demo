@@ -51,6 +51,9 @@
     <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\Debug.cs">
       <Link>Debug.cs</Link>
     </Compile>
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\DebugCommandStation.cs">
+      <Link>DebugCommandStation.cs</Link>
+    </Compile>
     <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\DynamicEvent.cs">
       <Link>DynamicEvent.cs</Link>
     </Compile>
@@ -114,11 +117,17 @@
     <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\Platform.cs">
       <Link>Platform.cs</Link>
     </Compile>
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\Quat.cs">
+      <Link>Quat.cs</Link>
+    </Compile>
     <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\Reference.cs">
       <Link>Reference.cs</Link>
     </Compile>
     <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\Serialize.cs">
       <Link>Serialize.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\Thread.cs">
+      <Link>Thread.cs</Link>
     </Compile>
     <Compile Include="..\..\Assets\Saab\GizmoSDK\GizmoBase\Time.cs">
       <Link>Time.cs</Link>

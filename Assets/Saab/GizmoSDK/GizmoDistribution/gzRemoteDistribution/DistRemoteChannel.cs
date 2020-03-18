@@ -19,7 +19,7 @@
 // Module		: GizmoDistribution C#
 // Description	: C# Bridge to gzDistRemoteChannel class
 // Author		: Anders Modén		
-// Product		: GizmoDistribution 2.10.4
+// Product		: GizmoDistribution 2.10.5
 //		
 //
 //			
@@ -51,7 +51,7 @@ namespace GizmoSDK
             TCP
         }
 
-        public interface IDistRemoteChannelInterface : IReferenceInterface
+        public interface IDistRemoteChannelInterface : IReference
         {
 
         }

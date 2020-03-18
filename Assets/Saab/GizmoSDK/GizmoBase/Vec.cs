@@ -19,7 +19,7 @@
 // Module		: GizmoBase C#
 // Description	: C# Bridge to gzVec class
 // Author		: Anders Modén		
-// Product		: GizmoBase 2.10.4
+// Product		: GizmoBase 2.10.5
 //		
 //
 //			
@@ -32,6 +32,7 @@
 // Who	Date	Description						
 //									
 // AMO	180301	Created file 	
+// AMO	200311	Added string output of Vec2,Vec3,Vec4 and their double repr (2.10.5)
 //
 //******************************************************************************
 
@@ -114,6 +115,14 @@ namespace GizmoSDK
             {
                 return (b - a).Length();
             }
+
+            public override string ToString()
+            {
+                return Marshal.PtrToStringUni(Vec2_asString(ref this));
+            }
+
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern IntPtr Vec2_asString(ref Vec2 vec);
         }
         [Serializable]
         public struct Vec3
@@ -123,6 +132,21 @@ namespace GizmoSDK
                 x = _x;
                 y = _y;
                 z = _z;
+            }
+
+            static public float Dot(Vec3 a, Vec3 b)
+            {
+                return a.x* b.x + a.y * b.y + a.z * b.z;
+            }
+
+            static public Vec3 Cross(Vec3 a, Vec3 b)
+            {
+                return new Vec3(
+                    a.y * b.z - a.z * b.y,
+                    a.z * b.x - a.x * b.z,
+                    a.x * b.y - a.y * b.x
+                    );
+
             }
 
             public static Vec3 operator +(Vec3 a, Vec3 b)
@@ -367,6 +391,7 @@ namespace GizmoSDK
                 y /= l;
             }
 
+
             public double Length()
             {
                 return Math.Sqrt(x * x + y * y );
@@ -389,6 +414,14 @@ namespace GizmoSDK
             {
                 return (b - a).Length();
             }
+
+            public override string ToString()
+            {
+                return Marshal.PtrToStringUni(Vec2D_asString(ref this));
+            }
+
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern IntPtr Vec2D_asString(ref Vec2D vec);
         }
 
         [Serializable]
@@ -445,6 +478,21 @@ namespace GizmoSDK
                 z /= l;
             }
 
+            static public double Dot(Vec3D a, Vec3D b)
+            {
+                return a.x * b.x + a.y * b.y + a.z * b.z;
+            }
+
+            static public Vec3D Cross(Vec3D a, Vec3D b)
+            {
+                return new Vec3D(
+                    a.y * b.z - a.z * b.y,
+                    a.z * b.x - a.x * b.z,
+                    a.x * b.y - a.y * b.x
+                    );
+
+            }
+
             public double Length()
             {
                 return Math.Sqrt(x * x + y * y + z * z);
@@ -477,6 +525,14 @@ namespace GizmoSDK
             {
                 return (b - a).Length();
             }
+
+            public override string ToString()
+            {
+                return Marshal.PtrToStringUni(Vec3D_asString(ref this));
+            }
+
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern IntPtr Vec3D_asString(ref Vec3D vec);
         }
 
         [Serializable]
@@ -557,6 +613,14 @@ namespace GizmoSDK
             {
                 return (b - a).Length();
             }
+
+            public override string ToString()
+            {
+                return Marshal.PtrToStringUni(Vec4D_asString(ref this));
+            }
+
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern IntPtr Vec4D_asString(ref Vec4D vec);
         }
     }
 }

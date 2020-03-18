@@ -15,9 +15,9 @@
 // Export Control:		NOT EXPORT CONTROLLED
 //
 //
-// File			: LicenseManager.cs
+// File			: Thread.cs
 // Module		: GizmoBase C#
-// Description	: C# Bridge to gzLicenseManager class
+// Description	: C# Bridge to gzThread class
 // Author		: Anders Modén		
 // Product		: GizmoBase 2.10.5
 //		
@@ -31,7 +31,7 @@
 //									
 // Who	Date	Description						
 //									
-// AMO	191015	Created file 	
+// AMO	191206	Created file 	        (2.10.5)
 //
 //******************************************************************************
 
@@ -42,19 +42,11 @@ namespace GizmoSDK
 {
     namespace GizmoBase
     {
-        public class LicenseManager : Reference
+        public interface IThread
         {
-            public LicenseManager() : base(LicenseManager_create()) { }
-
-
-            #region -------------- Native calls ------------------
-        
-            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
-            private static extern IntPtr LicenseManager_create();
-
-            #endregion
+            bool IsRunning();
+            bool IsStopping();
         }
-
     }
 }
 

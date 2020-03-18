@@ -40,14 +40,16 @@ namespace Object_Performance
             GizmoSDK.GizmoBase.Platform.Initialize();
             GizmoSDK.GizmoDistribution.Platform.Initialize();
 
+            GizmoSDK.GizmoBase.Message.SetMessageLevel(MessageLevel.DEBUG);
+
             // Create a manager. The manager controls it all
             DistManager manager = DistManager.GetManager(true);
 
-            DistTransportType protocol = DistTransportType.BROADCAST;
+            DistTransportType protocol = DistTransportType.MULTICAST;
 
-            string iface =  "127.0.0.1";
+           // string iface =  "127.0.0.1";
 
-            //string iface = null;
+            string iface = "192.168.137.1";
 
             // Start the manager with settting for transport protocols
             manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(false,protocol, iface), DistRemoteChannel.CreateDefaultServerChannel(false,protocol, iface));

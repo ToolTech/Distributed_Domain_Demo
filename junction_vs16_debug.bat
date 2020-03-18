@@ -11,8 +11,8 @@ if not defined GIZMOSDK (
 rmdir /S / Q Assets\Saab\GizmoSDK
 mkdir Assets\Saab\GizmoSDK
 
-mklink /J Assets\Saab\GizmoSDK\GizmoBase %GIZMOSDK%\GizmoBase\source\C#
-mklink /J Assets\Saab\GizmoSDK\GizmoDistribution %GIZMOSDK%\GizmoDistribution\source\C#
+mklink /J Assets\Saab\GizmoSDK\GizmoBase 		%GIZMOSDK%\GizmoBase\source\C#
+mklink /J Assets\Saab\GizmoSDK\GizmoDistribution 	%GIZMOSDK%\GizmoDistribution\source\C#
 
 
 rem ------------- End of GizmoSDK dependencies -------------------------------
@@ -23,4 +23,4 @@ rem ------------- runtime dlls -----------------------------------------------
 rmdir /S / Q Assets\Plugins
 mkdir Assets\Plugins
 
-mklink /J Assets\Plugins\x64 %GIZMOSDK%\GizmoDistribution\ws\C#\vs15\GizmoDistribution\x64\Debug
+mklink /J Assets\Plugins\x64 %GIZMOSDK%\GizmoDistribution\ws\C#\vs16\GizmoDistribution\x64\Debug
