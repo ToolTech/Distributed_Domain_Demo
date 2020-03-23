@@ -47,9 +47,9 @@ namespace Object_Performance
 
             DistTransportType protocol = DistTransportType.MULTICAST;
 
-           // string iface =  "127.0.0.1";
+            //string iface =  "127.0.0.1";
 
-            string iface = "192.168.137.1";
+            string iface = "";
 
             // Start the manager with settting for transport protocols
             manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(false,protocol, iface), DistRemoteChannel.CreateDefaultServerChannel(false,protocol, iface));
@@ -129,7 +129,7 @@ namespace Object_Performance
                         transaction.SetAttributeValue("Test", timer.GetTime());
 
                         if (!client.UpdateObject(transaction, objects[j]))
-                            Console.WriteLine("Bajs");
+                            Console.WriteLine("Failed to update object");
                     }
                 }
 

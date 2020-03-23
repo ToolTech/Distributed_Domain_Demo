@@ -28,7 +28,7 @@ namespace Event_Performance
     
     class Program
     {
-        const int COUNT = 10;
+        const int COUNT = 1000;
 
         static readonly LicenseManager lic = new LicenseManager();
 
