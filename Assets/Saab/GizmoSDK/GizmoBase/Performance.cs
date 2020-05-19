@@ -42,7 +42,61 @@ namespace GizmoSDK
 {
     namespace GizmoBase
     {
-             
+
+        public class Performance
+        {
+            [Flags]
+            public enum DumpFlags
+            {
+                RUNNING = (1 << 0),
+                STOPPED = (1 << 1),
+                ACCUMULATED_SECTIONS = (1 << 2),
+                HIERARCHICAL_SECTIONS = (1 << 3),
+                ALL = -1,
+            };
+
+            static public void Enter(string section)
+            {
+                Performance_enterPerformanceSection(section);
+            }
+
+            static public void Leave()
+            {
+                Performance_leavePerformanceSection();
+            }
+
+            static public void DumpPerformanceInfo(DumpFlags flags = DumpFlags.RUNNING | DumpFlags.ACCUMULATED_SECTIONS | DumpFlags.HIERARCHICAL_SECTIONS)
+            {
+                Performance_dumpPerformanceInfo(flags);
+            }
+
+            static public void Clear(string section="",UInt32 threadID=0)
+            {
+                Performance_clearPerformanceSection(section,threadID);
+            }
+
+            static public PerformanceResult GetResult(string section, UInt32 threadID = 0)
+            {
+                return new PerformanceResult(Performance_getPerformanceResult(section, threadID));
+            }
+
+            #region -------------- Native calls ------------------
+
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern void Performance_dumpPerformanceInfo(DumpFlags flags);
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern void Performance_enterPerformanceSection(string section);
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern void Performance_leavePerformanceSection();
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern void Performance_clearPerformanceSection(string section,UInt32 threadID);
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern IntPtr Performance_getPerformanceResult(string section, UInt32 threadID);
+
+
+            #endregion
+        }
+
         public class Monitor
         {
             static public void Enter(string monitor)
@@ -85,7 +139,128 @@ namespace GizmoSDK
             #endregion
         }
 
+        public class PerformanceResult : Reference
+        {
+            public PerformanceResult(IntPtr nativeReference) : base(nativeReference) { }
 
+            public UInt32 Iterations    { get {return PerformanceResult_getIterations(GetNativeReference()); }}
+
+            public UInt32 Recursive { get { return PerformanceResult_getRecursive(GetNativeReference()); } }
+
+            public double ExecTotTime { get { return PerformanceResult_getExecTotTime(GetNativeReference()); } }
+
+            public double ExecSelfTime { get { return PerformanceResult_getExecSelfTime(GetNativeReference()); } }
+
+            public double ExeParentTime { get { return PerformanceResult_getExecParentTime(GetNativeReference()); } }
+
+            public float ExecTotPercentage { get { return PerformanceResult_getExecTotPercentage(GetNativeReference()); } }
+
+            public float ExecSelfPercentage { get { return PerformanceResult_getExecSelfPercentage(GetNativeReference()); } }
+
+            public float ExecParentPercentage { get { return PerformanceResult_getExecParentPercentage(GetNativeReference()); } }
+
+            public UInt32 Callers { get { return PerformanceResult_getCallers(GetNativeReference()); } }
+
+            public UInt32 ThreadID { get { return PerformanceResult_getThreadID(GetNativeReference()); } }
+
+            public double SystemTime { get { return PerformanceResult_getSystemTime(GetNativeReference()); } }
+
+            #region -------------- Native calls ------------------
+
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern UInt32 PerformanceResult_getIterations(IntPtr result_reference);
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern UInt32 PerformanceResult_getRecursive(IntPtr result_reference);
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern double PerformanceResult_getExecTotTime(IntPtr result_reference);
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern double PerformanceResult_getExecSelfTime(IntPtr result_reference);
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern double PerformanceResult_getExecParentTime(IntPtr result_reference);
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern float PerformanceResult_getExecTotPercentage(IntPtr result_reference);
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern float PerformanceResult_getExecSelfPercentage(IntPtr result_reference);
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern float PerformanceResult_getExecParentPercentage(IntPtr result_reference);
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern UInt32 PerformanceResult_getCallers(IntPtr result_reference);
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern UInt32 PerformanceResult_getThreadID(IntPtr result_reference);
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern double PerformanceResult_getSystemTime(IntPtr result_reference);
+
+
+            #endregion
+        }
+
+        public class PerformanceTracer : Reference , IThread
+        {
+            public PerformanceTracer(IntPtr nativeReference) : base(nativeReference) { }
+
+            public PerformanceTracer() : base(PerformanceTracer_create()) { }
+
+            public bool IsRunning(bool tick = false)
+            {
+                return PerformanceTracer_isRunning(GetNativeReference(),tick);
+            }
+            public bool IsStopping(bool tick = false)
+            {
+                return PerformanceTracer_isStopping(GetNativeReference(),tick);
+            }
+
+            public bool Run(bool waitForRunning = false)
+            {
+                return PerformanceTracer_run(GetNativeReference(),waitForRunning);
+            }
+
+            public void Stop(bool waitForStopping = false)
+            {
+                PerformanceTracer_stop(GetNativeReference(),waitForStopping);
+            }
+
+            public bool AddSection(string sectionName, UInt32 threadID = 0)
+            {
+                return PerformanceTracer_addSection(GetNativeReference(), sectionName, threadID);
+            }
+            public bool RemoveSection(string sectionName, UInt32 threadID = 0)
+            {
+                return PerformanceTracer_removeSection(GetNativeReference(), sectionName, threadID);
+            }
+
+            public bool AddAll(UInt32 threadID = 0)
+            {
+                return PerformanceTracer_addAll(GetNativeReference(), threadID);
+            }
+
+            #region -------------- Native calls ------------------
+
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern IntPtr PerformanceTracer_create();
+
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern bool PerformanceTracer_isRunning(IntPtr tracer_reference,bool tick);
+
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern bool PerformanceTracer_isStopping(IntPtr tracer_reference,bool tick);
+
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern bool PerformanceTracer_run(IntPtr tracer_reference,bool waitForRunning);
+
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern void PerformanceTracer_stop(IntPtr tracer_reference, bool waitForStopping);
+
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern bool PerformanceTracer_addSection(IntPtr tracer_reference, string sectionName, UInt32 threadID);
+
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern bool PerformanceTracer_removeSection(IntPtr tracer_reference, string sectionName, UInt32 threadID);
+
+            [DllImport(Platform.BRIDGE, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+            private static extern bool PerformanceTracer_addAll(IntPtr tracer_reference, UInt32 threadID);
+
+            #endregion
+        }
     }
 }
 
