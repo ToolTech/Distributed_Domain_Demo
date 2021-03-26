@@ -43,12 +43,24 @@ namespace Event_Performance
 
             DistTransportType protocol = DistTransportType.MULTICAST;
 
-            string iface =  "${wi-fi}";
+            //string iface =  "${wi-fi}";
+
+            //string iface = "10.132.0.5";
+
+            string iface = "127.0.0.1";
+
+            string adress = "234.5.6.19";
+
+            ushort server_port = 1122;
+            ushort client_port = 2211;
+
+            
 
             //string iface = null;
 
             // Start the manager with settting for transport protocols
-            manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(true,protocol, iface), DistRemoteChannel.CreateDefaultServerChannel(true,protocol, iface));
+            //manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(true,protocol, iface), DistRemoteChannel.CreateDefaultServerChannel(true,protocol, iface));
+            manager.Start(DistRemoteChannel.CreateChannel(5000,protocol,adress, client_port,iface), DistRemoteChannel.CreateChannel(5000, protocol, adress, server_port, iface));
 
             // Client set up. You are a client that sends and receives information
             DistClient client = new DistClient("PerfClient", manager);
