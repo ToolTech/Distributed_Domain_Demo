@@ -111,6 +111,8 @@ namespace Object_Performance
 
                     transaction.SetAttributeValue("Test", 0.0);
 
+                    transaction.SetAttributeValue("id", Guid.NewGuid());
+
                     if (!client.UpdateObject(transaction, objects[j]))
                         Console.WriteLine("Boo");
                 }
@@ -165,6 +167,16 @@ namespace Object_Performance
             {
                 Console.WriteLine($"Got {OBJECTS * COUNT} objects updates in {update_timer.GetTime()} seconds -> Frequency: {update_timer.GetFrequency(OBJECTS * COUNT)} ");
                 update_counter = 0;
+            }
+
+            foreach(var a in notif)
+            {
+                var b = a.GetValue();
+
+                if(b.Is(DynamicType.Type.GUID))
+                {
+                    Guid c = b.GetGuid();
+                }
             }
         }
 
