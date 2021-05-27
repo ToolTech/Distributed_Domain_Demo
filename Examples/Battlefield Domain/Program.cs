@@ -58,6 +58,8 @@ namespace Battlefield
             // Events
             manager.RegisterEvent<BattlefieldTimeSyncEvent>();
 
+            DistObject x = manager.GetObject("sold", "BattlefieldSoldierObject");
+
 
 
 
