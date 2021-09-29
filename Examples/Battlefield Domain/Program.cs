@@ -20,9 +20,6 @@
 
 using GizmoSDK.GizmoBase;
 using GizmoSDK.GizmoDistribution;
-using System;
-
-
 
 namespace Battlefield
 {
@@ -103,22 +100,45 @@ namespace Battlefield
             // Subscribe all standard events
             client.SubscribeEvents(session);
 
+            const int COUNT = 30;
 
-            BattlefieldSoldierObject o = manager.GetObject<BattlefieldSoldierObject>("Soldier");
+            BattlefieldSoldierObject[] objs = new BattlefieldSoldierObject[COUNT];
 
-            client.AddObject(o, session);
-
-            o = client.WaitForObject(o.GetName(), session) as BattlefieldSoldierObject;
-
+            
             DistTransaction update = new DistTransaction();
 
-            for (int i=0;i<100;i++)
+            for (int i=0;i<1000;i++)
             {
+                int idx = ((int)Time.SystemSeconds) % COUNT;
+
+                if(objs[idx]==null)
+                {
+                    objs[idx]= manager.GetObject<BattlefieldSoldierObject>($"Soldier{idx}");
+
+                    client.AddObject(objs[idx], session);
+
+                    objs[idx] = client.WaitForObject(objs[idx].GetName(), session, 3) as BattlefieldSoldierObject;
+
+                    if (objs[idx] == null)
+                    {
+                        System.Console.WriteLine($"Failed to Created Soldier{idx} ---- No server");
+                        System.Threading.Thread.Sleep(1000);
+                        continue;
+                    }
+                    else
+                        System.Console.WriteLine($"Created Soldier{idx} --- OK");
+                }
+
+
+
                 update.NewTransaction();
 
                 update.SetAttributeValue("Updater", client.GetClientID().InstanceID.ToString());
+                update.SetAttributeValue("Obj", idx);
 
-                client.UpdateObject(update, o);
+                if(!client.UpdateObject(update, objs[idx]))
+                    System.Console.WriteLine($"Update failed for Soldier{idx} --- FAIL");
+
 
                 System.Threading.Thread.Sleep(1000);
             }
