@@ -117,7 +117,7 @@ namespace Battlefield
 
                     client.AddObject(objs[idx], session);
 
-                    objs[idx] = client.WaitForObject(objs[idx].GetName(), session, 3) as BattlefieldSoldierObject;
+                    objs[idx] = client.WaitForObject(objs[idx].GetName(), session, -1) as BattlefieldSoldierObject;
 
                     if (objs[idx] == null)
                     {
