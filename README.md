@@ -13,7 +13,7 @@ anders.moden@saabgroup.com
 
 Generate License
 ================
-Run the "licApp.exe" application in the Tools/LicApp directory and press "Copy Request" and send clipboard content to email adress above
+Run the "licApp.exe" application in the LicApp directory and press "Copy Request" and send clipboard content to email adress above
 
 Running the demo
 ================
