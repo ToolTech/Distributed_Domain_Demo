@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\gzDistribution.2.11.74.1\build\gzDistribution.props" Condition="Exists('..\..\packages\gzDistribution.2.11.74.1\build\gzDistribution.props')" />
-  <Import Project="..\..\packages\gzBase.2.11.74.1\build\gzBase.props" Condition="Exists('..\..\packages\gzBase.2.11.74.1\build\gzBase.props')" />
+  <Import Project="..\..\packages\gzDistribution.2.12.49.1\build\gzDistribution.props" Condition="Exists('..\..\packages\gzDistribution.2.12.49.1\build\gzDistribution.props')" />
+  <Import Project="..\..\packages\gzBase.2.12.49.1\build\gzBase.props" Condition="Exists('..\..\packages\gzBase.2.12.49.1\build\gzBase.props')" />
   <Import Project="..\..\packages\gzDistribution.2.10.19.1\build\gzDistribution.props" Condition="Exists('..\..\packages\gzDistribution.2.10.19.1\build\gzDistribution.props')" />
   <Import Project="..\..\packages\gzBase.2.10.19.1\build\gzBase.props" Condition="Exists('..\..\packages\gzBase.2.10.19.1\build\gzBase.props')" />
   <Import Project="..\..\packages\gzDistribution.2.10.16.1\build\gzDistribution.props" Condition="Exists('..\..\packages\gzDistribution.2.10.16.1\build\gzDistribution.props')" />
@@ -61,11 +61,11 @@
     <StartupObject>Event_Demo.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GizmoBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\..\packages\GizmoBase.2.11.74.1\lib\net461\GizmoBase.dll</HintPath>
+    <Reference Include="GizmoBase, Version=2.12.49.1, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\..\packages\GizmoBase.2.12.49.1\lib\net461\GizmoBase.dll</HintPath>
     </Reference>
-    <Reference Include="GizmoDistribution, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\..\packages\GizmoDistribution.2.11.74.1\lib\net461\GizmoDistribution.dll</HintPath>
+    <Reference Include="GizmoDistribution, Version=2.12.49.1, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\..\packages\GizmoDistribution.2.12.49.1\lib\net461\GizmoDistribution.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -117,12 +117,12 @@
     <Error Condition="!Exists('..\..\packages\gzDistribution.2.10.19.1\build\gzDistribution.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\gzDistribution.2.10.19.1\build\gzDistribution.props'))" />
     <Error Condition="!Exists('..\..\packages\gzDistribution.2.10.19.1\build\gzDistribution.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\gzDistribution.2.10.19.1\build\gzDistribution.targets'))" />
     <Error Condition="!Exists('..\..\packages\GizmoDistribution.2.10.19.1\build\GizmoDistribution.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\GizmoDistribution.2.10.19.1\build\GizmoDistribution.targets'))" />
-    <Error Condition="!Exists('..\..\packages\gzBase.2.11.74.1\build\gzBase.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\gzBase.2.11.74.1\build\gzBase.props'))" />
-    <Error Condition="!Exists('..\..\packages\gzBase.2.11.74.1\build\gzBase.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\gzBase.2.11.74.1\build\gzBase.targets'))" />
-    <Error Condition="!Exists('..\..\packages\GizmoBase.2.11.74.1\build\GizmoBase.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\GizmoBase.2.11.74.1\build\GizmoBase.targets'))" />
-    <Error Condition="!Exists('..\..\packages\gzDistribution.2.11.74.1\build\gzDistribution.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\gzDistribution.2.11.74.1\build\gzDistribution.props'))" />
-    <Error Condition="!Exists('..\..\packages\gzDistribution.2.11.74.1\build\gzDistribution.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\gzDistribution.2.11.74.1\build\gzDistribution.targets'))" />
-    <Error Condition="!Exists('..\..\packages\GizmoDistribution.2.11.74.1\build\GizmoDistribution.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\GizmoDistribution.2.11.74.1\build\GizmoDistribution.targets'))" />
+    <Error Condition="!Exists('..\..\packages\gzBase.2.12.49.1\build\gzBase.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\gzBase.2.12.49.1\build\gzBase.props'))" />
+    <Error Condition="!Exists('..\..\packages\gzBase.2.12.49.1\build\gzBase.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\gzBase.2.12.49.1\build\gzBase.targets'))" />
+    <Error Condition="!Exists('..\..\packages\GizmoBase.2.12.49.1\build\GizmoBase.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\GizmoBase.2.12.49.1\build\GizmoBase.targets'))" />
+    <Error Condition="!Exists('..\..\packages\gzDistribution.2.12.49.1\build\gzDistribution.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\gzDistribution.2.12.49.1\build\gzDistribution.props'))" />
+    <Error Condition="!Exists('..\..\packages\gzDistribution.2.12.49.1\build\gzDistribution.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\gzDistribution.2.12.49.1\build\gzDistribution.targets'))" />
+    <Error Condition="!Exists('..\..\packages\GizmoDistribution.2.12.49.1\build\GizmoDistribution.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\GizmoDistribution.2.12.49.1\build\GizmoDistribution.targets'))" />
   </Target>
   <Import Project="..\..\packages\gzBase.2.10.16.1\build\gzBase.targets" Condition="Exists('..\..\packages\gzBase.2.10.16.1\build\gzBase.targets')" />
   <Import Project="..\..\packages\GizmoBase.2.10.16.1\build\GizmoBase.targets" Condition="Exists('..\..\packages\GizmoBase.2.10.16.1\build\GizmoBase.targets')" />
@@ -132,8 +132,8 @@
   <Import Project="..\..\packages\GizmoBase.2.10.19.1\build\GizmoBase.targets" Condition="Exists('..\..\packages\GizmoBase.2.10.19.1\build\GizmoBase.targets')" />
   <Import Project="..\..\packages\gzDistribution.2.10.19.1\build\gzDistribution.targets" Condition="Exists('..\..\packages\gzDistribution.2.10.19.1\build\gzDistribution.targets')" />
   <Import Project="..\..\packages\GizmoDistribution.2.10.19.1\build\GizmoDistribution.targets" Condition="Exists('..\..\packages\GizmoDistribution.2.10.19.1\build\GizmoDistribution.targets')" />
-  <Import Project="..\..\packages\gzBase.2.11.74.1\build\gzBase.targets" Condition="Exists('..\..\packages\gzBase.2.11.74.1\build\gzBase.targets')" />
-  <Import Project="..\..\packages\GizmoBase.2.11.74.1\build\GizmoBase.targets" Condition="Exists('..\..\packages\GizmoBase.2.11.74.1\build\GizmoBase.targets')" />
-  <Import Project="..\..\packages\gzDistribution.2.11.74.1\build\gzDistribution.targets" Condition="Exists('..\..\packages\gzDistribution.2.11.74.1\build\gzDistribution.targets')" />
-  <Import Project="..\..\packages\GizmoDistribution.2.11.74.1\build\GizmoDistribution.targets" Condition="Exists('..\..\packages\GizmoDistribution.2.11.74.1\build\GizmoDistribution.targets')" />
+  <Import Project="..\..\packages\gzBase.2.12.49.1\build\gzBase.targets" Condition="Exists('..\..\packages\gzBase.2.12.49.1\build\gzBase.targets')" />
+  <Import Project="..\..\packages\GizmoBase.2.12.49.1\build\GizmoBase.targets" Condition="Exists('..\..\packages\GizmoBase.2.12.49.1\build\GizmoBase.targets')" />
+  <Import Project="..\..\packages\gzDistribution.2.12.49.1\build\gzDistribution.targets" Condition="Exists('..\..\packages\gzDistribution.2.12.49.1\build\gzDistribution.targets')" />
+  <Import Project="..\..\packages\GizmoDistribution.2.12.49.1\build\GizmoDistribution.targets" Condition="Exists('..\..\packages\GizmoDistribution.2.12.49.1\build\GizmoDistribution.targets')" />
 </Project>
