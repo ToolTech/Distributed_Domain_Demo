@@ -26,11 +26,11 @@ namespace Battlefield
         
     class Program
     {
+        // Start a license manager internally
         static readonly LicenseManager lic = new LicenseManager();
 
         static void Main(string[] args)
         {
-
             // Add a message receiver
             Message.OnMessage += Message_OnMessage;
 
