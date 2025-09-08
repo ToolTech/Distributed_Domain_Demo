@@ -63,12 +63,13 @@ namespace Battlefield
             // Start the manager with settting for transport protocols
             var MCastAddress = "234.2.3.100";
 
-            //var networkInterface = "10.23.24.50"; // Update this to your interface ip. E.g. 192.168.100.100.
+            var networkInterface = "127.0.0.1"; // Update this to your interface ip. E.g. 192.168.100.100.
+
             ushort serverPort = 6667;
             ushort sessionPort = 6668;
 
-            var serverChannel = DistRemoteChannel.CreateChannel(5000, DistTransportType.MULTICAST, MCastAddress, serverPort /*,networkInterface*/);
-            var sessionChannel = DistRemoteChannel.CreateChannel(5000, DistTransportType.MULTICAST, MCastAddress, sessionPort /*,networkInterface*/);
+            var serverChannel = DistRemoteChannel.CreateChannel(5000, DistTransportType.MULTICAST, MCastAddress, serverPort ,networkInterface);
+            var sessionChannel = DistRemoteChannel.CreateChannel(5000, DistTransportType.MULTICAST, MCastAddress, sessionPort ,networkInterface);
 
             manager.Start(sessionChannel, serverChannel);
 
