@@ -26,7 +26,8 @@ namespace Start_Manager_Example
 {
     class Program
     {
-        static readonly LicenseManager lic = new LicenseManager();
+        // Start a license manager internally
+        static readonly LicenseManager _lic = new LicenseManager();
 
         static void Main(string[] args)
         {
@@ -38,6 +39,9 @@ namespace Start_Manager_Example
             DistManager manager = DistManager.GetManager(true);
 
             // Start the manager with settting for transport protocols
+            //manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(true,DistTransportType.MULTICAST,"127.0.0.1"), DistRemoteChannel.CreateDefaultServerChannel(true,DistTransportType.MULTICAST,"127.0.0.1"));
+
+            // Just plain. Above opens up on 127.0.0.1 (localhost)
             manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(), DistRemoteChannel.CreateDefaultServerChannel());
 
             //If we want to attach the DistMonitor debugger
