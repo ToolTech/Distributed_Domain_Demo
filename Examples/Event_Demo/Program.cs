@@ -163,9 +163,12 @@ namespace Event_Demo
                 return;
            
             MessageEvent mess = e as MessageEvent;
-            
-            if(mess!=null)
+
+            if (mess != null)
+            {
                 Console.WriteLine(mess.Message);
+                Console.WriteLine(e.ToJSON());
+            }
         }
     }
 }
