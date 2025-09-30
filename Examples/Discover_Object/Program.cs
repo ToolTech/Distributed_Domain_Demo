@@ -20,6 +20,7 @@
 
 using GizmoSDK.GizmoBase;
 using GizmoSDK.GizmoDistribution;
+using System;
 
 namespace Update_Object
 {
@@ -68,33 +69,16 @@ namespace Update_Object
 
             // Subscribe standard events
             client.SubscribeObjects(session,null,true);
+            client.SubscribeEvents(session);
 
             // Create a delegete
             client.OnNewObject += Client_OnNewObject;
+            client.OnEvent += Client_OnEvent;
             client.OnNewAttributes += Client_OnNewAttributes;
             client.OnUpdateAttributes += Client_OnUpdateAttributes;
 
-            DistObject o = manager.GetObject("TestObject");
-
-            client.AddObject(o, session);
-
-            o = client.WaitForObject("TestObject", session);
-
-            DistTransaction update = new DistTransaction();
-
-            for (int i=0;i<100;i++)
-            {
-                update.NewTransaction();
-
-                update.SetAttributeValue("Updater", client.GetClientID().InstanceID.ToString());
-                update.SetAttributeValue("Time", Time.SystemSeconds);
-
-                client.UpdateObject(update, o);
-  
-                System.Threading.Thread.Sleep(1000);
-            }
-
-            
+            Console.WriteLine("Tryck Enter för att fortsätta...");
+            Console.ReadLine();
 
             client.ResignSession(session);
    
@@ -114,9 +98,11 @@ namespace Update_Object
 
         private static void Client_OnUpdateAttributes(DistClient sender, DistNotificationSet notif, DistObject o, DistSession session)
         {
+            System.Console.WriteLine(o.GetNativeTypeName());
+
             foreach (DistAttribute attr in notif)
             {
-                System.Console.WriteLine(attr.ToString());
+                System.Console.WriteLine(attr.GetName(),"  ",attr.GetValue().ToJSON());
             }
         }
 
@@ -131,7 +117,8 @@ namespace Update_Object
             if (e.GetSource() == sender.GetClientID().InstanceID)
                 return;
 
-            System.Console.WriteLine(e.ToString());
+            System.Console.WriteLine(e.GetNativeTypeName());
+            System.Console.WriteLine(e.ToJSON());
         }
 
         private static void Message_OnMessage(string sender, MessageLevel level, string message)

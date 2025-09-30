@@ -82,18 +82,19 @@ namespace Event_Demo
             GizmoSDK.GizmoDistribution.Platform.Initialize();
 
 
-            //GizmoSDK.GizmoBase.Message.SetMessageLevel(MessageLevel.DEBUG);
-            //GizmoSDK.GizmoBase.Message.OnMessage += Message_OnMessage;
-                       
+            GizmoSDK.GizmoBase.Message.SetMessageLevel(MessageLevel.DEBUG);
+            GizmoSDK.GizmoBase.Message.OnMessage += Message_OnMessage;
+
             // Create a manager. The manager controls it all
             DistManager manager = DistManager.GetManager(true);
 
             // Let the manager know about our special event
             manager.RegisterEvent<MessageEvent>();
 
+            string iface = "127.0.0.1";
+
             // Start the manager with settting for transport protocols
-            manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(), DistRemoteChannel.CreateDefaultServerChannel());
-            //manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(true,DistTransportType.MULTICAST,"127.0.0.1"), DistRemoteChannel.CreateDefaultServerChannel(true, DistTransportType.MULTICAST, "127.0.0.1"));
+            manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(false, DistTransportType.MULTICAST, iface), DistRemoteChannel.CreateDefaultServerChannel(false, DistTransportType.MULTICAST, iface));
 
             //If we want to attach the DistMonitor debugger
             manager.EnableDebug(true);
