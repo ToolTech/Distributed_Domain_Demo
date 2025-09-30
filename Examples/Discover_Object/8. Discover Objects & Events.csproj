@@ -6,10 +6,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1BB1AD89-5B53-4455-B125-97A25359E33B}</ProjectGuid>
+    <ProjectGuid>{8B6215E0-5FFD-470B-BC9C-9918D39D1B4B}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Event_Demo</RootNamespace>
-    <AssemblyName>Event_Demo</AssemblyName>
+    <RootNamespace>Update_Object</RootNamespace>
+    <AssemblyName>Update_Object</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -54,7 +54,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Event_Demo.Program</StartupObject>
+    <StartupObject>Update_Object.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GizmoBase, Version=2.12.273.1, Culture=neutral, processorArchitecture=AMD64">

@@ -80,15 +80,21 @@ namespace Event_Demo
             // Initialize platforms for various used SDKs
             GizmoSDK.GizmoBase.Platform.Initialize();
             GizmoSDK.GizmoDistribution.Platform.Initialize();
-                       
+
+
+            GizmoSDK.GizmoBase.Message.SetMessageLevel(MessageLevel.DEBUG);
+            GizmoSDK.GizmoBase.Message.OnMessage += Message_OnMessage;
+
             // Create a manager. The manager controls it all
             DistManager manager = DistManager.GetManager(true);
 
             // Let the manager know about our special event
             manager.RegisterEvent<MessageEvent>();
 
+            string iface = "127.0.0.1";
+
             // Start the manager with settting for transport protocols
-            manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(), DistRemoteChannel.CreateDefaultServerChannel());
+            manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(false, DistTransportType.MULTICAST, iface), DistRemoteChannel.CreateDefaultServerChannel(false, DistTransportType.MULTICAST, iface));
 
             //If we want to attach the DistMonitor debugger
             manager.EnableDebug(true);
@@ -104,7 +110,7 @@ namespace Event_Demo
 
             // Joint that session and subribe all events
             client.JoinSession(session);
-            client.SubscribeEvents< MessageEvent>(session); // Subscribe MessageEvent as base type
+            client.SubscribeEvents<MessageEvent>(session); // Subscribe MessageEvent as base type
 
             // Create a delegete
             client.OnEvent += Client_OnEvent;
@@ -145,7 +151,11 @@ namespace Event_Demo
 
             // GC and platform uninit is managed by the system automatically
         }
-                
+
+        private static void Message_OnMessage(string sender, MessageLevel level, string message)
+        {
+            Console.WriteLine(message);
+        }
 
         private static void Client_OnEvent(DistClient sender, DistEvent e)
         {
@@ -154,9 +164,12 @@ namespace Event_Demo
                 return;
            
             MessageEvent mess = e as MessageEvent;
-            
-            if(mess!=null)
+
+            if (mess != null)
+            {
                 Console.WriteLine(mess.Message);
+                Console.WriteLine(e.ToJSON());
+            }
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Object_Performance
     {
         const int COUNT = 1000;
 
-        const int OBJECTS = 100;
+        const int OBJECTS = 1000;
 
         static readonly LicenseManager lic = new LicenseManager();
        
@@ -47,9 +47,9 @@ namespace Object_Performance
 
             DistTransportType protocol = DistTransportType.MULTICAST;
 
-            //string iface =  "127.0.0.1";
+            string iface =  "127.0.0.1";
 
-            string iface = "";
+            //string iface = "";
 
             // Start the manager with settting for transport protocols
             manager.Start(DistRemoteChannel.CreateDefaultSessionChannel(false,protocol, iface), DistRemoteChannel.CreateDefaultServerChannel(false,protocol, iface));
@@ -93,7 +93,10 @@ namespace Object_Performance
                     objects[i] = manager.GetObject($"Object {i}");
 
                     client.AddObject(objects[i], session);
+                }
 
+                for (int i = 0; i < OBJECTS; i++)
+                {
                     objects[i] = client.WaitForObject($"Object {i}", session);
                 }
 

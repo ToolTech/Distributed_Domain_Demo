@@ -6,10 +6,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1BB1AD89-5B53-4455-B125-97A25359E33B}</ProjectGuid>
+    <ProjectGuid>{39DB0DD2-B954-439D-A89E-8167F07A0260}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Event_Demo</RootNamespace>
-    <AssemblyName>Event_Demo</AssemblyName>
+    <RootNamespace>FordonDemo</RootNamespace>
+    <AssemblyName>FordonDemo</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -54,7 +54,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Event_Demo.Program</StartupObject>
+    <StartupObject>FordonDemo.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GizmoBase, Version=2.12.273.1, Culture=neutral, processorArchitecture=AMD64">
