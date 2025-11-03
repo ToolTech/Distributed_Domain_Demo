@@ -1,7 +1,7 @@
 ﻿//******************************************************************************
 // File			: Program.cs
-// Module		: Battlefield Examples
-// Description	: Basic examples for Saab Battlefield Domain Model (BFD)
+// Module		: CSW Battlefield Examples
+// Description	: Basic examples for Saab CSW Battlefield Domain Model (BFD)
 // Author		: Anders Modén		
 //		
 // Copyright © 2003- Saab Training Systems AB, Sweden
@@ -55,11 +55,6 @@ namespace Battlefield
             // Events
             manager.RegisterEvent<BattlefieldTimeSyncEvent>();
 
-            DistObject x = manager.GetObject("sold", "BattlefieldSoldierObject");
-
-
-
-
             // Start the manager with settting for transport protocols
             var MCastAddress = "234.2.3.100";
 
@@ -83,7 +78,7 @@ namespace Battlefield
             client.Initialize();
 
             // Now we can get a session. A kind of a meeting room that is used to exchange various "topics"
-            DistSession session = client.GetSession("Battlefield", true, true);
+            DistSession session = client.GetSession("CSW-Battlefield", true, true);
 
             // Joint that session and subribe all events
             client.JoinSession(session);
@@ -116,18 +111,20 @@ namespace Battlefield
                 {
                     objs[idx]= manager.GetObject<BattlefieldSoldierObject>($"Soldier{idx}");
 
-                    client.AddObject(objs[idx], session);
-
-                    objs[idx] = client.WaitForObject(objs[idx].GetName(), session, -1) as BattlefieldSoldierObject;
-
-                    if (objs[idx] == null)
+                    if (client.AddObject(objs[idx], session))
                     {
-                        System.Console.WriteLine($"Failed to Created Soldier{idx} ---- No server");
-                        System.Threading.Thread.Sleep(1000);
-                        continue;
+
+                        objs[idx] = client.WaitForObject(objs[idx].GetName(), session, -1) as BattlefieldSoldierObject;
+
+                        if (objs[idx] == null)
+                        {
+                            System.Console.WriteLine($"Failed to Created Soldier{idx} ---- No server");
+                            System.Threading.Thread.Sleep(1000);
+                            continue;
+                        }
+                        else
+                            System.Console.WriteLine($"Created Soldier{idx} --- OK");
                     }
-                    else
-                        System.Console.WriteLine($"Created Soldier{idx} --- OK");
                 }
 
 
