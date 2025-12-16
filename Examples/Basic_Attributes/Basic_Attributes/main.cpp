@@ -47,13 +47,15 @@ int main(int argc, char* argv[])
 	// Create a manager. The manager controls it all
 	gzDistManagerPtr manager = gzDistManager::getManager(TRUE);
 
-
 	// Register a factory object
 	BasicType::registerFactory(manager);
 
 	// Start the manager and use default channels. 
 	manager->start(gzDistCreateDefaultSessionChannel(FALSE,GZ_DIST_MULTICAST,gzHostAddress("127.0.0.1")), gzDistCreateDefaultServerChannel(FALSE,GZ_DIST_MULTICAST, gzHostAddress("127.0.0.1")));
 	//manager->start(gzDistCreateDefaultSessionChannel(), gzDistCreateDefaultServerChannel());
+
+
+	manager->enableDebug(TRUE);
 
 	// Initalize my client
 	MyDistClientPtr client = new MyDistClient;

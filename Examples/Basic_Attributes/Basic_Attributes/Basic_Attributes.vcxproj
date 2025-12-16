@@ -148,6 +148,7 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\..\packages\gzBase.2.12.295.1\build\gzBase.targets" Condition="Exists('..\..\..\packages\gzBase.2.12.295.1\build\gzBase.targets')" />
     <Import Project="..\..\..\packages\gzDistribution.2.12.295.1\build\gzDistribution.targets" Condition="Exists('..\..\..\packages\gzDistribution.2.12.295.1\build\gzDistribution.targets')" />
+    <Import Project="..\..\..\packages\GizmoDistributionTools.2.12.295.1\build\GizmoDistributionTools.targets" Condition="Exists('..\..\..\packages\GizmoDistributionTools.2.12.295.1\build\GizmoDistributionTools.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -157,5 +158,6 @@
     <Error Condition="!Exists('..\..\..\packages\gzBase.2.12.295.1\build\gzBase.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\gzBase.2.12.295.1\build\gzBase.targets'))" />
     <Error Condition="!Exists('..\..\..\packages\gzDistribution.2.12.295.1\build\gzDistribution.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\gzDistribution.2.12.295.1\build\gzDistribution.props'))" />
     <Error Condition="!Exists('..\..\..\packages\gzDistribution.2.12.295.1\build\gzDistribution.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\gzDistribution.2.12.295.1\build\gzDistribution.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\GizmoDistributionTools.2.12.295.1\build\GizmoDistributionTools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\GizmoDistributionTools.2.12.295.1\build\GizmoDistributionTools.targets'))" />
   </Target>
 </Project>
