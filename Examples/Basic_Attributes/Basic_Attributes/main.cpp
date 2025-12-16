@@ -1,7 +1,7 @@
 //******************************************************************************
 // File			: main.cpp
 // Module		: Distribution Examples
-// Description	: Basic examples for C# distribution
+// Description	: Basic examples for C++ distribution
 // Author		: Anders Modén		
 //		
 // Copyright © 2003- Saab Training Systems AB, Sweden

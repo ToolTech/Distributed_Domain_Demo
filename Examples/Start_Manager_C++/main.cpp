@@ -1,5 +1,5 @@
 //******************************************************************************
-// File			: BasicType.h
+// File			: main.cpp
 // Module		: Distribution Examples
 // Description	: Basic examples for C++ distribution
 // Author		: Anders Modén		
@@ -17,27 +17,37 @@
 // AMO	251215	Created file 	
 //
 //******************************************************************************
-
-#pragma once
 #include "gzDistLibrary.h"
 
-class BasicType : public gzDistObject
+// An instance of the license manager that will load the gz_license_server.dat file
+class LicenseManager : public gzLicenseManager
 {
 public:
 
-	// Declare interface (used for subscription etc) 
-	GZ_DECLARE_TYPE_INTERFACE;
+	LicenseManager()
+	{
+		// Run and wait for manager
+		run(TRUE);
+	}
 
-	// Construction and destruction 
-	BasicType(const gzString& name);
-	virtual ~BasicType();
+} lic_manager;
 
-	// Clone interface 
-	virtual gzReference* clone() const override;
+int main(int argc, char* argv[])
+{
+	// Create a manager. The manager controls it all
+	gzDistManagerPtr manager = gzDistManager::getManager(TRUE);
 
-	// Register factory object
-	static gzVoid registerFactory(gzDistManager* manager);
-};
+	manager->start();
 
-GZ_DECLARE_REFPTR(BasicType);
+	//! Enable debug. manager must be started
+	manager->enableDebug(TRUE);
 
+	// --------------------------
+	while (!gz_kbhit())
+		gzYield();
+
+
+	manager->shutDown();
+
+	return 0;
+}
