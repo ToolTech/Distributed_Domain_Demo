@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\..\packages\gzDistribution.2.12.295.1\build\gzDistribution.props" Condition="Exists('..\..\..\packages\gzDistribution.2.12.295.1\build\gzDistribution.props')" />
-  <Import Project="..\..\..\packages\gzBase.2.12.295.1\build\gzBase.props" Condition="Exists('..\..\..\packages\gzBase.2.12.295.1\build\gzBase.props')" />
+  <Import Project="..\..\..\packages\gzDistribution.2.12.296.1\build\gzDistribution.props" Condition="Exists('..\..\..\packages\gzDistribution.2.12.296.1\build\gzDistribution.props')" />
+  <Import Project="..\..\..\packages\gzBase.2.12.296.1\build\gzBase.props" Condition="Exists('..\..\..\packages\gzBase.2.12.296.1\build\gzBase.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -146,18 +146,18 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\..\..\packages\gzBase.2.12.295.1\build\gzBase.targets" Condition="Exists('..\..\..\packages\gzBase.2.12.295.1\build\gzBase.targets')" />
-    <Import Project="..\..\..\packages\gzDistribution.2.12.295.1\build\gzDistribution.targets" Condition="Exists('..\..\..\packages\gzDistribution.2.12.295.1\build\gzDistribution.targets')" />
-    <Import Project="..\..\..\packages\GizmoDistributionTools.2.12.295.1\build\GizmoDistributionTools.targets" Condition="Exists('..\..\..\packages\GizmoDistributionTools.2.12.295.1\build\GizmoDistributionTools.targets')" />
+    <Import Project="..\..\..\packages\gzBase.2.12.296.1\build\gzBase.targets" Condition="Exists('..\..\..\packages\gzBase.2.12.296.1\build\gzBase.targets')" />
+    <Import Project="..\..\..\packages\gzDistribution.2.12.296.1\build\gzDistribution.targets" Condition="Exists('..\..\..\packages\gzDistribution.2.12.296.1\build\gzDistribution.targets')" />
+    <Import Project="..\..\..\packages\GizmoDistributionTools.2.12.296.1\build\GizmoDistributionTools.targets" Condition="Exists('..\..\..\packages\GizmoDistributionTools.2.12.296.1\build\GizmoDistributionTools.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\packages\gzBase.2.12.295.1\build\gzBase.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\gzBase.2.12.295.1\build\gzBase.props'))" />
-    <Error Condition="!Exists('..\..\..\packages\gzBase.2.12.295.1\build\gzBase.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\gzBase.2.12.295.1\build\gzBase.targets'))" />
-    <Error Condition="!Exists('..\..\..\packages\gzDistribution.2.12.295.1\build\gzDistribution.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\gzDistribution.2.12.295.1\build\gzDistribution.props'))" />
-    <Error Condition="!Exists('..\..\..\packages\gzDistribution.2.12.295.1\build\gzDistribution.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\gzDistribution.2.12.295.1\build\gzDistribution.targets'))" />
-    <Error Condition="!Exists('..\..\..\packages\GizmoDistributionTools.2.12.295.1\build\GizmoDistributionTools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\GizmoDistributionTools.2.12.295.1\build\GizmoDistributionTools.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\gzBase.2.12.296.1\build\gzBase.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\gzBase.2.12.296.1\build\gzBase.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\gzBase.2.12.296.1\build\gzBase.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\gzBase.2.12.296.1\build\gzBase.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\gzDistribution.2.12.296.1\build\gzDistribution.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\gzDistribution.2.12.296.1\build\gzDistribution.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\gzDistribution.2.12.296.1\build\gzDistribution.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\gzDistribution.2.12.296.1\build\gzDistribution.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\GizmoDistributionTools.2.12.296.1\build\GizmoDistributionTools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\GizmoDistributionTools.2.12.296.1\build\GizmoDistributionTools.targets'))" />
   </Target>
 </Project>

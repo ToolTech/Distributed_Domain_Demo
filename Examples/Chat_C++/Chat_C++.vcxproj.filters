@@ -14,7 +14,7 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="License">
-      <UniqueIdentifier>{16d53151-3704-44ac-810e-2d95c2074a4a}</UniqueIdentifier>
+      <UniqueIdentifier>{7a11c735-b9f4-440c-b302-07ef93208228}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

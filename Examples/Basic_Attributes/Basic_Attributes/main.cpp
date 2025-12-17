@@ -40,9 +40,8 @@ public:
 
 int main(int argc, char* argv[])
 {
-
 	
-	//gzMessage::setMessageLevel(GZ_MESSAGE_DEBUG /*| GZ_MESSAGE_API_INTERNAL*/);
+	//gzMessage::setMessageLevel(GZ_MESSAGE_DEBUG | GZ_MESSAGE_API_INTERNAL);
 
 	// Create a manager. The manager controls it all
 	gzDistManagerPtr manager = gzDistManager::getManager(TRUE);

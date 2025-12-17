@@ -13,7 +13,7 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Licenses">
+    <Filter Include="License">
       <UniqueIdentifier>{105cd1f1-2c83-4d4d-8c84-08df4380f006}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -30,7 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\..\..\gz_license_server.dat">
-      <Filter>Licenses</Filter>
+      <Filter>License</Filter>
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
